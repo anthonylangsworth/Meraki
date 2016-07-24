@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
@@ -9,23 +11,23 @@ namespace Meraki {
         private readonly HttpClient _client;
         private readonly UrlFormatProvider _formatter = new UrlFormatProvider();
 
-        public MerakiClient(IOptions<MerakiClientSettings> options) {
+        public MerakiClient(IOptions<MerakiClientSettings> options)
+            : this(options.Value) {
+        }
+
+        public MerakiClient(MerakiClientSettings settings) {
             _client = new HttpClient(new HttpClientHandler()) {
-                BaseAddress = new Uri(options.Value.Address)
+                BaseAddress = new Uri(settings.Address)
             };
-            _client.DefaultRequestHeaders.Add("X-Cisco-Meraki-API-Key", options.Value.Key);
+            _client.DefaultRequestHeaders.Add("X-Cisco-Meraki-API-Key", settings.Key);
             _client.DefaultRequestHeaders.Add("Accept-Type", "application/json");
         }
 
         private string Url(FormattableString formattable) => formattable.ToString(_formatter);
 
-        public Task<HttpResponseMessage> SendAsync(HttpMethod method, string uri) {
-            return SendAsync(new HttpRequestMessage(method, uri));
-        }
+        public Task<HttpResponseMessage> SendAsync(HttpMethod method, string uri) => SendAsync(new HttpRequestMessage(method, uri));
 
-        internal Task<HttpResponseMessage> SendAsync(HttpRequestMessage request) {
-            return _client.SendAsync(request);
-        }
+        internal Task<HttpResponseMessage> SendAsync(HttpRequestMessage request) => _client.SendAsync(request);
 
         internal async Task<T> GetAsync<T>(string uri) {
             var response = await _client.SendAsync(new HttpRequestMessage(HttpMethod.Get, uri));
