@@ -11,7 +11,7 @@ namespace Meraki {
             setup.Configure(settings);
             configure?.Invoke(settings);
 
-            return new MerakiClient(options);
+            return new MerakiClient(settings);
         }
     }
 }
