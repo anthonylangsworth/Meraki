@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
@@ -30,14 +28,16 @@ namespace Meraki {
         internal Task<HttpResponseMessage> SendAsync(HttpRequestMessage request) => _client.SendAsync(request);
 
         internal async Task<T> GetAsync<T>(string uri) {
-            var response = await _client.SendAsync(new HttpRequestMessage(HttpMethod.Get, uri));
+            var request = new HttpRequestMessage(HttpMethod.Get, uri);
+            var response = await _client.SendAsync(request);
             var content = await response.Content.ReadAsStringAsync();
 
             return JsonConvert.DeserializeObject<T>(content);
         }
 
         public async Task<string> GetAsync(string uri) {
-            var response = await _client.SendAsync(new HttpRequestMessage(HttpMethod.Get, uri));
+            var request = new HttpRequestMessage(HttpMethod.Get, uri);
+            var response = await _client.SendAsync(request);
             var content = await response.Content.ReadAsStringAsync();
 
             return content;
