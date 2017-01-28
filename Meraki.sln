@@ -1,32 +1,39 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25402.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.26127.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{8726CEDB-DAAA-46A0-A83E-3006F0F6C601}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{35F738EA-ED19-4369-9AB7-98366FBBC5F0}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EBDE05D2-81DD-4351-BC0F-503BA946DFDE}"
-	ProjectSection(SolutionItems) = preProject
-		global.json = global.json
-	EndProjectSection
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Meraki", "src\Meraki\Meraki.xproj", "{F1CA5407-6A1E-449D-B935-43D9460982A0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Meraki", "src\Meraki\Meraki.csproj", "{06FB16F7-53BD-408D-B4CE-4B51408B796B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F1CA5407-6A1E-449D-B935-43D9460982A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F1CA5407-6A1E-449D-B935-43D9460982A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F1CA5407-6A1E-449D-B935-43D9460982A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F1CA5407-6A1E-449D-B935-43D9460982A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06FB16F7-53BD-408D-B4CE-4B51408B796B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06FB16F7-53BD-408D-B4CE-4B51408B796B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06FB16F7-53BD-408D-B4CE-4B51408B796B}.Debug|x64.ActiveCfg = Debug|x64
+		{06FB16F7-53BD-408D-B4CE-4B51408B796B}.Debug|x64.Build.0 = Debug|x64
+		{06FB16F7-53BD-408D-B4CE-4B51408B796B}.Debug|x86.ActiveCfg = Debug|x86
+		{06FB16F7-53BD-408D-B4CE-4B51408B796B}.Debug|x86.Build.0 = Debug|x86
+		{06FB16F7-53BD-408D-B4CE-4B51408B796B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06FB16F7-53BD-408D-B4CE-4B51408B796B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06FB16F7-53BD-408D-B4CE-4B51408B796B}.Release|x64.ActiveCfg = Release|x64
+		{06FB16F7-53BD-408D-B4CE-4B51408B796B}.Release|x64.Build.0 = Release|x64
+		{06FB16F7-53BD-408D-B4CE-4B51408B796B}.Release|x86.ActiveCfg = Release|x86
+		{06FB16F7-53BD-408D-B4CE-4B51408B796B}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{F1CA5407-6A1E-449D-B935-43D9460982A0} = {8726CEDB-DAAA-46A0-A83E-3006F0F6C601}
+		{06FB16F7-53BD-408D-B4CE-4B51408B796B} = {35F738EA-ED19-4369-9AB7-98366FBBC5F0}
 	EndGlobalSection
 EndGlobal
