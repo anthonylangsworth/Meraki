@@ -4,8 +4,10 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
-namespace Meraki {
-    public partial class MerakiClient {
+namespace Meraki
+{
+    public partial class MerakiClient
+    {
         private readonly HttpClient _client;
         private readonly UrlFormatProvider _formatter = new UrlFormatProvider();
 
