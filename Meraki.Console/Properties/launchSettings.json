@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Meraki.Console": {
+      "commandName": "Project",
+      "commandLineArgs": "-k 90bf017d35c80d14426e47e1ef9426a873da3caa"
+    }
+  }
+}
