@@ -10,6 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Meraki\Meraki.csproj" />
     <ProjectReference Include="..\src\Meraki\Meraki.csproj" />
   </ItemGroup>
 
