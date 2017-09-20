@@ -20,13 +20,34 @@ namespace Meraki
         public static MerakiClient Create(Action<MerakiClientSettings> configure = null)
         {
             var settings = new MerakiClientSettings();
-            // var options = Options.Create(settings);
             var setup = new MerakiClientSettingsSetup();
 
             setup.Configure(settings);
             configure?.Invoke(settings);
 
             return new MerakiClient(settings);
+        }
+
+        /// <summary>
+        /// Create a <see cref="MerakiClient"/> using the given <paramref name="apiKey"/>.
+        /// </summary>
+        /// <param name="apiKey">
+        /// The API Key to use. This cannot be null, empty or whitespace.
+        /// </param>
+        /// <returns>
+        /// A configured <see cref="MerakiClient"/> object.
+        /// </returns>
+        /// <exception cref="ArgumentException">
+        /// <paramref name="apiKey"/> cannot be null, empty or whitespace.
+        /// </exception>
+        public static MerakiClient Create(string apiKey)
+        {
+            if (string.IsNullOrWhiteSpace(apiKey))
+            {
+                throw new ArgumentException("Cannot be null, empty or whitespace", nameof(apiKey));   
+            }
+
+            return Create(mcs => mcs.Key = apiKey);
         }
     }
 }

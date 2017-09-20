@@ -6,6 +6,9 @@ using Newtonsoft.Json;
 
 namespace Meraki
 {
+    /// <summary>
+    /// Wrapper around Meraki APIs.
+    /// </summary>
     public partial class MerakiClient
     {
         private readonly HttpClient _client;
@@ -17,6 +20,9 @@ namespace Meraki
         /// <param name="options">
         /// The options to use. This cannot be null.
         /// </param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="options"/> cannot be null.
+        /// </exception>
         public MerakiClient(IOptions<MerakiClientSettings> options)
             : this(options?.Value)
         {
@@ -78,9 +84,9 @@ namespace Meraki
 
         internal async Task<T> GetAsync<T>(string uri)
         {
-            var request = new HttpRequestMessage(HttpMethod.Get, uri);
-            var response = await _client.SendAsync(request);
-            var content = await response.Content.ReadAsStringAsync();
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, uri);
+            HttpResponseMessage response = await _client.SendAsync(request);
+            string content = await response.Content.ReadAsStringAsync();
 
             return JsonConvert.DeserializeObject<T>(content);
         }
@@ -96,9 +102,9 @@ namespace Meraki
         /// </returns>
         public async Task<string> GetAsync(string uri)
         {
-            var request = new HttpRequestMessage(HttpMethod.Get, uri);
-            var response = await _client.SendAsync(request);
-            var content = await response.Content.ReadAsStringAsync();
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, uri);
+            HttpResponseMessage response = await _client.SendAsync(request);
+            string content = await response.Content.ReadAsStringAsync();
 
             return content;
         }

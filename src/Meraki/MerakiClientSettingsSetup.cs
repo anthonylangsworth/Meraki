@@ -5,7 +5,7 @@ namespace Meraki
     /// <summary>
     /// Initialize a <see cref="MerakiClientSettings"/> object.
     /// </summary>
-    public class MerakiClientSettingsSetup : ConfigureOptions<MerakiClientSettings>
+    internal class MerakiClientSettingsSetup : ConfigureOptions<MerakiClientSettings>
     {
         /// <summary>
         /// Create a new <see cref="MerakiClientSettingsSetup"/> object.
