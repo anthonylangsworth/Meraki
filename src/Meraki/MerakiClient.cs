@@ -78,9 +78,22 @@ namespace Meraki
         /// <returns>
         /// The <see cref="HttpRequestMessage"/>.
         /// </returns>
-        public Task<HttpResponseMessage> SendAsync(HttpMethod method, string uri) => SendAsync(new HttpRequestMessage(method, uri));
+        /// <exception cref="HttpRequestException">
+        /// The request failed.
+        /// </exception>
+        public async Task<HttpResponseMessage> SendAsync(HttpMethod method, string uri)
+        {
+            HttpResponseMessage response = await SendAsync(new HttpRequestMessage(method, uri));
+            response.EnsureSuccessStatusCode();
+            return response;
+        } 
 
-        internal Task<HttpResponseMessage> SendAsync(HttpRequestMessage request) => _client.SendAsync(request);
+        internal async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
+        {
+            HttpResponseMessage response = await _client.SendAsync(request);
+            response.EnsureSuccessStatusCode();
+            return response;
+        }
 
         internal async Task<T> GetAsync<T>(string uri)
         {
@@ -102,6 +115,9 @@ namespace Meraki
         /// <returns>
         /// The result as a string.
         /// </returns>
+        /// <exception cref="HttpRequestException">
+        /// The request failed.
+        /// </exception>
         public async Task<string> GetAsync(string uri)
         {
             using (HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, uri))
