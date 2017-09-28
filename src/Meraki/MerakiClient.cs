@@ -97,13 +97,7 @@ namespace Meraki
 
         internal async Task<T> GetAsync<T>(string uri)
         {
-            using (HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, uri))
-            using (HttpResponseMessage response = await _client.SendAsync(request))
-            {
-                response.EnsureSuccessStatusCode();
-                string content = await response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<T>(content);
-            }
+            return JsonConvert.DeserializeObject<T>(await GetAsync(uri));
         }
 
         /// <summary>
@@ -124,8 +118,7 @@ namespace Meraki
             using (HttpResponseMessage response = await _client.SendAsync(request))
             {
                 response.EnsureSuccessStatusCode();
-                string content = await response.Content.ReadAsStringAsync();
-                return content;
+                return await response.Content.ReadAsStringAsync();
             }
         }
     }
