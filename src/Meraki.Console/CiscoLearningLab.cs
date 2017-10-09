@@ -99,7 +99,6 @@ namespace Meraki.Console
             await System.Console.Out.WriteLineAsync($"Network '{network.Name}' contains device with serial {deviceSerial}"); // claimedAt does not exist
         }
 
-
         /// <summary>
         /// What tags are applied to device “Q2HP-AJ22-UG72”?
         /// </summary>
