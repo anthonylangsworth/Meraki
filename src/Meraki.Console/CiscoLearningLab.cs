@@ -24,7 +24,7 @@ namespace Meraki.Console
             int organizationId = GetOrganizationId(merakiClient, organizationName).Result;
 
             foreach (Func<MerakiClient, int, Task> exercise in
-                new Func<MerakiClient, int, Task>[] { Exercise4, Exercise5 }) // Exercise1, Exercise2, Exercise3, Exercise4
+                new Func<MerakiClient, int, Task>[] { Exercise6 }) // Exercise1, Exercise2, Exercise3, Exercise4, Exercise5
             {
                 await exercise(merakiClient, organizationId);
             }
@@ -80,8 +80,8 @@ namespace Meraki.Console
         {
             const string deviceSerial = "Q2EK-S3AA-BXFW"; // "Q2JD-W28X-FNEN" does not exist
             Device device = merakiClient.GetOrganizationNetworksAsync(organizationId).Result
-                                           .SelectMany(n => merakiClient.GetNetworkDevicesAsync(n.Id).Result)
-                                           .FirstOrDefault(d => deviceSerial.Equals(d.Serial, StringComparison.OrdinalIgnoreCase)); 
+                                        .SelectMany(n => merakiClient.GetNetworkDevicesAsync(n.Id).Result)
+                                        .FirstOrDefault(d => deviceSerial.Equals(d.Serial, StringComparison.OrdinalIgnoreCase)); 
             await System.Console.Out.WriteLineAsync($"Device {deviceSerial} claimed at {device.Mac}"); // claimedAt does not exist
         }
 
@@ -97,6 +97,22 @@ namespace Meraki.Console
             Network network = merakiClient.GetOrganizationNetworksAsync(organizationId).Result
                                           .FirstOrDefault(n => merakiClient.GetNetworkDevicesAsync(n.Id).Result.Any(d => deviceSerial.Equals(d.Serial)));
             await System.Console.Out.WriteLineAsync($"Network '{network.Name}' contains device with serial {deviceSerial}"); // claimedAt does not exist
+        }
+
+
+        /// <summary>
+        /// What tags are applied to device “Q2HP-AJ22-UG72”?
+        /// </summary>
+        /// <param name="merakiClient"></param>
+        /// <param name="organizationId"></param>
+        /// <returns></returns>
+        private async Task Exercise6(MerakiClient merakiClient, int organizationId)
+        {
+            const string deviceSerial = "Q2EK-S3AA-BXFW"; // "Q2HP-AJ22-UG72" does not exist
+            Device device = merakiClient.GetOrganizationNetworksAsync(organizationId).Result
+                                        .SelectMany(n => merakiClient.GetNetworkDevicesAsync(n.Id).Result)
+                                        .FirstOrDefault(d => deviceSerial.Equals(d.Serial, StringComparison.OrdinalIgnoreCase)); 
+            await System.Console.Out.WriteLineAsync($"Device with serial {deviceSerial} has the tags '{device.Tags}'");
         }
     }
 }
