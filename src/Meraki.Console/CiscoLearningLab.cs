@@ -24,7 +24,7 @@ namespace Meraki.Console
             int organizationId = GetOrganizationId(merakiClient, organizationName).Result;
 
             foreach (Func<MerakiClient, int, Task> exercise in
-                new Func<MerakiClient, int, Task>[] { Exercise1, Exercise2, Exercise3 })
+                new Func<MerakiClient, int, Task>[] { Exercise4, Exercise5 }) // Exercise1, Exercise2, Exercise3, Exercise4
             {
                 await exercise(merakiClient, organizationId);
             }
@@ -50,6 +50,7 @@ namespace Meraki.Console
         /// Find out through the API when the license of this organization expires.
         /// </summary>
         /// <param name="merakiClient"></param>
+        /// <param name="organizationId"></param>
         /// <returns></returns>
         private async Task Exercise2(MerakiClient merakiClient, int organizationId)
         {
@@ -61,11 +62,41 @@ namespace Meraki.Console
         /// Is SNMP enabled on this Organization?
         /// </summary>
         /// <param name="merakiClient"></param>
+        /// <param name="organizationId"></param>
         /// <returns></returns>
         private async Task Exercise3(MerakiClient merakiClient, int organizationId)
         {
             SnmpSettings snmpSettings = await merakiClient.GetOrganizationSnmpSettingsAsync(organizationId);
             await System.Console.Out.WriteLineAsync($"SNMP v2c enabled: {snmpSettings.V2cEnabled},  v3 enabled: {snmpSettings.V3Enabled}");
+        }
+
+        /// <summary>
+        /// What is the value for “claimedAt” for the device with serial number "Q2JD-W28X-FNEN"
+        /// </summary>
+        /// <param name="merakiClient"></param>
+        /// <param name="organizationId"></param>
+        /// <returns></returns>
+        private async Task Exercise4(MerakiClient merakiClient, int organizationId)
+        {
+            const string deviceSerial = "Q2EK-S3AA-BXFW"; // "Q2JD-W28X-FNEN" does not exist
+            Device device = merakiClient.GetOrganizationNetworksAsync(organizationId).Result
+                                           .SelectMany(n => merakiClient.GetNetworkDevicesAsync(n.Id).Result)
+                                           .FirstOrDefault(d => deviceSerial.Equals(d.Serial, StringComparison.OrdinalIgnoreCase)); 
+            await System.Console.Out.WriteLineAsync($"Device {deviceSerial} claimed at {device.Mac}"); // claimedAt does not exist
+        }
+
+        /// <summary>
+        /// What’s the name of the network that contains the device with serial number “Q2CD-MJ68-SYFF”
+        /// </summary>
+        /// <param name="merakiClient"></param>
+        /// <param name="organizationId"></param>
+        /// <returns></returns>
+        private async Task Exercise5(MerakiClient merakiClient, int organizationId)
+        {
+            const string deviceSerial = "Q2EK-S3AA-BXFW"; // "Q2CD-MJ68-SYFF" does not exist
+            Network network = merakiClient.GetOrganizationNetworksAsync(organizationId).Result
+                                          .FirstOrDefault(n => merakiClient.GetNetworkDevicesAsync(n.Id).Result.Any(d => deviceSerial.Equals(d.Serial)));
+            await System.Console.Out.WriteLineAsync($"Network '{network.Name}' contains device with serial {deviceSerial}"); // claimedAt does not exist
         }
     }
 }

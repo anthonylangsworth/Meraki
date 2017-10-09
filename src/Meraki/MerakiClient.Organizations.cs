@@ -20,12 +20,12 @@ namespace Meraki
             return await GetOrganizationAdminsAsync(organization.Id);
         }
 
-        public async Task<string> GetOrganizationNetworksAsync(int id)
+        public async Task<IReadOnlyList<Network>> GetOrganizationNetworksAsync(int id)
         {
-            return await GetAsync(Url($"api/v0/organizations/{id}/networks"));
+            return await GetAsync<IReadOnlyList<Network>>(Url($"api/v0/organizations/{id}/networks"));
         }
 
-        public async Task<string> GetOrganizationNetworksAsync(Organization organization)
+        public async Task<IReadOnlyList<Network>> GetOrganizationNetworksAsync(Organization organization)
         {
             return await GetOrganizationNetworksAsync(organization.Id);
         }
