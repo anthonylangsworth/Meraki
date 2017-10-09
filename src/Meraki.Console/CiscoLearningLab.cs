@@ -24,7 +24,7 @@ namespace Meraki.Console
             int organizationId = GetOrganizationId(merakiClient, organizationName).Result;
 
             foreach (Func<MerakiClient, int, Task> exercise in
-                new Func<MerakiClient, int, Task>[] { Exercise1, Exercise2 })
+                new Func<MerakiClient, int, Task>[] { Exercise1, Exercise2, Exercise3 })
             {
                 await exercise(merakiClient, organizationId);
             }
@@ -55,6 +55,17 @@ namespace Meraki.Console
         {
             LicenseState licenseState = await merakiClient.GetOrganizationLicenseStateAsync(organizationId);
             await System.Console.Out.WriteLineAsync($"The license expires on {licenseState.ExpirationDate}");
+        }
+
+        /// <summary>
+        /// Is SNMP enabled on this Organization?
+        /// </summary>
+        /// <param name="merakiClient"></param>
+        /// <returns></returns>
+        private async Task Exercise3(MerakiClient merakiClient, int organizationId)
+        {
+            SnmpSettings snmpSettings = await merakiClient.GetOrganizationSnmpSettingsAsync(organizationId);
+            await System.Console.Out.WriteLineAsync($"SNMP v2c enabled: {snmpSettings.V2cEnabled},  v3 enabled: {snmpSettings.V3Enabled}");
         }
     }
 }

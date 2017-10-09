@@ -45,5 +45,9 @@ namespace Meraki
             return await GetAsync<LicenseState>(Url($"api/v0/organizations/{id}/licenseState"));
         }
 
+        public async Task<SnmpSettings> GetOrganizationSnmpSettingsAsync(int id)
+        {
+            return await GetAsync<SnmpSettings>(Url($"api/v0/organizations/{id}/snmp"));
+        }
     }
 }
