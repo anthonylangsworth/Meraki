@@ -83,16 +83,20 @@ namespace Meraki
         /// </exception>
         public async Task<HttpResponseMessage> SendAsync(HttpMethod method, string uri)
         {
-            HttpResponseMessage response = await SendAsync(new HttpRequestMessage(method, uri));
-            response.EnsureSuccessStatusCode();
-            return response;
+            using (HttpResponseMessage response = await SendAsync(new HttpRequestMessage(method, uri)))
+            {
+                response.EnsureSuccessStatusCode();
+                return response;
+            }
         } 
 
         internal async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
         {
-            HttpResponseMessage response = await _client.SendAsync(request);
-            response.EnsureSuccessStatusCode();
-            return response;
+            using (HttpResponseMessage response = await _client.SendAsync(request))
+            {
+                response.EnsureSuccessStatusCode();
+                return response;
+            }
         }
 
         internal async Task<T> GetAsync<T>(string uri)
