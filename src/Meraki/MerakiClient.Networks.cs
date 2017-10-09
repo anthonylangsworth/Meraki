@@ -5,22 +5,22 @@ namespace Meraki
 {
     public partial class MerakiClient
     {
-        public async Task<string> GetNetworkAsync(string id)
+        public async Task<string> GetNetworkAsync(int id)
         {
             return await GetAsync(Url($"api/v0/networks/{id}/admins"));
         }
 
-        public async Task<string> GetNetworkTrafficAsync(string id)
+        public async Task<string> GetNetworkTrafficAsync(int id)
         {
             return await GetNetworkTrafficAsync(id, TimeSpan.FromSeconds(7200));
         }
 
-        public async Task<string> GetNetworkTrafficAsync(string id, TimeSpan timespan)
+        public async Task<string> GetNetworkTrafficAsync(int id, TimeSpan timespan)
         {
             return await GetAsync(Url($"api/v0/networks/{id}/traffic?timespan={(int)timespan.TotalSeconds}"));
         }
 
-        public async Task<string> GetNetworkDevicesAsync(string id)
+        public async Task<string> GetNetworkDevicesAsync(int id)
         {
             return await GetAsync(Url($"api/v0/networks/{id}/devices"));
         }
@@ -30,7 +30,7 @@ namespace Meraki
             return await GetNetworkDevicesAsync(network.Id);
         }
 
-        public async Task<string> GetNetworkVlans(string id)
+        public async Task<string> GetNetworkVlans(int id)
         {
             return await GetAsync(Url($"networks/{id}/vlans"));
         }

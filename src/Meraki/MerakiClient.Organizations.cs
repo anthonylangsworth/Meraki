@@ -10,7 +10,7 @@ namespace Meraki
             return await GetAsync<IReadOnlyList<Organization>>($"api/v0/organizations");
         }
 
-        public async Task<string> GetOrganizationAdminsAsync(string id)
+        public async Task<string> GetOrganizationAdminsAsync(int id)
         {
             return await GetAsync(Url($"api/v0/organizations/{id}/admins"));
         }
@@ -20,7 +20,7 @@ namespace Meraki
             return await GetOrganizationAdminsAsync(organization.Id);
         }
 
-        public async Task<string> GetOrganizationNetworksAsync(string id)
+        public async Task<string> GetOrganizationNetworksAsync(int id)
         {
             return await GetAsync(Url($"api/v0/organizations/{id}/networks"));
         }
@@ -30,7 +30,7 @@ namespace Meraki
             return await GetOrganizationNetworksAsync(organization.Id);
         }
 
-        public async Task<string> GetOrganizationInventoryAsync(string id)
+        public async Task<string> GetOrganizationInventoryAsync(int id)
         {
             return await GetAsync(Url($"api/v0/organizations/{id}/inventory"));
         }
@@ -39,5 +39,11 @@ namespace Meraki
         {
             return await GetOrganizationInventoryAsync(organization.Id);
         }
+
+        public async Task<LicenseState> GetOrganizationLicenseStateAsync(int id)
+        {
+            return await GetAsync<LicenseState>(Url($"api/v0/organizations/{id}/licenseState"));
+        }
+
     }
 }

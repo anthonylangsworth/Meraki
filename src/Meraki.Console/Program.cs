@@ -14,20 +14,12 @@ namespace Meraki.Console
             try
             {
                 Parser.Default.ParseArguments<CommandLineOptions>(args)
-                    .WithParsed<CommandLineOptions>(clo => Test(clo.ApiKey).Wait());
+                    .WithParsed<CommandLineOptions>(clo => new CiscoLearningLab().Run(clo.ApiKey).Wait());
             }
             catch (Exception ex)
             {
                 System.Console.Error.WriteLine(ex);
             }
-        }
-
-        static async Task Test(string apiKey)
-        {
-            MerakiClient merakiClient = MerakiClientFactory.Create(mcs => mcs.Key = apiKey);
-
-            IReadOnlyList<Organization> organizations = await merakiClient.GetOrganizationsAsync();
-            System.Console.WriteLine(string.Join(", ", organizations.Select(org => $"{org.Name} ({org.Id})")));
         }
     }
 }
