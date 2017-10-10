@@ -13,8 +13,10 @@ namespace Meraki.Console
         {
             try
             {
-                Parser.Default.ParseArguments<CommandLineOptions>(args)
-                    .WithParsed<CommandLineOptions>(clo => new CiscoLearningLab().Run(clo.ApiKey).Wait());
+                Parser.Default.ParseArguments<LabOptions, DumpOptions>(args)
+                    .WithParsed<LabOptions>(clo => new CiscoLearningLab().Run(clo.ApiKey).Wait())
+                    .WithParsed<DumpOptions>(clo => new Dump().Run(clo.ApiKey).Wait())
+                    .WithNotParsed(errors => System.Console.Error.WriteLine("InvalidArgs"));
             }
             catch (Exception ex)
             {

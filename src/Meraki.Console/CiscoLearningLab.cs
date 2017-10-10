@@ -9,7 +9,7 @@ namespace Meraki.Console
     /// <summary>
     /// Follow the exercises at http://developers.meraki.com/post/152434096196/dashboard-api-learning-lab.
     /// </summary>
-    public class CiscoLearningLab
+    internal class CiscoLearningLab
     {
         public async Task Run(string apiKey)
         {
@@ -96,7 +96,7 @@ namespace Meraki.Console
             const string deviceSerial = "Q2EK-S3AA-BXFW"; // "Q2CD-MJ68-SYFF" does not exist
             Network network = merakiClient.GetOrganizationNetworksAsync(organizationId).Result
                                           .FirstOrDefault(n => merakiClient.GetNetworkDevicesAsync(n.Id).Result.Any(d => deviceSerial.Equals(d.Serial)));
-            await System.Console.Out.WriteLineAsync($"Network '{network.Name}' contains device with serial {deviceSerial}"); // claimedAt does not exist
+            await System.Console.Out.WriteLineAsync($"Network '{network?.Name}' contains device with serial {deviceSerial}"); // claimedAt does not exist
         }
 
         /// <summary>
@@ -111,7 +111,22 @@ namespace Meraki.Console
             Device device = merakiClient.GetOrganizationNetworksAsync(organizationId).Result
                                         .SelectMany(n => merakiClient.GetNetworkDevicesAsync(n.Id).Result)
                                         .FirstOrDefault(d => deviceSerial.Equals(d.Serial, StringComparison.OrdinalIgnoreCase)); 
-            await System.Console.Out.WriteLineAsync($"Device with serial {deviceSerial} has the tags '{device.Tags}'");
+            await System.Console.Out.WriteLineAsync($"Device with serial {deviceSerial} has the tags '{device?.Tags}'");
+        }
+
+        /// <summary>
+        /// To which port of “Q2HP-AJ22-UG72” is the client, “e0:55:3d:1f:a7:10” connected?
+        /// </summary>
+        /// <param name="merakiClient"></param>
+        /// <param name="organizationId"></param>
+        /// <returns></returns>
+        private async Task Exercise7(MerakiClient merakiClient, int organizationId)
+        {
+            const string deviceSerial = "Q2EK-S3AA-BXFW"; // "Q2HP-AJ22-UG72" does not exist
+            Device device = merakiClient.GetOrganizationNetworksAsync(organizationId).Result
+                .SelectMany(n => merakiClient.GetNetworkDevicesAsync(n.Id).Result)
+                .FirstOrDefault(d => deviceSerial.Equals(d.Serial, StringComparison.OrdinalIgnoreCase));
+            await System.Console.Out.WriteLineAsync($"Device with serial {deviceSerial} has the tags '{device?.Tags}'");
         }
     }
 }

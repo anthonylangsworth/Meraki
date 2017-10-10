@@ -5,9 +5,9 @@ using CommandLine;
 
 namespace Meraki.Console
 {
-    class CommandLineOptions
+    internal class BaseOptions
     {
-        [Option('k', "apiKey", HelpText = "Meraki API Key", MetaValue = "API_KEY")]
+        [Option('k', "apiKey", HelpText = "Meraki API Key", MetaValue = "API_KEY", Required = true)]
         public string ApiKey { get; set; }
     }
 }
