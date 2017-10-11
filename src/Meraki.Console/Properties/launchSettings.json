@@ -2,7 +2,7 @@
   "profiles": {
     "Meraki.Console": {
       "commandName": "Project",
-      "commandLineArgs": "dump -k cc54e1f9520616813f654aab8e0dfc614e33c179 "
+      "commandLineArgs": "lab -k cc54e1f9520616813f654aab8e0dfc614e33c179 "
     }
   }
 }

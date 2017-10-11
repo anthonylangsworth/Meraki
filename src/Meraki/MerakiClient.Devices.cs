@@ -14,5 +14,10 @@ namespace Meraki
         {
             return await GetDeviceClientsAsync(serial, TimeSpan.FromSeconds(8600));
         }
+
+        public async Task<Device> GetDeviceAsync(string networkId, string serial)
+        {
+            return await GetAsync<Device>(Url($"api/v0/networks/{networkId}/devices/{serial}"));
+        }
     }
 }

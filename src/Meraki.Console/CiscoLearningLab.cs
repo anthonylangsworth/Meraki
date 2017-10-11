@@ -24,7 +24,7 @@ namespace Meraki.Console
             int organizationId = GetOrganizationId(merakiClient, organizationName).Result;
 
             foreach (Func<MerakiClient, int, Task> exercise in
-                new Func<MerakiClient, int, Task>[] { Exercise6 }) // Exercise1, Exercise2, Exercise3, Exercise4, Exercise5
+                new Func<MerakiClient, int, Task>[] { Exercise8 }) // Exercise1, Exercise2, Exercise3, Exercise4, Exercise5, Exercise6, Exercise7
             {
                 await exercise(merakiClient, organizationId);
             }
@@ -108,9 +108,7 @@ namespace Meraki.Console
         private async Task Exercise6(MerakiClient merakiClient, int organizationId)
         {
             const string deviceSerial = "Q2EK-S3AA-BXFW"; // "Q2HP-AJ22-UG72" does not exist
-            Device device = merakiClient.GetOrganizationNetworksAsync(organizationId).Result
-                                        .SelectMany(n => merakiClient.GetNetworkDevicesAsync(n.Id).Result)
-                                        .FirstOrDefault(d => deviceSerial.Equals(d.Serial, StringComparison.OrdinalIgnoreCase)); 
+            Device device = GetDevice(merakiClient, organizationId, deviceSerial);
             await System.Console.Out.WriteLineAsync($"Device with serial {deviceSerial} has the tags '{device?.Tags}'");
         }
 
@@ -122,11 +120,42 @@ namespace Meraki.Console
         /// <returns></returns>
         private async Task Exercise7(MerakiClient merakiClient, int organizationId)
         {
-            const string deviceSerial = "Q2EK-S3AA-BXFW"; // "Q2HP-AJ22-UG72" does not exist
-            Device device = merakiClient.GetOrganizationNetworksAsync(organizationId).Result
-                .SelectMany(n => merakiClient.GetNetworkDevicesAsync(n.Id).Result)
-                .FirstOrDefault(d => deviceSerial.Equals(d.Serial, StringComparison.OrdinalIgnoreCase));
-            await System.Console.Out.WriteLineAsync($"Device with serial {deviceSerial} has the tags '{device?.Tags}'");
+            const string switchSerial = "Q2HP-DT5F-KMJE"; // "Q2HP-AJ22-UG72" does not exist
+            const string deviceMac = "e0:55:3d:4f:45:a9"; // "Q2AT-6CLF-RQFE", an MC7
+            Device device = GetDevice(merakiClient, organizationId, switchSerial);
+            IReadOnlyList<SwitchPort> ports = await merakiClient.GetSwitchPortsAsync(switchSerial);
+            // await System.Console.Out.WriteLineAsync($"Device with serial {switchSerial} has the tags '{device?.Tags}'");
+        }
+
+
+        /// <summary>
+        /// How many VLANs are configured on device “Q2QN-WPR6-UJPL”?
+        /// </summary>
+        /// <param name="merakiClient"></param>
+        /// <param name="organizationId"></param>
+        /// <returns></returns>
+        private async Task Exercise8(MerakiClient merakiClient, int organizationId)
+        {
+            const string switchSerial = "Q2HP-DT5F-KMJE"; // "Q2QN-WPR6-UJPL" does not exist
+            Device device = GetDevice(merakiClient, organizationId, switchSerial);
+            IReadOnlyList<SwitchPort> ports = await merakiClient.GetSwitchPortsAsync(switchSerial);
+            await System.Console.Out.WriteLineAsync($"Device with serial {switchSerial} has '{ports.Select(sp => sp.Vlan).Distinct().Count()}' vlans");
+        }
+
+        /// <summary>
+        /// Get the <see cref="Device"/> for the given serial number.
+        /// </summary>
+        /// <param name="merakiClient"></param>
+        /// <param name="organizationId"></param>
+        /// <param name="serial"></param>
+        /// <returns>
+        /// The <see cref="Device"/> or null, if no device exists.
+        /// </returns>
+        private Device GetDevice(MerakiClient merakiClient, int organizationId, string serial)
+        {
+            return merakiClient.GetOrganizationNetworksAsync(organizationId).Result
+                               .SelectMany(n => merakiClient.GetNetworkDevicesAsync(n.Id).Result)
+                               .FirstOrDefault(d => serial.Equals(d.Serial, StringComparison.OrdinalIgnoreCase));
         }
     }
 }
