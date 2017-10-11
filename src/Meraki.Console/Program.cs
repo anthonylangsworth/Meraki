@@ -15,8 +15,7 @@ namespace Meraki.Console
             {
                 Parser.Default.ParseArguments<LabOptions, DumpOptions>(args)
                     .WithParsed<LabOptions>(clo => new CiscoLearningLab().Run(clo.ApiKey).Wait())
-                    .WithParsed<DumpOptions>(clo => new Dump().Run(clo.ApiKey).Wait())
-                    .WithNotParsed(errors => System.Console.Error.WriteLine("InvalidArgs"));
+                    .WithParsed<DumpOptions>(clo => new Dump().Run(clo.ApiKey).Wait());
             }
             catch (Exception ex)
             {
