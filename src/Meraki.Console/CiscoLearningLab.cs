@@ -24,7 +24,7 @@ namespace Meraki.Console
             int organizationId = GetOrganizationId(merakiClient, organizationName).Result;
 
             foreach (Func<MerakiClient, int, Task> exercise in
-                new Func<MerakiClient, int, Task>[] { Exercise8 }) // Exercise1, Exercise2, Exercise3, Exercise4, Exercise5, Exercise6, Exercise7
+                new Func<MerakiClient, int, Task>[] { Exercise1, Exercise2, Exercise3, Exercise4, Exercise5, Exercise6, Exercise7, Exercise8 })
             {
                 await exercise(merakiClient, organizationId);
             }
