@@ -4,4 +4,4 @@ The beginnings of a C# wrapper over the Meraki Dashboard APIs (https://dashboard
 
 Includes the exercises found at http://developers.meraki.com/post/152434096196/dashboard-api-learning-lab. 
 
-Based off original work my Michael Park at https://github.com/migrap/Meraki.
+Based off original work by Michael Park at https://github.com/migrap/Meraki.
