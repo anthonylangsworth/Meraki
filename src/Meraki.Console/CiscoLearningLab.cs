@@ -40,6 +40,7 @@ namespace Meraki.Console
         /// Determine the Organization ID for the “Meraki Live Sandbox”
         /// </summary>
         /// <param name="merakiClient"></param>
+        /// <param name="organizationId"></param>
         /// <returns></returns>
         private async Task Exercise1(MerakiClient merakiClient, int organizationId)
         {
