@@ -123,9 +123,8 @@ namespace Meraki.Console
         {
             const string switchSerial = "Q2HP-DT5F-KMJE"; // "Q2HP-AJ22-UG72" does not exist
             const string deviceMac = "e0:55:3d:4f:45:a9"; // "Q2AT-6CLF-RQFE", an MC7
-            Device device = GetDevice(merakiClient, organizationId, switchSerial);
-            IReadOnlyList<SwitchPort> ports = await merakiClient.GetSwitchPortsAsync(switchSerial);
-            // await System.Console.Out.WriteLineAsync($"Device with serial {switchSerial} has the tags '{device?.Tags}'");
+            IReadOnlyList<Client> clients = await merakiClient.GetClientsAsync(switchSerial);
+            await System.Console.Out.WriteLineAsync($"Switch {switchSerial} has device '{deviceMac} the on port '{clients.FirstOrDefault(c => deviceMac.Equals(c.Mac))?.SwitchPort}'");
         }
 
 
