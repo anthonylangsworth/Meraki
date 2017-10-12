@@ -8,6 +8,7 @@ namespace Meraki.Console
 {
     /// <summary>
     /// Follow the exercises at http://developers.meraki.com/post/152434096196/dashboard-api-learning-lab.
+    /// Use the API key "cc54e1f9520616813f654aab8e0dfc614e33c179".
     /// </summary>
     internal class CiscoLearningLab
     {
@@ -21,19 +22,13 @@ namespace Meraki.Console
             MerakiClient merakiClient = MerakiClientFactory.Create(mcs => mcs.Key = apiKey);
 
             const string organizationName = "Meraki Live Sandbox";
-            int organizationId = GetOrganizationId(merakiClient, organizationName).Result;
+            int organizationId = MerakiDashboardHelper.GetOrganizationId(merakiClient, organizationName).Result;
 
             foreach (Func<MerakiClient, int, Task> exercise in
                 new Func<MerakiClient, int, Task>[] { Exercise1, Exercise2, Exercise3, Exercise4, Exercise5, Exercise6, Exercise7, Exercise8 })
             {
                 await exercise(merakiClient, organizationId);
             }
-        }
-
-        private async Task<int> GetOrganizationId(MerakiClient merakiClient, string organizationName)
-        {
-            IReadOnlyList<Organization> organizations = await merakiClient.GetOrganizationsAsync();
-            return organizations.First(o => o.Name == organizationName).Id;
         }
 
         /// <summary>
@@ -137,7 +132,6 @@ namespace Meraki.Console
         private async Task Exercise8(MerakiClient merakiClient, int organizationId)
         {
             const string switchSerial = "Q2HP-DT5F-KMJE"; // "Q2QN-WPR6-UJPL" does not exist
-            Device device = GetDevice(merakiClient, organizationId, switchSerial);
             IReadOnlyList<SwitchPort> ports = await merakiClient.GetSwitchPortsAsync(switchSerial);
             await System.Console.Out.WriteLineAsync($"Device with serial {switchSerial} has '{ports.Select(sp => sp.Vlan).Distinct().Count()}' vlans");
         }
