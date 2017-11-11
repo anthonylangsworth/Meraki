@@ -3,7 +3,7 @@
     /// <summary>
     /// Configuration settings for a <see cref="MerakiClient"/>.
     /// </summary>
-    public class MerakiClientSettings
+    public class MerakiDashboardClientSettings
     {
         /// <summary>
         /// The scheme and host name portion of the URL, e.g. "https://dashboard.meraki.com".

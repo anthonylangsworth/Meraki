@@ -9,7 +9,7 @@ namespace Meraki
     /// <summary>
     /// Wrapper around Meraki APIs.
     /// </summary>
-    public partial class MerakiClient
+    public partial class MerakiDashboardClient
     {
         private readonly HttpClient _client;
         private readonly UrlFormatProvider _formatter = new UrlFormatProvider();
@@ -23,7 +23,7 @@ namespace Meraki
         /// <exception cref="ArgumentNullException">
         /// <paramref name="options"/> cannot be null.
         /// </exception>
-        public MerakiClient(IOptions<MerakiClientSettings> options)
+        public MerakiDashboardClient(IOptions<MerakiDashboardClientSettings> options)
             : this(options?.Value)
         {
             // Do nothing
@@ -33,16 +33,16 @@ namespace Meraki
         /// Create a new <see cref="MerakiClient"/>.
         /// </summary>
         /// <param name="settings">
-        /// The <see cref="MerakiClientSettings"/> to use. This cannot be null.
+        /// The <see cref="MerakiDashboardClientSettings"/> to use. This cannot be null.
         /// </param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="settings"/> cannot be null.
         /// </exception>
         /// <exception cref="ArgumentException">
-        /// The <see cref="MerakiClientSettings.Address"/> or <see cref="MerakiClientSettings.Key"/> fields
+        /// The <see cref="MerakiDashboardClientSettings.Address"/> or <see cref="MerakiDashboardClientSettings.Key"/> fields
         /// cannot be null, empty or whitespace.
         /// </exception>
-        public MerakiClient(MerakiClientSettings settings)
+        public MerakiDashboardClient(MerakiDashboardClientSettings settings)
         {
             if (settings == null)
             {

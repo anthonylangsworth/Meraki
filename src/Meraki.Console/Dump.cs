@@ -14,15 +14,15 @@ namespace Meraki.Console
                 throw new ArgumentException("Cannot be null, empty or whitespace", nameof(apiKey));
             }
 
-            MerakiClient merakiClient = MerakiClientFactory.Create(mcs => mcs.Key = apiKey);
+            MerakiDashboardClient merakiDashboardClient = MerakiDashboardClientFactory.Create(mcs => mcs.Key = apiKey);
 
-            foreach (Organization organization in await merakiClient.GetOrganizationsAsync())
+            foreach (Organization organization in await merakiDashboardClient.GetOrganizationsAsync())
             {
                 System.Console.WriteLine($"{organization.Name} ({organization.Id}):");
-                foreach (Network network in await merakiClient.GetOrganizationNetworksAsync(organization))
+                foreach (Network network in await merakiDashboardClient.GetOrganizationNetworksAsync(organization))
                 {
                     System.Console.WriteLine($"  {network.Name} ({network.Id}):");
-                    foreach (Device device in await merakiClient.GetNetworkDevicesAsync(network))
+                    foreach (Device device in await merakiDashboardClient.GetNetworkDevicesAsync(network))
                     {
                         System.Console.WriteLine($"    {device.Serial} ({device.Model}, {device.Mac})");
                     }

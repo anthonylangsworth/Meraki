@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Meraki
 {
-    public partial class MerakiClient
+    public partial class MerakiDashboardClient
     {
         public async Task<string> GetNetworkAsync(string id)
         {

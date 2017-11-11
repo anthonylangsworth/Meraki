@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Meraki
 {
-    public partial class MerakiClient
+    public partial class MerakiDashboardClient
     {
         // /devices/[serial]/clients
         public async Task<IReadOnlyList<Client>> GetClientsAsync(string serial)

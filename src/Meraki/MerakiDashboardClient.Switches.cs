@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Meraki
 {
-    public partial class MerakiClient
+    public partial class MerakiDashboardClient
     {
         // /devices/[serial]/switchPorts
         public async Task<IReadOnlyList<SwitchPort>> GetSwitchPortsAsync(string serial)
