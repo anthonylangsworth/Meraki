@@ -121,7 +121,7 @@ namespace MerakiDashboard.Console
         {
             const string switchSerial = "Q2HP-DT5F-KMJE"; // "Q2HP-AJ22-UG72" does not exist
             const string deviceMac = "e0:55:3d:4f:45:a9"; // "Q2AT-6CLF-RQFE", an MC7
-            IReadOnlyList<Client> clients = await merakiDashboardClient.GetClientsAsync(switchSerial);
+            Client[] clients = await merakiDashboardClient.GetClientsAsync(switchSerial);
             await System.Console.Out.WriteLineAsync($"Switch {switchSerial} has device '{deviceMac} the on port '{clients.FirstOrDefault(c => deviceMac.Equals(c.Mac))?.SwitchPort}'");
         }
 
@@ -135,7 +135,7 @@ namespace MerakiDashboard.Console
         private async Task Exercise8(MerakiDashboardClient merakiDashboardClient, string organizationId)
         {
             const string switchSerial = "Q2HP-DT5F-KMJE"; // "Q2QN-WPR6-UJPL" does not exist
-            IReadOnlyList<SwitchPort> ports = await merakiDashboardClient.GetSwitchPortsAsync(switchSerial);
+            SwitchPort[] ports = await merakiDashboardClient.GetSwitchPortsAsync(switchSerial);
             await System.Console.Out.WriteLineAsync($"Device with serial {switchSerial} has '{ports.Select(sp => sp.Vlan).Distinct().Count()}' vlans");
         }
 

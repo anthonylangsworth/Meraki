@@ -8,7 +8,7 @@ namespace MerakiDashboard.Console
     {
         public static async Task<string> GetOrganizationId(MerakiDashboardClient merakiDashboardClient, string organizationName)
         {
-            IReadOnlyList<Organization> organizations = await merakiDashboardClient.GetOrganizationsAsync();
+            Organization[] organizations = await merakiDashboardClient.GetOrganizationsAsync();
             return organizations.First(o => o.Name == organizationName).Id;
         }
     }

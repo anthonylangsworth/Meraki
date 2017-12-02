@@ -100,9 +100,9 @@ namespace MerakiDashboard
         #pragma warning disable CS1591
 
         // /devices/[serial]/clients
-        public async Task<IReadOnlyList<Client>> GetClientsAsync(string serial)
+        public async Task<Client[]> GetClientsAsync(string serial)
         {
-            return await Client.GetAsync<IReadOnlyList<Client>>(InterpolateAndEscape($"api/v0/devices/{serial}/switchPorts"));
+            return await Client.GetAsync<Client[]>(InterpolateAndEscape($"api/v0/devices/{serial}/switchPorts"));
         }
 
         public async Task<string> GetDeviceClientsAsync(string serial, TimeSpan timespan)
@@ -135,12 +135,12 @@ namespace MerakiDashboard
             return await Client.GetAsync(InterpolateAndEscape($"api/v0/networks/{id}/traffic?timespan={(int)timespan.TotalSeconds}"));
         }
 
-        public async Task<IReadOnlyList<Device>> GetNetworkDevicesAsync(string id)
+        public async Task<Device[]> GetNetworkDevicesAsync(string id)
         {
-            return await Client.GetAsync<IReadOnlyList<Device>>(InterpolateAndEscape($"api/v0/networks/{id}/devices"));
+            return await Client.GetAsync<Device[]>(InterpolateAndEscape($"api/v0/networks/{id}/devices"));
         }
 
-        public async Task<IReadOnlyList<Device>> GetNetworkDevicesAsync(Network network)
+        public async Task<Device[]> GetNetworkDevicesAsync(Network network)
         {
             return await GetNetworkDevicesAsync(network.Id);
         }
@@ -155,9 +155,9 @@ namespace MerakiDashboard
             return await GetNetworkVlans(network.Id);
         }
 
-        public async Task<IReadOnlyList<Organization>> GetOrganizationsAsync()
+        public async Task<Organization[]> GetOrganizationsAsync()
         {
-            return await Client.GetAsync<IReadOnlyList<Organization>>($"api/v0/organizations");
+            return await Client.GetAsync<Organization[]>($"api/v0/organizations");
         }
 
         public async Task<string> GetOrganizationAdminsAsync(string id)
@@ -170,12 +170,12 @@ namespace MerakiDashboard
             return await GetOrganizationAdminsAsync(organization.Id);
         }
 
-        public async Task<IReadOnlyList<Network>> GetOrganizationNetworksAsync(string id)
+        public async Task<Network[]> GetOrganizationNetworksAsync(string id)
         {
-            return await Client.GetAsync<IReadOnlyList<Network>>(InterpolateAndEscape($"api/v0/organizations/{id}/networks"));
+            return await Client.GetAsync<Network[]>(InterpolateAndEscape($"api/v0/organizations/{id}/networks"));
         }
 
-        public async Task<IReadOnlyList<Network>> GetOrganizationNetworksAsync(Organization organization)
+        public async Task<Network[]> GetOrganizationNetworksAsync(Organization organization)
         {
             return await GetOrganizationNetworksAsync(organization.Id);
         }
@@ -201,9 +201,9 @@ namespace MerakiDashboard
         }
 
         // /devices/[serial]/switchPorts
-        public async Task<IReadOnlyList<SwitchPort>> GetSwitchPortsAsync(string serial)
+        public async Task<SwitchPort[]> GetSwitchPortsAsync(string serial)
         {
-            return await Client.GetAsync<IReadOnlyList<SwitchPort>>(InterpolateAndEscape($"api/v0/devices/{serial}/switchPorts"));
+            return await Client.GetAsync<SwitchPort[]>(InterpolateAndEscape($"api/v0/devices/{serial}/switchPorts"));
         }
     }
 }
