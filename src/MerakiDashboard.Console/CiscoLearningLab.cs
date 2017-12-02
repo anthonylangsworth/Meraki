@@ -18,8 +18,7 @@ namespace MerakiDashboard.Console
                 throw new ArgumentException("Cannot be null, empty or whitespace", nameof(apiKey));
             }
 
-            using (MerakiDashboardClient merakiDashboardClient =
-                MerakiDashboardClientFactory.Create(mcs => mcs.Key = apiKey))
+            using (MerakiDashboardClient merakiDashboardClient = MerakiDashboardClientFactory.Create(apiKey))
             {
                 const string organizationName = "Meraki Live Demo";
                 string organizationId = MerakiDashboardHelper.GetOrganizationId(merakiDashboardClient, organizationName).Result;
