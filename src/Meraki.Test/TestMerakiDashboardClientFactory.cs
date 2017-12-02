@@ -18,5 +18,14 @@ namespace Meraki.Test
                 Assert.Equal(apiKey, merakiDashboardClient.ApiKey);
             }
         }
+
+        [Theory]
+        [InlineData(null)]
+        [InlineData("")]
+        [InlineData(" ")]
+        public void Create_ApiKey_Null(string apiKey)
+        {
+            Assert.Throws<ArgumentException>("apiKey", () => MerakiDashboardClientFactory.Create(apiKey));
+        }
     }
 }

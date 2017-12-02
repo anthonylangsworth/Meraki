@@ -19,15 +19,20 @@ namespace Meraki.Console
                 throw new ArgumentException("Cannot be null, empty or whitespace", nameof(apiKey));
             }
 
-            MerakiDashboardClient merakiDashboardClient = MerakiDashboardClientFactory.Create(mcs => mcs.Key = apiKey);
-
-            const string organizationName = "Meraki Live Demo";
-            string organizationId = MerakiDashboardHelper.GetOrganizationId(merakiDashboardClient, organizationName).Result;
-
-            foreach (Func<MerakiDashboardClient, string, Task> exercise in
-                new Func<MerakiDashboardClient, string, Task>[] { Exercise1, Exercise2, Exercise3, Exercise4, Exercise5, Exercise6, Exercise7, Exercise8 })
+            using (MerakiDashboardClient merakiDashboardClient =
+                MerakiDashboardClientFactory.Create(mcs => mcs.Key = apiKey))
             {
-                await exercise(merakiDashboardClient, organizationId);
+                const string organizationName = "Meraki Live Demo";
+                string organizationId = MerakiDashboardHelper.GetOrganizationId(merakiDashboardClient, organizationName).Result;
+
+                foreach (Func<MerakiDashboardClient, string, Task> exercise in
+                    new Func<MerakiDashboardClient, string, Task>[]
+                    {
+                        Exercise1, Exercise2, Exercise3, Exercise4, Exercise5, Exercise6, Exercise7, Exercise8
+                    })
+                {
+                    await exercise(merakiDashboardClient, organizationId);
+                }
             }
         }
 
