@@ -10,7 +10,7 @@ namespace MerakiDashboard
     /// <summary>
     /// Call HTTP apis.
     /// </summary>
-    internal class HttpApiClient
+    internal sealed class HttpApiClient: IDisposable
     {
         private readonly HttpClient _client;
         private readonly UrlFormatProvider _formatter = new UrlFormatProvider();
@@ -49,6 +49,15 @@ namespace MerakiDashboard
                     _client.DefaultRequestHeaders.Add(header.Key, header.Value);
                 }
             }
+        }
+
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        public void Dispose()
+        {
+            // Class is sealed so no need for common IDisposable pattern
+            _client?.Dispose();
         }
 
         /// <summary>
