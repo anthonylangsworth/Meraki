@@ -11,7 +11,7 @@ namespace Meraki
     /// <summary>
     /// Wrapper around Meraki APIs.
     /// </summary>
-    public class MerakiDashboardClient
+    public sealed class MerakiDashboardClient: IDisposable
     {
         private const string AcceptTypeHttpHeader = "Accept-Type";
         private const string MerakiApiKeyHttpHeader = "X-Cisco-Meraki-API-Key";
@@ -67,6 +67,16 @@ namespace Meraki
             };
             _client.DefaultRequestHeaders.Add(MerakiApiKeyHttpHeader, settings.Key);
             _client.DefaultRequestHeaders.Add(AcceptTypeHttpHeader, "application/json");
+        }
+
+
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        public void Dispose()
+        {
+            // Will expand this into the full Dispose pattern if or when this class is inheritable.
+            _client?.Dispose();
         }
 
         /// <summary>

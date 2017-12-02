@@ -19,8 +19,8 @@ namespace Meraki
         /// </returns>
         public static MerakiDashboardClient Create(Action<MerakiDashboardClientSettings> configure = null)
         {
-            var settings = new MerakiDashboardClientSettings();
-            var setup = new MerakiDashboardClientSettingsSetup();
+            MerakiDashboardClientSettings settings = new MerakiDashboardClientSettings();
+            MerakiDashboardClientSettingsSetup setup = new MerakiDashboardClientSettingsSetup();
 
             setup.Configure(settings);
             configure?.Invoke(settings);
