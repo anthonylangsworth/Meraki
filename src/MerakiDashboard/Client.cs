@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Reflection;
+﻿using System.Net;
 using System.Runtime.Serialization;
-using System.Text;
 
 // Ignore XML documentation warnings from here on. 
 #pragma warning disable CS1591
 
-namespace Meraki
+namespace MerakiDashboard
 {
     public class Client
     {

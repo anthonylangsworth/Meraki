@@ -5,7 +5,7 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace Meraki
+namespace MerakiDashboard
 {
     /// <summary>
     /// Call HTTP apis.

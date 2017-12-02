@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using Meraki.Console;
 
-namespace Meraki.Console
+namespace MerakiDashboard.Console
 {
     /// <summary>
     /// Follow the exercises at http://developers.meraki.com/post/152434096196/dashboard-api-learning-lab.

@@ -2,7 +2,7 @@ using System;
 using Microsoft.Extensions.Options;
 using Xunit;
 
-namespace Meraki.Test
+namespace MerakiDashboard.Test
 {
     /// <summary>
     /// Tests for <see cref="MerakiDashboardClient"/>.

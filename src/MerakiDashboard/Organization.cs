@@ -3,7 +3,7 @@
 // Ignore XML documentation warnings
 #pragma warning disable CS1591
 
-namespace Meraki
+namespace MerakiDashboard
 {
 
     /// <summary>

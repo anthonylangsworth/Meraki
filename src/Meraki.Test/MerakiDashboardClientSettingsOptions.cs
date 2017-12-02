@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 
-namespace Meraki.Test
+namespace MerakiDashboard.Test
 {
     class MerakiDashboardClientSettingsOptions: IOptions<MerakiDashboardClientSettings>
     {

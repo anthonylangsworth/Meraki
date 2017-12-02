@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Meraki
+namespace MerakiDashboard
 {
     /// <summary>
     /// Configuration settings for a <see cref="MerakiDashboardClient"/>.

@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
+using Meraki.Console;
 
-namespace Meraki.Console
+namespace MerakiDashboard.Console
 {
     /// <summary>
     /// Follow the exercises at https://learninglabs.cisco.com/modules/getting-started-with-meraki/meraki-dashboard-api.

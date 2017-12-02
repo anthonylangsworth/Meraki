@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Meraki\Meraki.csproj" />
+    <ProjectReference Include="..\MerakiDashboard\MerakiDashboard.csproj" />
   </ItemGroup>
 
 </Project>

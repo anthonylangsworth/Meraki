@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace Meraki
+namespace MerakiDashboard
 {
     /// <summary>
     /// A <see cref="IFormatProvider"/> that ensures data substituted unto a URI is escaped

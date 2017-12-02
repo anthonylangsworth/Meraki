@@ -1,7 +1,6 @@
 ﻿using System;
-using Microsoft.Extensions.Options;
 
-namespace Meraki
+namespace MerakiDashboard
 {
     /// <summary>
     /// Factory to create <see cref="MerakiDashboardClient"/> objects.

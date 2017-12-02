@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
-namespace Meraki.Test
+namespace MerakiDashboard.Test
 {
     public class TestMerakiDashboardClientFactory
     {

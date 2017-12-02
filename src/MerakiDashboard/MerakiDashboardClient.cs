@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
-namespace Meraki
+namespace MerakiDashboard
 {
     /// <summary>
     /// Wrapper around Meraki APIs.
