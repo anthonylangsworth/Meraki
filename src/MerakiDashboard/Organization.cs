@@ -5,7 +5,6 @@
 
 namespace MerakiDashboard
 {
-
     /// <summary>
     /// A Meraki Organization.
     /// </summary>

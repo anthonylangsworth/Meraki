@@ -147,7 +147,7 @@ namespace MerakiDashboard
 
         public async Task<string> GetNetworkVlans(string id)
         {
-            return await Client.GetAsync(InterpolateAndEscape($"networks/{id}/vlans"));
+            return await Client.GetAsync(InterpolateAndEscape($"api/v0/networks/{id}/vlans"));
         }
 
         public async Task<string> GetNetworkVlans(Network network)
@@ -158,6 +158,11 @@ namespace MerakiDashboard
         public async Task<Organization[]> GetOrganizationsAsync()
         {
             return await Client.GetAsync<Organization[]>($"api/v0/organizations");
+        }
+
+        public async Task<Organization> GetOrganizationAsync(string id)
+        {
+            return await Client.GetAsync<Organization>(InterpolateAndEscape($"api/v0/organizations/{id}"));
         }
 
         public async Task<string> GetOrganizationAdminsAsync(string id)

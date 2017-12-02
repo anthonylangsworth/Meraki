@@ -1,5 +1,7 @@
 using System;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
+using Moq;
 using Xunit;
 
 namespace MerakiDashboard.Test
@@ -93,6 +95,30 @@ namespace MerakiDashboard.Test
         public void Ctor_IOptions_Null_Settings()
         {
             Assert.Throws<ArgumentNullException>(() => new MerakiDashboardClient(new MerakiDashboardClientSettingsOptions()));
+        }
+
+        [Fact]
+        public async void GetOrganizationAsync()
+        {
+            const string organizationId = "myOrg";
+            Organization expectedOrganization = new Organization()
+            {
+                Name = "organization name",
+                Id = organizationId
+            };
+
+            Mock<IApiClient> apiClientMock = new Mock<IApiClient>(MockBehavior.Strict);
+            apiClientMock.Setup(apiClient => apiClient.GetAsync<Organization>($"api/v0/organizations/{organizationId}"))
+                         .Returns(Task.FromResult(expectedOrganization));
+            apiClientMock.Setup(apiClient => apiClient.Dispose());
+
+            using (MerakiDashboardClient merakiDashboardClient = new MerakiDashboardClient(apiClientMock.Object))
+            {
+                Organization actualOrganization = await merakiDashboardClient.GetOrganizationAsync(organizationId);
+                Assert.Equal(expectedOrganization, actualOrganization, OrganizationEqualityComparer.Instance);
+            }
+
+            apiClientMock.VerifyAll();
         }
     }
 }

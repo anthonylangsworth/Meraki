@@ -8,7 +8,10 @@ namespace MerakiDashboard
     /// <summary>
     /// Generic API client.
     /// </summary>
-    internal interface IApiClient: IDisposable
+    /// <remarks>
+    /// An internal class exposed for testing and mocking only.
+    /// </remarks>
+    public interface IApiClient: IDisposable
     {
         /// <summary>
         /// Call the given URL asynchronously.
