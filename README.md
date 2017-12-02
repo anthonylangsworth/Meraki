@@ -1,6 +1,7 @@
 # Meraki Dashboard API .Net Client
 
-The beginnings of a C# wrapper over the Meraki Dashboard APIs (https://dashboard.meraki.com/api_docs).
+The beginnings of a C# wrapper over the Meraki Dashboard APIs (https://dashboard.meraki.com/api_docs),
+mainly providing strong typing for the sent and returned values. It is currently a work in progress.
 
 Based off original work by Michael Park at https://github.com/migrap/Meraki.
 
@@ -32,3 +33,7 @@ in the MerakiDashboard.Console project. At the time of writing, the Meraki organ
 not match the documented exercises. However, this may still be helpful to those looking for more complex
 examples.
 
+## Contributing
+
+As this is incomplete, pull requests are welcome. Please follow general C# programming guidelines and naming
+conventions and remember to include at least one mocked unit test for each new method.
