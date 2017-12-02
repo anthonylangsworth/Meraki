@@ -12,7 +12,7 @@ namespace MerakiDashboard.Console
                 throw new ArgumentException("Cannot be null, empty or whitespace", nameof(apiKey));
             }
 
-            MerakiDashboardClient merakiDashboardClient = MerakiDashboardClientFactory.Create(mcs => mcs.Key = apiKey);
+            MerakiDashboardClient merakiDashboardClient = MerakiDashboardClientFactory.Create(mcs => mcs.ApiKey = apiKey);
 
             foreach (Organization organization in await merakiDashboardClient.GetOrganizationsAsync())
             {

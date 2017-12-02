@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
@@ -10,10 +10,10 @@ namespace MerakiDashboard
     /// <summary>
     /// Call HTTP apis.
     /// </summary>
-    internal sealed class HttpApiClient: IDisposable
+    internal sealed class HttpApiClient: IApiClient
     {
-        private readonly HttpClient _client;
-        private readonly UrlFormatProvider _formatter = new UrlFormatProvider();
+        private const string AcceptTypeHttpHeader = "Accept-Type";
+        private const string MerakiApiKeyHttpHeader = "X-Cisco-Meraki-API-Key";
 
         /// <summary>
         /// Create a new <see cref="HttpApiClient"/>.
@@ -21,13 +21,13 @@ namespace MerakiDashboard
         /// <param name="baseAddress">
         /// The base URI for web service calls. This must be absolute and cannot be null.
         /// </param>
-        /// <param name="httpRequestHeaders">
+        /// <param name="apiKey">
         /// An optional parameter containing HTTP headers to add.
         /// </param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="baseAddress"/> cannot be null.
         /// </exception>
-        public HttpApiClient(Uri baseAddress, HttpRequestHeaders httpRequestHeaders = null)
+        public HttpApiClient(Uri baseAddress, string apiKey)
         {
             if (baseAddress == null)
             {
@@ -37,18 +37,17 @@ namespace MerakiDashboard
             {
                 throw new ArgumentException("Must be absolute URI", nameof(baseAddress));
             }
+            if (string.IsNullOrWhiteSpace(apiKey))
+            {
+                throw new ArgumentException("Cannot be null, empty or whitespace", nameof(apiKey));
+            }
 
-            _client = new HttpClient(new HttpClientHandler())
+            HttpClient = new HttpClient(new HttpClientHandler())
             {
                 BaseAddress = new Uri(baseAddress.AbsoluteUri, UriKind.Absolute)
             };
-            if (httpRequestHeaders != null)
-            {
-                foreach (KeyValuePair<string, IEnumerable<string>> header in httpRequestHeaders)
-                {
-                    _client.DefaultRequestHeaders.Add(header.Key, header.Value);
-                }
-            }
+            HttpClient.DefaultRequestHeaders.Add(MerakiApiKeyHttpHeader, apiKey);
+            HttpClient.DefaultRequestHeaders.Add(AcceptTypeHttpHeader, "application/json");
         }
 
         /// <summary>
@@ -57,22 +56,23 @@ namespace MerakiDashboard
         public void Dispose()
         {
             // Class is sealed so no need for common IDisposable pattern
-            _client?.Dispose();
+            HttpClient?.Dispose();
         }
 
         /// <summary>
-        /// Format and escape the given string for a URI.
+        /// Base address used for calls.
         /// </summary>
-        /// <param name="formattable">
-        /// The string to format.
-        /// </param>
-        /// <returns>
-        /// The formatted string.
-        /// </returns>
-        public string Url(FormattableString formattable)
-        {
-            return formattable.ToString(_formatter);
-        }
+        public Uri BaseAddress => HttpClient.BaseAddress;
+
+        /// <summary>
+        /// The Meraki Dashboard API key.
+        /// </summary>
+        public string ApiKey => HttpClient.DefaultRequestHeaders.GetValues(MerakiApiKeyHttpHeader).FirstOrDefault();
+
+        /// <summary>
+        /// Actually does the calls.
+        /// </summary>
+        internal HttpClient HttpClient { get; }
 
         /// <summary>
         /// Call the given URL asynchronously.
@@ -90,11 +90,9 @@ namespace MerakiDashboard
         /// </exception>
         public async Task<HttpResponseMessage> SendAsync(HttpMethod method, string uri)
         {
-            using (HttpResponseMessage response = await _client.SendAsync(new HttpRequestMessage(method, uri)))
-            {
-                response.EnsureSuccessStatusCode();
-                return response;
-            }
+            HttpResponseMessage response = await HttpClient.SendAsync(new HttpRequestMessage(method, uri));
+            response.EnsureSuccessStatusCode();
+            return response;
         }
 
         /// <summary>
@@ -132,7 +130,7 @@ namespace MerakiDashboard
         public async Task<string> GetAsync(string uri)
         {
             using (HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, uri))
-            using (HttpResponseMessage response = await _client.SendAsync(request))
+            using (HttpResponseMessage response = await HttpClient.SendAsync(request))
             {
                 response.EnsureSuccessStatusCode();
                 return await response.Content.ReadAsStringAsync();

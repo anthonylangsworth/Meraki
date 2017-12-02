@@ -26,8 +26,8 @@ namespace MerakiDashboard
         /// </param>
         private static void ConfigureOptions(MerakiDashboardClientSettings options)
         {
-            options.Address = new Uri(DefaultMerakiDashboardApiBaseAddress, UriKind.Absolute);
-            options.Key = "";
+            options.BaseAddress = new Uri(DefaultMerakiDashboardApiBaseAddress, UriKind.Absolute);
+            options.ApiKey = "";
         }
     }
 }

@@ -12,8 +12,8 @@ namespace MerakiDashboard.Test
 
             using (MerakiDashboardClient merakiDashboardClient = MerakiDashboardClientFactory.Create(apiKey))
             {
-                Assert.Equal(MerakiDashboardClientSettingsSetup.DefaultMerakiDashboardApiBaseAddress, merakiDashboardClient.Address.AbsoluteUri);
-                Assert.Equal(apiKey, merakiDashboardClient.ApiKey);
+                Assert.Equal(MerakiDashboardClientSettingsSetup.DefaultMerakiDashboardApiBaseAddress, merakiDashboardClient.Client.BaseAddress.AbsoluteUri);
+                Assert.Equal(apiKey, merakiDashboardClient.Client.ApiKey);
             }
         }
 

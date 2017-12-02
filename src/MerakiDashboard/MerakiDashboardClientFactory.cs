@@ -46,7 +46,7 @@ namespace MerakiDashboard
                 throw new ArgumentException("Cannot be null, empty or whitespace", nameof(apiKey));   
             }
 
-            return Create(mcs => mcs.Key = apiKey);
+            return Create(mcs => mcs.ApiKey = apiKey);
         }
     }
 }

@@ -17,14 +17,14 @@ namespace MerakiDashboard.Test
 
             MerakiDashboardClientSettings merakiDashboardClientSettings = new MerakiDashboardClientSettings
             {
-                Address = baseAddress,
-                Key = apiKey
+                BaseAddress = baseAddress,
+                ApiKey = apiKey
             };
 
             using (MerakiDashboardClient merakiDashboardClient = new MerakiDashboardClient(merakiDashboardClientSettings))
             { 
-                Assert.Equal(baseAddress, merakiDashboardClient.Address);
-                Assert.Equal(apiKey, merakiDashboardClient.ApiKey);
+                Assert.Equal(baseAddress, merakiDashboardClient.Client.BaseAddress);
+                Assert.Equal(apiKey, merakiDashboardClient.Client.ApiKey);
             }
         }
 
@@ -38,15 +38,15 @@ namespace MerakiDashboard.Test
             {
                 Value = new MerakiDashboardClientSettings
                 {
-                    Address = baseAddress,
-                    Key = apiKey
+                    BaseAddress = baseAddress,
+                    ApiKey = apiKey
                 }
             };
 
             using (MerakiDashboardClient merakiDashboardClient = new MerakiDashboardClient(merakiDashboardClientSettingsOptions))
             {
-                Assert.Equal(baseAddress, merakiDashboardClient.Address);
-                Assert.Equal(apiKey, merakiDashboardClient.ApiKey);
+                Assert.Equal(baseAddress, merakiDashboardClient.Client.BaseAddress);
+                Assert.Equal(apiKey, merakiDashboardClient.Client.ApiKey);
             }
         }
 
@@ -57,42 +57,42 @@ namespace MerakiDashboard.Test
         }
 
         [Fact]
-        public void Ctor_MerakiDashboardClientSettings_Null_Address()
+        public void Ctor_MerakiDashboardClientSettings_Null_BaseAddress()
         {
             MerakiDashboardClientSettings merakiDashboardClientSettings = new MerakiDashboardClientSettings
             {
-                Address = null,
-                Key = "apiKey"
+                BaseAddress = null,
+                ApiKey = "apiKey"
             };
 
-            Assert.Throws<ArgumentException>("settings", () => new MerakiDashboardClient(merakiDashboardClientSettings));
+            Assert.Throws<ArgumentNullException>("baseAddress", () => new MerakiDashboardClient(merakiDashboardClientSettings));
         }
 
         [Theory]
         [InlineData(null)]
         [InlineData("")]
         [InlineData(" ")]
-        public void Ctor_MerakiDashboardClientSettings_Null_Key(string apiKey)
+        public void Ctor_MerakiDashboardClientSettings_Null_ApiKey(string apiKey)
         {
             MerakiDashboardClientSettings merakiDashboardClientSettings = new MerakiDashboardClientSettings
             {
-                Address = new Uri("http://www.myserver.com"),
-                Key = apiKey
+                BaseAddress = new Uri("http://www.myserver.com"),
+                ApiKey = apiKey
             };
 
-            Assert.Throws<ArgumentException>("settings", () => new MerakiDashboardClient(merakiDashboardClientSettings));
+            Assert.Throws<ArgumentException>("apiKey", () => new MerakiDashboardClient(merakiDashboardClientSettings));
         }
 
         [Fact]
         public void Ctor_Null_IOptions()
         {
-            Assert.Throws<ArgumentNullException>("settings", () => new MerakiDashboardClient((IOptions<MerakiDashboardClientSettings>)null));
+            Assert.Throws<ArgumentNullException>(() => new MerakiDashboardClient((IOptions<MerakiDashboardClientSettings>)null));
         }
 
         [Fact]
         public void Ctor_IOptions_Null_Settings()
         {
-            Assert.Throws<ArgumentNullException>("settings", () => new MerakiDashboardClient(new MerakiDashboardClientSettingsOptions()));
+            Assert.Throws<ArgumentNullException>(() => new MerakiDashboardClient(new MerakiDashboardClientSettingsOptions()));
         }
     }
 }

@@ -10,11 +10,11 @@ namespace MerakiDashboard
         /// <summary>
         /// The scheme and host name portion of the URL, e.g. "https://dashboard.meraki.com".
         /// </summary>
-        public Uri Address { get; set; }
+        public Uri BaseAddress { get; set; }
 
         /// <summary>
         /// The API Key.
         /// </summary>
-        public string Key { get; set; }
+        public string ApiKey { get; set; }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
@@ -13,12 +14,6 @@ namespace MerakiDashboard
     /// </summary>
     public sealed class MerakiDashboardClient: IDisposable
     {
-        private const string AcceptTypeHttpHeader = "Accept-Type";
-        private const string MerakiApiKeyHttpHeader = "X-Cisco-Meraki-API-Key";
-
-        private readonly HttpClient _client;
-        private readonly UrlFormatProvider _formatter = new UrlFormatProvider();
-
         /// <summary>
         /// Create a new <see cref="MerakiDashboardClient"/>.
         /// </summary>
@@ -44,31 +39,32 @@ namespace MerakiDashboard
         /// <paramref name="settings"/> nor <paramref name="settings.Address"/> can be null.
         /// </exception>
         /// <exception cref="ArgumentException">
-        /// The <see cref="MerakiDashboardClientSettings.Key"/> field cannot be null, empty or whitespace.
+        /// The <see cref="MerakiDashboardClientSettings.ApiKey"/> field cannot be null, empty or whitespace.
         /// </exception>
         public MerakiDashboardClient(MerakiDashboardClientSettings settings)
-        {
-            if (settings == null)
-            {
-                throw new ArgumentNullException(nameof(settings));
-            }
-            if (settings.Address == null)
-            {
-                throw new ArgumentException("Missing address", nameof(settings));
-            }
-            if (string.IsNullOrWhiteSpace(settings.Key))
-            {
-                throw new ArgumentException("Missing API key", nameof(settings));
-            }
-
-            _client = new HttpClient(new HttpClientHandler())
-            {
-                BaseAddress = new Uri(settings.Address.AbsoluteUri)
-            };
-            _client.DefaultRequestHeaders.Add(MerakiApiKeyHttpHeader, settings.Key);
-            _client.DefaultRequestHeaders.Add(AcceptTypeHttpHeader, "application/json");
+            : this(new HttpApiClient(settings?.BaseAddress, settings?.ApiKey))
+        { 
+            // Do nothing
         }
 
+        /// <summary>
+        /// Create a <see cref="MerakiDashboardClient"/> with the specified <see cref="IApiClient"/>.
+        /// Used for internal testing and mocking only.
+        /// </summary>
+        /// <param name="apiClient">
+        /// The <see cref="IApiClient"/> to use. This cannot be null.
+        /// </param>
+        /// <param name="urlFormatProvider">
+        /// A optional <see cref="UrlFormatProvider"/> used to escape URL arguments.
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="apiClient"/> cannot be null.
+        /// </exception>
+        internal MerakiDashboardClient(IApiClient apiClient, UrlFormatProvider urlFormatProvider = null)
+        {
+            Client = apiClient ?? throw new ArgumentNullException(nameof(apiClient));
+            Formatter = urlFormatProvider ?? new UrlFormatProvider();
+        }
 
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
@@ -76,79 +72,29 @@ namespace MerakiDashboard
         public void Dispose()
         {
             // Will expand this into the full Dispose pattern if or when this class is inheritable.
-            _client?.Dispose();
+            Client?.Dispose();
         }
 
         /// <summary>
-        /// Base address for Meraki API calls.
+        /// The <see cref="IApiClient"/> used to call Meraki APIs.
         /// </summary>
-        public Uri Address => _client.BaseAddress;
+        internal IApiClient Client { get; }
 
         /// <summary>
-        /// The Meraki API key used.
+        /// Used for escaping URL arguments.
         /// </summary>
-        public string ApiKey => _client.DefaultRequestHeaders.GetValues(MerakiApiKeyHttpHeader).FirstOrDefault();
-
-        private string Url(FormattableString formattable) => formattable.ToString(_formatter);
+        internal UrlFormatProvider Formatter { get; }
 
         /// <summary>
-        /// Call the given URL asynchronously, not expecting any returned data.
+        /// Escape arguments substituted into the string.
         /// </summary>
-        /// <param name="method">
-        /// </param>
-        /// <param name="uri">
-        /// The URI to call.
+        /// <param name="formattable">
+        /// The string to format, usually in the form of C# 7.0 $"...".
         /// </param>
         /// <returns>
-        /// The <see cref="HttpRequestMessage"/>.
+        /// The string with the substituted, escaped values.
         /// </returns>
-        /// <exception cref="HttpRequestException">
-        /// The request failed.
-        /// </exception>
-        public async Task<HttpResponseMessage> SendAsync(HttpMethod method, string uri)
-        {
-            using (HttpResponseMessage response = await SendAsync(new HttpRequestMessage(method, uri)))
-            {
-                response.EnsureSuccessStatusCode();
-                return response;
-            }
-        } 
-
-        internal async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request)
-        {
-            using (HttpResponseMessage response = await _client.SendAsync(request))
-            {
-                response.EnsureSuccessStatusCode();
-                return response;
-            }
-        }
-
-        internal async Task<T> GetAsync<T>(string uri)
-        {
-            return JsonConvert.DeserializeObject<T>(await GetAsync(uri));
-        }
-
-        /// <summary>
-        /// Call the given URL asynchronously, expecting returned data.
-        /// </summary>
-        /// <param name="uri">
-        /// The URI to call.
-        /// </param>
-        /// <returns>
-        /// The result as a string.
-        /// </returns>
-        /// <exception cref="HttpRequestException">
-        /// The request failed.
-        /// </exception>
-        public async Task<string> GetAsync(string uri)
-        {
-            using (HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, uri))
-            using (HttpResponseMessage response = await _client.SendAsync(request))
-            {
-                response.EnsureSuccessStatusCode();
-                return await response.Content.ReadAsStringAsync();
-            }
-        }
+        internal string InterpolateAndEscape(FormattableString formattable) => formattable.ToString(Formatter);
 
         // Ignore XML documentation warnings from here on. 
         #pragma warning disable CS1591
@@ -156,12 +102,12 @@ namespace MerakiDashboard
         // /devices/[serial]/clients
         public async Task<IReadOnlyList<Client>> GetClientsAsync(string serial)
         {
-            return await GetAsync<IReadOnlyList<Client>>(Url($"api/v0/devices/{serial}/switchPorts"));
+            return await Client.GetAsync<IReadOnlyList<Client>>(InterpolateAndEscape($"api/v0/devices/{serial}/switchPorts"));
         }
 
         public async Task<string> GetDeviceClientsAsync(string serial, TimeSpan timespan)
         {
-            return await GetAsync(Url($"api/v0/devices/{serial}/clients?timespan={(int)timespan.TotalSeconds}"));
+            return await Client.GetAsync(InterpolateAndEscape($"api/v0/devices/{serial}/clients?timespan={(int)timespan.TotalSeconds}"));
         }
 
         public async Task<string> GetDeviceClientsAsync(string serial)
@@ -171,12 +117,12 @@ namespace MerakiDashboard
 
         public async Task<Device> GetDeviceAsync(string networkId, string serial)
         {
-            return await GetAsync<Device>(Url($"api/v0/networks/{networkId}/devices/{serial}"));
+            return await Client.GetAsync<Device>(InterpolateAndEscape($"api/v0/networks/{networkId}/devices/{serial}"));
         }
 
         public async Task<string> GetNetworkAsync(string id)
         {
-            return await GetAsync(Url($"api/v0/networks/{id}/admins"));
+            return await Client.GetAsync(InterpolateAndEscape($"api/v0/networks/{id}/admins"));
         }
 
         public async Task<string> GetNetworkTrafficAsync(string id)
@@ -186,12 +132,12 @@ namespace MerakiDashboard
 
         public async Task<string> GetNetworkTrafficAsync(string id, TimeSpan timespan)
         {
-            return await GetAsync(Url($"api/v0/networks/{id}/traffic?timespan={(int)timespan.TotalSeconds}"));
+            return await Client.GetAsync(InterpolateAndEscape($"api/v0/networks/{id}/traffic?timespan={(int)timespan.TotalSeconds}"));
         }
 
         public async Task<IReadOnlyList<Device>> GetNetworkDevicesAsync(string id)
         {
-            return await GetAsync<IReadOnlyList<Device>>(Url($"api/v0/networks/{id}/devices"));
+            return await Client.GetAsync<IReadOnlyList<Device>>(InterpolateAndEscape($"api/v0/networks/{id}/devices"));
         }
 
         public async Task<IReadOnlyList<Device>> GetNetworkDevicesAsync(Network network)
@@ -201,7 +147,7 @@ namespace MerakiDashboard
 
         public async Task<string> GetNetworkVlans(string id)
         {
-            return await GetAsync(Url($"networks/{id}/vlans"));
+            return await Client.GetAsync(InterpolateAndEscape($"networks/{id}/vlans"));
         }
 
         public async Task<string> GetNetworkVlans(Network network)
@@ -211,12 +157,12 @@ namespace MerakiDashboard
 
         public async Task<IReadOnlyList<Organization>> GetOrganizationsAsync()
         {
-            return await GetAsync<IReadOnlyList<Organization>>($"api/v0/organizations");
+            return await Client.GetAsync<IReadOnlyList<Organization>>($"api/v0/organizations");
         }
 
         public async Task<string> GetOrganizationAdminsAsync(string id)
         {
-            return await GetAsync(Url($"api/v0/organizations/{id}/admins"));
+            return await Client.GetAsync(InterpolateAndEscape($"api/v0/organizations/{id}/admins"));
         }
 
         public async Task<string> GetOrganizationAdminsAsync(Organization organization)
@@ -226,7 +172,7 @@ namespace MerakiDashboard
 
         public async Task<IReadOnlyList<Network>> GetOrganizationNetworksAsync(string id)
         {
-            return await GetAsync<IReadOnlyList<Network>>(Url($"api/v0/organizations/{id}/networks"));
+            return await Client.GetAsync<IReadOnlyList<Network>>(InterpolateAndEscape($"api/v0/organizations/{id}/networks"));
         }
 
         public async Task<IReadOnlyList<Network>> GetOrganizationNetworksAsync(Organization organization)
@@ -236,7 +182,7 @@ namespace MerakiDashboard
 
         public async Task<string> GetOrganizationInventoryAsync(string id)
         {
-            return await GetAsync(Url($"api/v0/organizations/{id}/inventory"));
+            return await Client.GetAsync(InterpolateAndEscape($"api/v0/organizations/{id}/inventory"));
         }
 
         public async Task<string> GetOrganizationInventoryAsync(Organization organization)
@@ -246,18 +192,18 @@ namespace MerakiDashboard
 
         public async Task<LicenseState> GetOrganizationLicenseStateAsync(string id)
         {
-            return await GetAsync<LicenseState>(Url($"api/v0/organizations/{id}/licenseState"));
+            return await Client.GetAsync<LicenseState>(InterpolateAndEscape($"api/v0/organizations/{id}/licenseState"));
         }
 
         public async Task<SnmpSettings> GetOrganizationSnmpSettingsAsync(string id)
         {
-            return await GetAsync<SnmpSettings>(Url($"api/v0/organizations/{id}/snmp"));
+            return await Client.GetAsync<SnmpSettings>(InterpolateAndEscape($"api/v0/organizations/{id}/snmp"));
         }
 
         // /devices/[serial]/switchPorts
         public async Task<IReadOnlyList<SwitchPort>> GetSwitchPortsAsync(string serial)
         {
-            return await GetAsync<IReadOnlyList<SwitchPort>>(Url($"api/v0/devices/{serial}/switchPorts"));
+            return await Client.GetAsync<IReadOnlyList<SwitchPort>>(InterpolateAndEscape($"api/v0/devices/{serial}/switchPorts"));
         }
     }
 }
