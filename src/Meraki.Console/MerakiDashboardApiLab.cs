@@ -7,7 +7,6 @@ namespace Meraki.Console
 {
     /// <summary>
     /// Follow the exercises at https://learninglabs.cisco.com/modules/getting-started-with-meraki/meraki-dashboard-api.
-    /// Use the API key "db29550a72d7b61f93057a2a51bfbaf88d80e864".
     /// </summary>
     internal class MerakiDashboardApiLab
     {

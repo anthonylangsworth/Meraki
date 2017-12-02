@@ -8,7 +8,6 @@ namespace Meraki.Console
 {
     /// <summary>
     /// Follow the exercises at http://developers.meraki.com/post/152434096196/dashboard-api-learning-lab.
-    /// Use the API key "cc54e1f9520616813f654aab8e0dfc614e33c179".
     /// </summary>
     internal class CiscoLearningLab
     {
