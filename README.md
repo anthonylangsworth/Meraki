@@ -19,7 +19,7 @@ using MerakiDashboard;
 string organizationId; // my organization ID
 using (MerakiDashboardClient merakiDashboardClient = MerakiDashboardClientFactory.Create(apiKey))
 {
-	Organization organizations = await merakiDashboardClient.GetOrganizationAsync();
+	Organization organization = await merakiDashboardClient.GetOrganizationAsync(organizationId);
 
 	// ...
 }
