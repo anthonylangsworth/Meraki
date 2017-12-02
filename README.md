@@ -16,6 +16,7 @@ using MerakiDashboard;
 
  // ...
 
+string apiKey; // API key from the user's profile in the Meraki Dashboard
 string organizationId; // my organization ID
 using (MerakiDashboardClient merakiDashboardClient = MerakiDashboardClientFactory.Create(apiKey))
 {
