@@ -1,4 +1,4 @@
-# Meraki
+# Meraki Dashboard API .Net Client
 
 The beginnings of a C# wrapper over the Meraki Dashboard APIs (https://dashboard.meraki.com/api_docs).
 

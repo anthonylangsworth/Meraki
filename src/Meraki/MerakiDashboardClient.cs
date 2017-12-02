@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -136,6 +137,113 @@ namespace Meraki
                 response.EnsureSuccessStatusCode();
                 return await response.Content.ReadAsStringAsync();
             }
+        }
+
+        // /devices/[serial]/clients
+        public async Task<IReadOnlyList<Client>> GetClientsAsync(string serial)
+        {
+            return await GetAsync<IReadOnlyList<Client>>(Url($"api/v0/devices/{serial}/switchPorts"));
+        }
+
+        public async Task<string> GetDeviceClientsAsync(string serial, TimeSpan timespan)
+        {
+            return await GetAsync(Url($"api/v0/devices/{serial}/clients?timespan={(int)timespan.TotalSeconds}"));
+        }
+
+        public async Task<string> GetDeviceClientsAsync(string serial)
+        {
+            return await GetDeviceClientsAsync(serial, TimeSpan.FromSeconds(8600));
+        }
+
+        public async Task<Device> GetDeviceAsync(string networkId, string serial)
+        {
+            return await GetAsync<Device>(Url($"api/v0/networks/{networkId}/devices/{serial}"));
+        }
+
+        public async Task<string> GetNetworkAsync(string id)
+        {
+            return await GetAsync(Url($"api/v0/networks/{id}/admins"));
+        }
+
+        public async Task<string> GetNetworkTrafficAsync(string id)
+        {
+            return await GetNetworkTrafficAsync(id, TimeSpan.FromSeconds(7200));
+        }
+
+        public async Task<string> GetNetworkTrafficAsync(string id, TimeSpan timespan)
+        {
+            return await GetAsync(Url($"api/v0/networks/{id}/traffic?timespan={(int)timespan.TotalSeconds}"));
+        }
+
+        public async Task<IReadOnlyList<Device>> GetNetworkDevicesAsync(string id)
+        {
+            return await GetAsync<IReadOnlyList<Device>>(Url($"api/v0/networks/{id}/devices"));
+        }
+
+        public async Task<IReadOnlyList<Device>> GetNetworkDevicesAsync(Network network)
+        {
+            return await GetNetworkDevicesAsync(network.Id);
+        }
+
+        public async Task<string> GetNetworkVlans(string id)
+        {
+            return await GetAsync(Url($"networks/{id}/vlans"));
+        }
+
+        public async Task<string> GetNetworkVlans(Network network)
+        {
+            return await GetNetworkVlans(network.Id);
+        }
+
+        public async Task<IReadOnlyList<Organization>> GetOrganizationsAsync()
+        {
+            return await GetAsync<IReadOnlyList<Organization>>($"api/v0/organizations");
+        }
+
+        public async Task<string> GetOrganizationAdminsAsync(int id)
+        {
+            return await GetAsync(Url($"api/v0/organizations/{id}/admins"));
+        }
+
+        public async Task<string> GetOrganizationAdminsAsync(Organization organization)
+        {
+            return await GetOrganizationAdminsAsync(organization.Id);
+        }
+
+        public async Task<IReadOnlyList<Network>> GetOrganizationNetworksAsync(int id)
+        {
+            return await GetAsync<IReadOnlyList<Network>>(Url($"api/v0/organizations/{id}/networks"));
+        }
+
+        public async Task<IReadOnlyList<Network>> GetOrganizationNetworksAsync(Organization organization)
+        {
+            return await GetOrganizationNetworksAsync(organization.Id);
+        }
+
+        public async Task<string> GetOrganizationInventoryAsync(int id)
+        {
+            return await GetAsync(Url($"api/v0/organizations/{id}/inventory"));
+        }
+
+        public async Task<string> GetOrganizationInventoryAsync(Organization organization)
+        {
+            return await GetOrganizationInventoryAsync(organization.Id);
+        }
+
+        public async Task<LicenseState> GetOrganizationLicenseStateAsync(int id)
+        {
+            return await GetAsync<LicenseState>(Url($"api/v0/organizations/{id}/licenseState"));
+        }
+
+        public async Task<SnmpSettings> GetOrganizationSnmpSettingsAsync(int id)
+        {
+            return await GetAsync<SnmpSettings>(Url($"api/v0/organizations/{id}/snmp"));
+        }
+
+        // /devices/[serial]/switchPorts
+        public async Task<IReadOnlyList<SwitchPort>> GetSwitchPortsAsync(string serial)
+        {
+            return await GetAsync<IReadOnlyList<SwitchPort>>(Url($"api/v0/devices/{serial}/switchPorts"));
         }
     }
 }
