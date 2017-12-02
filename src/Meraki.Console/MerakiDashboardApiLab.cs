@@ -21,10 +21,10 @@ namespace Meraki.Console
             MerakiDashboardClient merakiDashboardClient = MerakiDashboardClientFactory.Create(mcs => mcs.Key = apiKey);
 
             const string organizationName = "Meraki Live Sandbox";
-            int organizationId = MerakiDashboardHelper.GetOrganizationId(merakiDashboardClient, organizationName).Result;
+            string organizationId = MerakiDashboardHelper.GetOrganizationId(merakiDashboardClient, organizationName).Result;
 
-            foreach (Func<MerakiDashboardClient, int, Task> exercise in
-                new Func<MerakiDashboardClient, int, Task>[] { })
+            foreach (Func<MerakiDashboardClient, string, Task> exercise in
+                new Func<MerakiDashboardClient, string, Task>[] { })
             {
                 await exercise(merakiDashboardClient, organizationId);
             }

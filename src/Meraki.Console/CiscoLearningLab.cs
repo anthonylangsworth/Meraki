@@ -21,11 +21,11 @@ namespace Meraki.Console
 
             MerakiDashboardClient merakiDashboardClient = MerakiDashboardClientFactory.Create(mcs => mcs.Key = apiKey);
 
-            const string organizationName = "Meraki Live Sandbox";
-            int organizationId = MerakiDashboardHelper.GetOrganizationId(merakiDashboardClient, organizationName).Result;
+            const string organizationName = "Meraki Live Demo";
+            string organizationId = MerakiDashboardHelper.GetOrganizationId(merakiDashboardClient, organizationName).Result;
 
-            foreach (Func<MerakiDashboardClient, int, Task> exercise in
-                new Func<MerakiDashboardClient, int, Task>[] { Exercise1, Exercise2, Exercise3, Exercise4, Exercise5, Exercise6, Exercise7, Exercise8 })
+            foreach (Func<MerakiDashboardClient, string, Task> exercise in
+                new Func<MerakiDashboardClient, string, Task>[] { Exercise1, Exercise2, Exercise3, Exercise4, Exercise5, Exercise6, Exercise7, Exercise8 })
             {
                 await exercise(merakiDashboardClient, organizationId);
             }
@@ -37,7 +37,7 @@ namespace Meraki.Console
         /// <param name="merakiDashboardClient"></param>
         /// <param name="organizationId"></param>
         /// <returns></returns>
-        private async Task Exercise1(MerakiDashboardClient merakiDashboardClient, int organizationId)
+        private async Task Exercise1(MerakiDashboardClient merakiDashboardClient, string organizationId)
         {
             await System.Console.Out.WriteLineAsync($"ID {organizationId}");
         }
@@ -48,7 +48,7 @@ namespace Meraki.Console
         /// <param name="merakiDashboardClient"></param>
         /// <param name="organizationId"></param>
         /// <returns></returns>
-        private async Task Exercise2(MerakiDashboardClient merakiDashboardClient, int organizationId)
+        private async Task Exercise2(MerakiDashboardClient merakiDashboardClient, string organizationId)
         {
             LicenseState licenseState = await merakiDashboardClient.GetOrganizationLicenseStateAsync(organizationId);
             await System.Console.Out.WriteLineAsync($"The license expires on {licenseState.ExpirationDate}");
@@ -60,7 +60,7 @@ namespace Meraki.Console
         /// <param name="merakiDashboardClient"></param>
         /// <param name="organizationId"></param>
         /// <returns></returns>
-        private async Task Exercise3(MerakiDashboardClient merakiDashboardClient, int organizationId)
+        private async Task Exercise3(MerakiDashboardClient merakiDashboardClient, string organizationId)
         {
             SnmpSettings snmpSettings = await merakiDashboardClient.GetOrganizationSnmpSettingsAsync(organizationId);
             await System.Console.Out.WriteLineAsync($"SNMP v2c enabled: {snmpSettings.V2cEnabled},  v3 enabled: {snmpSettings.V3Enabled}");
@@ -72,7 +72,7 @@ namespace Meraki.Console
         /// <param name="merakiDashboardClient"></param>
         /// <param name="organizationId"></param>
         /// <returns></returns>
-        private async Task Exercise4(MerakiDashboardClient merakiDashboardClient, int organizationId)
+        private async Task Exercise4(MerakiDashboardClient merakiDashboardClient, string organizationId)
         {
             const string deviceSerial = "Q2EK-S3AA-BXFW"; // "Q2JD-W28X-FNEN" does not exist
             Device device = merakiDashboardClient.GetOrganizationNetworksAsync(organizationId).Result
@@ -87,7 +87,7 @@ namespace Meraki.Console
         /// <param name="merakiDashboardClient"></param>
         /// <param name="organizationId"></param>
         /// <returns></returns>
-        private async Task Exercise5(MerakiDashboardClient merakiDashboardClient, int organizationId)
+        private async Task Exercise5(MerakiDashboardClient merakiDashboardClient, string organizationId)
         {
             const string deviceSerial = "Q2EK-S3AA-BXFW"; // "Q2CD-MJ68-SYFF" does not exist
             Network network = merakiDashboardClient.GetOrganizationNetworksAsync(organizationId).Result
@@ -101,7 +101,7 @@ namespace Meraki.Console
         /// <param name="merakiDashboardClient"></param>
         /// <param name="organizationId"></param>
         /// <returns></returns>
-        private async Task Exercise6(MerakiDashboardClient merakiDashboardClient, int organizationId)
+        private async Task Exercise6(MerakiDashboardClient merakiDashboardClient, string organizationId)
         {
             const string deviceSerial = "Q2EK-S3AA-BXFW"; // "Q2HP-AJ22-UG72" does not exist
             Device device = GetDevice(merakiDashboardClient, organizationId, deviceSerial);
@@ -114,7 +114,7 @@ namespace Meraki.Console
         /// <param name="merakiDashboardClient"></param>
         /// <param name="organizationId"></param>
         /// <returns></returns>
-        private async Task Exercise7(MerakiDashboardClient merakiDashboardClient, int organizationId)
+        private async Task Exercise7(MerakiDashboardClient merakiDashboardClient, string organizationId)
         {
             const string switchSerial = "Q2HP-DT5F-KMJE"; // "Q2HP-AJ22-UG72" does not exist
             const string deviceMac = "e0:55:3d:4f:45:a9"; // "Q2AT-6CLF-RQFE", an MC7
@@ -129,7 +129,7 @@ namespace Meraki.Console
         /// <param name="merakiDashboardClient"></param>
         /// <param name="organizationId"></param>
         /// <returns></returns>
-        private async Task Exercise8(MerakiDashboardClient merakiDashboardClient, int organizationId)
+        private async Task Exercise8(MerakiDashboardClient merakiDashboardClient, string organizationId)
         {
             const string switchSerial = "Q2HP-DT5F-KMJE"; // "Q2QN-WPR6-UJPL" does not exist
             IReadOnlyList<SwitchPort> ports = await merakiDashboardClient.GetSwitchPortsAsync(switchSerial);
@@ -145,7 +145,7 @@ namespace Meraki.Console
         /// <returns>
         /// The <see cref="Device"/> or null, if no device exists.
         /// </returns>
-        private Device GetDevice(MerakiDashboardClient merakiDashboardClient, int organizationId, string serial)
+        private Device GetDevice(MerakiDashboardClient merakiDashboardClient, string organizationId, string serial)
         {
             return merakiDashboardClient.GetOrganizationNetworksAsync(organizationId).Result
                                .SelectMany(n => merakiDashboardClient.GetNetworkDevicesAsync(n.Id).Result)
