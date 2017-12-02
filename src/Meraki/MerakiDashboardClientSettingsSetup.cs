@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Options;
+﻿using System;
+using Microsoft.Extensions.Options;
 
 namespace Meraki
 {
@@ -23,7 +24,7 @@ namespace Meraki
         /// </param>
         private static void ConfigureOptions(MerakiDashboardClientSettings options)
         {
-            options.Address = "https://dashboard.meraki.com";
+            options.Address = new Uri("https://dashboard.meraki.com", UriKind.Absolute);
             options.Key = "";
         }
     }

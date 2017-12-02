@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
@@ -11,11 +12,13 @@ namespace Meraki
     /// </summary>
     public partial class MerakiDashboardClient
     {
+        private const string AcceptTypeHttpHeader = "Accept-Type";
+        private const string MerakiApiKeyHttpHeader = "X-Cisco-Meraki-API-Key";
         private readonly HttpClient _client;
         private readonly UrlFormatProvider _formatter = new UrlFormatProvider();
 
         /// <summary>
-        /// Create a new <see cref="MerakiClient"/>.
+        /// Create a new <see cref="MerakiDashboardClient"/>.
         /// </summary>
         /// <param name="options">
         /// The options to use. This cannot be null.
@@ -30,17 +33,16 @@ namespace Meraki
         }
 
         /// <summary>
-        /// Create a new <see cref="MerakiClient"/>.
+        /// Create a new <see cref="MerakiDashboardClient"/>.
         /// </summary>
         /// <param name="settings">
         /// The <see cref="MerakiDashboardClientSettings"/> to use. This cannot be null.
         /// </param>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="settings"/> cannot be null.
+        /// <paramref name="settings"/> nor <paramref name="settings.Address"/> can be null.
         /// </exception>
         /// <exception cref="ArgumentException">
-        /// The <see cref="MerakiDashboardClientSettings.Address"/> or <see cref="MerakiDashboardClientSettings.Key"/> fields
-        /// cannot be null, empty or whitespace.
+        /// The <see cref="MerakiDashboardClientSettings.Key"/> field cannot be null, empty or whitespace.
         /// </exception>
         public MerakiDashboardClient(MerakiDashboardClientSettings settings)
         {
@@ -48,7 +50,7 @@ namespace Meraki
             {
                 throw new ArgumentNullException(nameof(settings));
             }
-            if (string.IsNullOrWhiteSpace(settings.Address))
+            if (settings.Address == null)
             {
                 throw new ArgumentException("Missing address", nameof(settings));
             }
@@ -59,11 +61,21 @@ namespace Meraki
 
             _client = new HttpClient(new HttpClientHandler())
             {
-                BaseAddress = new Uri(settings.Address)
+                BaseAddress = new Uri(settings.Address.AbsoluteUri)
             };
-            _client.DefaultRequestHeaders.Add("X-Cisco-Meraki-API-Key", settings.Key);
-            _client.DefaultRequestHeaders.Add("Accept-Type", "application/json");
+            _client.DefaultRequestHeaders.Add(MerakiApiKeyHttpHeader, settings.Key);
+            _client.DefaultRequestHeaders.Add(AcceptTypeHttpHeader, "application/json");
         }
+
+        /// <summary>
+        /// Base address for Meraki API calls.
+        /// </summary>
+        public Uri Address => _client.BaseAddress;
+
+        /// <summary>
+        /// The Meraki API key used.
+        /// </summary>
+        public string ApiKey => _client.DefaultRequestHeaders.GetValues(MerakiApiKeyHttpHeader).FirstOrDefault();
 
         private string Url(FormattableString formattable) => formattable.ToString(_formatter);
 

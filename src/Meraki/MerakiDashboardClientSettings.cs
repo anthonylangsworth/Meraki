@@ -1,4 +1,6 @@
-﻿namespace Meraki
+﻿using System;
+
+namespace Meraki
 {
     /// <summary>
     /// Configuration settings for a <see cref="MerakiClient"/>.
@@ -8,7 +10,7 @@
         /// <summary>
         /// The scheme and host name portion of the URL, e.g. "https://dashboard.meraki.com".
         /// </summary>
-        public string Address { get; set; }
+        public Uri Address { get; set; }
 
         /// <summary>
         /// The API Key.
