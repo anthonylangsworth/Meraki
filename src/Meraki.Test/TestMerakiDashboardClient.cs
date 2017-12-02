@@ -1,10 +1,12 @@
 using System;
-using System.Security.Cryptography.X509Certificates;
 using Microsoft.Extensions.Options;
 using Xunit;
 
 namespace Meraki.Test
 {
+    /// <summary>
+    /// Tests for <see cref="MerakiDashboardClient"/>.
+    /// </summary>
     public class TestMerakiDashboardClient
     {
         [Fact]
