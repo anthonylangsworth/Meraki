@@ -14,7 +14,7 @@ namespace MerakiDashboard
         public string Id { get; set; }
 
         [DataMember(Name= "organizationId")]
-        public int OrganizationId { get; set; }
+        public string OrganizationId { get; set; }
 
         [DataMember(Name = "type")]
         public string NetworkType { get; set; }

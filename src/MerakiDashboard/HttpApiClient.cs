@@ -83,16 +83,20 @@ namespace MerakiDashboard
         /// The URI to call.
         /// </param>
         /// <returns>
-        /// The <see cref="HttpRequestMessage"/>.
+        /// The <see cref="HttpRequestMessage"/>. The caller is responsible for Disposing
+        /// the returned object.
         /// </returns>
         /// <exception cref="HttpRequestException">
         /// The request failed.
         /// </exception>
         public async Task<HttpResponseMessage> SendAsync(HttpMethod method, string uri)
         {
-            HttpResponseMessage response = await HttpClient.SendAsync(new HttpRequestMessage(method, uri));
-            response.EnsureSuccessStatusCode();
-            return response;
+            using (HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, uri))
+            {
+                HttpResponseMessage response = await HttpClient.SendAsync(request);
+                response.EnsureSuccessStatusCode();
+                return response;
+            }
         }
 
         /// <summary>

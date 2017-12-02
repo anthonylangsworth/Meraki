@@ -101,7 +101,7 @@ namespace MerakiDashboard.Test
         public async void GetOrganizationAsync()
         {
             const string organizationId = "myOrg";
-            Organization expectedOrganization = new Organization()
+            Organization expectedOrganization = new Organization
             {
                 Name = "organization name",
                 Id = organizationId
@@ -115,7 +115,7 @@ namespace MerakiDashboard.Test
             using (MerakiDashboardClient merakiDashboardClient = new MerakiDashboardClient(apiClientMock.Object))
             {
                 Organization actualOrganization = await merakiDashboardClient.GetOrganizationAsync(organizationId);
-                Assert.Equal(expectedOrganization, actualOrganization, OrganizationEqualityComparer.Instance);
+                Assert.Equal(expectedOrganization, actualOrganization);
             }
 
             apiClientMock.VerifyAll();
