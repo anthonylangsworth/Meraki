@@ -3,7 +3,7 @@
 namespace Meraki
 {
     /// <summary>
-    /// Configuration settings for a <see cref="MerakiClient"/>.
+    /// Configuration settings for a <see cref="MerakiDashboardClient"/>.
     /// </summary>
     public class MerakiDashboardClientSettings
     {

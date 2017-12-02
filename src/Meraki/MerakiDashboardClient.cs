@@ -150,6 +150,9 @@ namespace Meraki
             }
         }
 
+        // Ignore XML documentation warnings from here on. 
+        #pragma warning disable CS1591
+
         // /devices/[serial]/clients
         public async Task<IReadOnlyList<Client>> GetClientsAsync(string serial)
         {

@@ -21,12 +21,11 @@ namespace Meraki
         /// <param name="baseAddress">
         /// The base URI for web service calls. This must be absolute and cannot be null.
         /// </param>
+        /// <param name="httpRequestHeaders">
+        /// An optional parameter containing HTTP headers to add.
+        /// </param>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="settings"/> cannot be null.
-        /// </exception>
-        /// <exception cref="ArgumentException">
-        /// The <see cref="MerakiDashboardClientSettings.Address"/> or <see cref="MerakiDashboardClientSettings.Key"/> fields
-        /// cannot be null, empty or whitespace.
+        /// <paramref name="baseAddress"/> cannot be null.
         /// </exception>
         public HttpApiClient(Uri baseAddress, HttpRequestHeaders httpRequestHeaders = null)
         {

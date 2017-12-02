@@ -5,6 +5,9 @@ using System.Runtime.Serialization;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
+// Ignore XML documentation warnings from here on. 
+#pragma warning disable CS1591
+
 namespace Meraki
 {
     public class Device

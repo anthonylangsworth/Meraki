@@ -8,7 +8,7 @@ namespace Meraki
     /// </summary>
     internal class MerakiDashboardClientSettingsSetup : ConfigureOptions<MerakiDashboardClientSettings>
     {
-        public static readonly string DefaultMerakiDashboardApiBaseAddress = "https://dashboard.meraki.com";
+        public static readonly string DefaultMerakiDashboardApiBaseAddress = "https://dashboard.meraki.com/";
 
         /// <summary>
         /// Create a new <see cref="MerakiDashboardClientSettingsSetup"/> object.
