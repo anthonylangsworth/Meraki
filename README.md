@@ -27,7 +27,7 @@ using (MerakiDashboardClient merakiDashboardClient = MerakiDashboardClientFactor
 
 ## Exercise
 
-The exercises found at [http://developers.meraki.com/post/152434096196/dashboard-api-learning-lab] can be found 
+The exercises found at http://developers.meraki.com/post/152434096196/dashboard-api-learning-lab can be found 
 in the MerakiDashboard.Console project. At the time of writing, the Meraki organization and devices shown does
 not match the documented exercises. However, this may still be helpful to those looking for more complex
 examples.
