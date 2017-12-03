@@ -42,17 +42,17 @@ namespace MerakiDashboard
         /// The <see cref="MerakiDashboardClientSettings.ApiKey"/> field cannot be null, empty or whitespace.
         /// </exception>
         public MerakiDashboardClient(MerakiDashboardClientSettings settings)
-            : this(new HttpApiClient(settings?.ApiKey, settings?.BaseAddress))
+            : this(new MerakiHttpApiClient(settings?.ApiKey, settings?.BaseAddress))
         { 
             // Do nothing
         }
 
         /// <summary>
-        /// Create a <see cref="MerakiDashboardClient"/> with the specified <see cref="HttpApiClient"/>.
+        /// Create a <see cref="MerakiDashboardClient"/> with the specified <see cref="MerakiHttpApiClient"/>.
         /// Used for internal testing and mocking only.
         /// </summary>
         /// <param name="apiClient">
-        /// The <see cref="HttpApiClient"/> to use. This cannot be null.
+        /// The <see cref="MerakiHttpApiClient"/> to use. This cannot be null.
         /// </param>
         /// <param name="urlFormatProvider">
         /// A optional <see cref="UrlFormatProvider"/> used to escape URL arguments.
@@ -60,7 +60,7 @@ namespace MerakiDashboard
         /// <exception cref="ArgumentNullException">
         /// <paramref name="apiClient"/> cannot be null.
         /// </exception>
-        internal MerakiDashboardClient(HttpApiClient apiClient, UrlFormatProvider urlFormatProvider = null)
+        internal MerakiDashboardClient(MerakiHttpApiClient apiClient, UrlFormatProvider urlFormatProvider = null)
         {
             Client = apiClient ?? throw new ArgumentNullException(nameof(apiClient));
             Formatter = urlFormatProvider ?? new UrlFormatProvider();
@@ -99,9 +99,9 @@ namespace MerakiDashboard
         }
 
         /// <summary>
-        /// The <see cref="HttpApiClient"/> used to call Meraki APIs.
+        /// The <see cref="MerakiHttpApiClient"/> used to call Meraki APIs.
         /// </summary>
-        internal HttpApiClient Client { get; }
+        internal MerakiHttpApiClient Client { get; }
 
         /// <summary>
         /// Used for escaping URL arguments.

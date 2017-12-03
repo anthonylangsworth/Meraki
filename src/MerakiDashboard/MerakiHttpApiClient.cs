@@ -13,13 +13,13 @@ namespace MerakiDashboard
     /// <remarks>
     /// Public (instead of internal) for testnig and mocking.
     /// </remarks>
-    public class HttpApiClient: IDisposable
+    public class MerakiHttpApiClient: IDisposable
     {
         private const string AcceptTypeHttpHeader = "Accept-Type";
         private const string MerakiApiKeyHttpHeader = "X-Cisco-Meraki-API-Key";
 
         /// <summary>
-        /// Create a new <see cref="HttpApiClient"/>.
+        /// Create a new <see cref="MerakiHttpApiClient"/>.
         /// </summary>
         /// <param name="apiKey">
         /// The meraki API key, usually found in the user's profile in the Meraki Dashboard.
@@ -28,14 +28,14 @@ namespace MerakiDashboard
         /// <exception cref="ArgumentException">
         /// <paramref name="apiKey"/> cannot be null, empty or whitespace.
         /// </exception>
-        public HttpApiClient(string apiKey)
+        public MerakiHttpApiClient(string apiKey)
             : this(apiKey, new Uri(MerakiDashboardClientSettingsSetup.DefaultMerakiDashboardApiBaseAddress, UriKind.Absolute))
         {
             // Do nothing
         }
 
         /// <summary>
-        /// Create a new <see cref="HttpApiClient"/>.
+        /// Create a new <see cref="MerakiHttpApiClient"/>.
         /// </summary>
         /// <param name="apiKey">
         /// The meraki API key, usually found in the user's profile in the Meraki Dashboard.
@@ -52,7 +52,7 @@ namespace MerakiDashboard
         /// <paramref name="apiKey"/> cannot be null, empty or whitespace. <paramref name="baseAddress"/>
         /// must be an absolute URI.
         /// </exception>
-        public HttpApiClient(string apiKey, Uri baseAddress)
+        public MerakiHttpApiClient(string apiKey, Uri baseAddress)
         {
             if (baseAddress == null)
             {
@@ -79,7 +79,7 @@ namespace MerakiDashboard
         /// <summary>
         /// Finalizer.
         /// </summary>
-        ~HttpApiClient()
+        ~MerakiHttpApiClient()
         {
             Dispose(false);
         }

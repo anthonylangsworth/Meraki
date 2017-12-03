@@ -108,7 +108,7 @@ namespace MerakiDashboard.Test
                 Id = organizationId
             };
 
-            Mock<HttpApiClient> apiClientMock = new Mock<HttpApiClient>(MockBehavior.Strict, "apiKey");
+            Mock<MerakiHttpApiClient> apiClientMock = new Mock<MerakiHttpApiClient>(MockBehavior.Strict, "apiKey");
             apiClientMock.Setup(apiClient => apiClient.GetAsync<Organization>($"v0/organizations/{organizationId}"))
                          .Returns(Task.FromResult(expectedOrganization));
             // apiClientMock.As<IDisposable>().Setup(apiClient => apiClient.Dispose());
