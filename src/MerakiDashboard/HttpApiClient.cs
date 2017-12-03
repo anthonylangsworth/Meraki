@@ -8,9 +8,12 @@ using Newtonsoft.Json;
 namespace MerakiDashboard
 {
     /// <summary>
-    /// Call HTTP apis.
+    /// Call HTTP APIs. Can be used to call Meraki APIs directly if not wrapped by <see cref="MerakiDashboardClient"/>.
     /// </summary>
-    internal sealed class HttpApiClient: IApiClient
+    /// <remarks>
+    /// Public (instead of internal) for testnig and mocking.
+    /// </remarks>
+    public class HttpApiClient: IDisposable
     {
         private const string AcceptTypeHttpHeader = "Accept-Type";
         private const string MerakiApiKeyHttpHeader = "X-Cisco-Meraki-API-Key";
@@ -18,16 +21,38 @@ namespace MerakiDashboard
         /// <summary>
         /// Create a new <see cref="HttpApiClient"/>.
         /// </summary>
-        /// <param name="baseAddress">
-        /// The base URI for web service calls. This must be absolute and cannot be null.
-        /// </param>
         /// <param name="apiKey">
-        /// An optional parameter containing HTTP headers to add.
+        /// The meraki API key, usually found in the user's profile in the Meraki Dashboard.
+        /// This cannot be null, empty or whitespace.
+        /// </param>
+        /// <exception cref="ArgumentException">
+        /// <paramref name="apiKey"/> cannot be null, empty or whitespace.
+        /// </exception>
+        public HttpApiClient(string apiKey)
+            : this(apiKey, new Uri(MerakiDashboardClientSettingsSetup.DefaultMerakiDashboardApiBaseAddress, UriKind.Absolute))
+        {
+            // Do nothing
+        }
+
+        /// <summary>
+        /// Create a new <see cref="HttpApiClient"/>.
+        /// </summary>
+        /// <param name="apiKey">
+        /// The meraki API key, usually found in the user's profile in the Meraki Dashboard.
+        /// This cannot be null, empty or whitespace.
+        /// </param>
+        /// <param name="baseAddress">
+        /// The optional base URI for web service calls if it differs from the Meraki defalt. 
+        /// If provided, this must be an absolute URI.
         /// </param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="baseAddress"/> cannot be null.
         /// </exception>
-        public HttpApiClient(Uri baseAddress, string apiKey)
+        /// <exception cref="ArgumentException">
+        /// <paramref name="apiKey"/> cannot be null, empty or whitespace. <paramref name="baseAddress"/>
+        /// must be an absolute URI.
+        /// </exception>
+        public HttpApiClient(string apiKey, Uri baseAddress)
         {
             if (baseAddress == null)
             {
@@ -44,6 +69,7 @@ namespace MerakiDashboard
 
             HttpClient = new HttpClient(new HttpClientHandler())
             {
+                // Copy the URI to prevent in advertant modification by the caller.
                 BaseAddress = new Uri(baseAddress.AbsoluteUri, UriKind.Absolute)
             };
             HttpClient.DefaultRequestHeaders.Add(MerakiApiKeyHttpHeader, apiKey);
@@ -51,12 +77,34 @@ namespace MerakiDashboard
         }
 
         /// <summary>
+        /// Finalizer.
+        /// </summary>
+        ~HttpApiClient()
+        {
+            Dispose(false);
+        }
+
+        /// <summary>
+        /// Actually clean up.
+        /// </summary>
+        /// <param name="calledFromDispose">
+        /// true if called from Dispose, false if called from the finalizer.
+        /// </param>
+        protected virtual void Dispose(bool calledFromDispose)
+        {
+            if (calledFromDispose)
+            {
+                HttpClient?.Dispose();
+            }
+        }
+
+        /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
         public void Dispose()
         {
-            // Class is sealed so no need for common IDisposable pattern
-            HttpClient?.Dispose();
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
         /// <summary>
@@ -89,7 +137,7 @@ namespace MerakiDashboard
         /// <exception cref="HttpRequestException">
         /// The request failed.
         /// </exception>
-        public async Task<HttpResponseMessage> SendAsync(HttpMethod method, string uri)
+        public virtual async Task<HttpResponseMessage> SendAsync(HttpMethod method, string uri)
         {
             using (HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, uri))
             {
@@ -114,7 +162,7 @@ namespace MerakiDashboard
         /// <exception cref="HttpRequestException">
         /// The request failed.
         /// </exception>
-        public async Task<T> GetAsync<T>(string uri)
+        public virtual async Task<T> GetAsync<T>(string uri)
         {
             return JsonConvert.DeserializeObject<T>(await GetAsync(uri));
         }
@@ -131,7 +179,7 @@ namespace MerakiDashboard
         /// <exception cref="HttpRequestException">
         /// The request failed.
         /// </exception>
-        public async Task<string> GetAsync(string uri)
+        public virtual async Task<string> GetAsync(string uri)
         {
             using (HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, uri))
             using (HttpResponseMessage response = await HttpClient.SendAsync(request))

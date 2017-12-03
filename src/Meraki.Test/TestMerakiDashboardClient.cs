@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using Moq;
+using Moq.Protected;
 using Xunit;
 
 namespace MerakiDashboard.Test
@@ -107,10 +108,11 @@ namespace MerakiDashboard.Test
                 Id = organizationId
             };
 
-            Mock<IApiClient> apiClientMock = new Mock<IApiClient>(MockBehavior.Strict);
-            apiClientMock.Setup(apiClient => apiClient.GetAsync<Organization>($"api/v0/organizations/{organizationId}"))
+            Mock<HttpApiClient> apiClientMock = new Mock<HttpApiClient>(MockBehavior.Strict, "apiKey");
+            apiClientMock.Setup(apiClient => apiClient.GetAsync<Organization>($"v0/organizations/{organizationId}"))
                          .Returns(Task.FromResult(expectedOrganization));
-            apiClientMock.Setup(apiClient => apiClient.Dispose());
+            // apiClientMock.As<IDisposable>().Setup(apiClient => apiClient.Dispose());
+            apiClientMock.Protected().Setup("Dispose", true);
 
             using (MerakiDashboardClient merakiDashboardClient = new MerakiDashboardClient(apiClientMock.Object))
             {

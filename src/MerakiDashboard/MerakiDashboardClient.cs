@@ -42,17 +42,17 @@ namespace MerakiDashboard
         /// The <see cref="MerakiDashboardClientSettings.ApiKey"/> field cannot be null, empty or whitespace.
         /// </exception>
         public MerakiDashboardClient(MerakiDashboardClientSettings settings)
-            : this(new HttpApiClient(settings?.BaseAddress, settings?.ApiKey))
+            : this(new HttpApiClient(settings?.ApiKey, settings?.BaseAddress))
         { 
             // Do nothing
         }
 
         /// <summary>
-        /// Create a <see cref="MerakiDashboardClient"/> with the specified <see cref="IApiClient"/>.
+        /// Create a <see cref="MerakiDashboardClient"/> with the specified <see cref="HttpApiClient"/>.
         /// Used for internal testing and mocking only.
         /// </summary>
         /// <param name="apiClient">
-        /// The <see cref="IApiClient"/> to use. This cannot be null.
+        /// The <see cref="HttpApiClient"/> to use. This cannot be null.
         /// </param>
         /// <param name="urlFormatProvider">
         /// A optional <see cref="UrlFormatProvider"/> used to escape URL arguments.
@@ -60,7 +60,7 @@ namespace MerakiDashboard
         /// <exception cref="ArgumentNullException">
         /// <paramref name="apiClient"/> cannot be null.
         /// </exception>
-        internal MerakiDashboardClient(IApiClient apiClient, UrlFormatProvider urlFormatProvider = null)
+        internal MerakiDashboardClient(HttpApiClient apiClient, UrlFormatProvider urlFormatProvider = null)
         {
             Client = apiClient ?? throw new ArgumentNullException(nameof(apiClient));
             Formatter = urlFormatProvider ?? new UrlFormatProvider();
@@ -99,9 +99,9 @@ namespace MerakiDashboard
         }
 
         /// <summary>
-        /// The <see cref="IApiClient"/> used to call Meraki APIs.
+        /// The <see cref="HttpApiClient"/> used to call Meraki APIs.
         /// </summary>
-        internal IApiClient Client { get; }
+        internal HttpApiClient Client { get; }
 
         /// <summary>
         /// Used for escaping URL arguments.
@@ -125,12 +125,12 @@ namespace MerakiDashboard
         // /devices/[serial]/clients
         public virtual async Task<Client[]> GetClientsAsync(string serial)
         {
-            return await Client.GetAsync<Client[]>(InterpolateAndEscape($"api/v0/devices/{serial}/switchPorts"));
+            return await Client.GetAsync<Client[]>(InterpolateAndEscape($"v0/devices/{serial}/switchPorts"));
         }
 
         public virtual async Task<string> GetDeviceClientsAsync(string serial, TimeSpan timespan)
         {
-            return await Client.GetAsync(InterpolateAndEscape($"api/v0/devices/{serial}/clients?timespan={(int)timespan.TotalSeconds}"));
+            return await Client.GetAsync(InterpolateAndEscape($"v0/devices/{serial}/clients?timespan={(int)timespan.TotalSeconds}"));
         }
 
         public virtual async Task<string> GetDeviceClientsAsync(string serial)
@@ -140,12 +140,12 @@ namespace MerakiDashboard
 
         public virtual async Task<Device> GetDeviceAsync(string networkId, string serial)
         {
-            return await Client.GetAsync<Device>(InterpolateAndEscape($"api/v0/networks/{networkId}/devices/{serial}"));
+            return await Client.GetAsync<Device>(InterpolateAndEscape($"v0/networks/{networkId}/devices/{serial}"));
         }
 
         public virtual async Task<string> GetNetworkAsync(string id)
         {
-            return await Client.GetAsync(InterpolateAndEscape($"api/v0/networks/{id}/admins"));
+            return await Client.GetAsync(InterpolateAndEscape($"v0/networks/{id}/admins"));
         }
 
         public virtual async Task<string> GetNetworkTrafficAsync(string id)
@@ -155,12 +155,12 @@ namespace MerakiDashboard
 
         public virtual async Task<string> GetNetworkTrafficAsync(string id, TimeSpan timespan)
         {
-            return await Client.GetAsync(InterpolateAndEscape($"api/v0/networks/{id}/traffic?timespan={(int)timespan.TotalSeconds}"));
+            return await Client.GetAsync(InterpolateAndEscape($"v0/networks/{id}/traffic?timespan={(int)timespan.TotalSeconds}"));
         }
 
         public virtual async Task<Device[]> GetNetworkDevicesAsync(string id)
         {
-            return await Client.GetAsync<Device[]>(InterpolateAndEscape($"api/v0/networks/{id}/devices"));
+            return await Client.GetAsync<Device[]>(InterpolateAndEscape($"v0/networks/{id}/devices"));
         }
 
         public virtual async Task<Device[]> GetNetworkDevicesAsync(Network network)
@@ -170,7 +170,7 @@ namespace MerakiDashboard
 
         public virtual async Task<string> GetNetworkVlans(string id)
         {
-            return await Client.GetAsync(InterpolateAndEscape($"api/v0/networks/{id}/vlans"));
+            return await Client.GetAsync(InterpolateAndEscape($"v0/networks/{id}/vlans"));
         }
 
         public virtual async Task<string> GetNetworkVlans(Network network)
@@ -180,17 +180,17 @@ namespace MerakiDashboard
 
         public virtual async Task<Organization[]> GetOrganizationsAsync()
         {
-            return await Client.GetAsync<Organization[]>($"api/v0/organizations");
+            return await Client.GetAsync<Organization[]>($"v0/organizations");
         }
 
         public virtual async Task<Organization> GetOrganizationAsync(string id)
         {
-            return await Client.GetAsync<Organization>(InterpolateAndEscape($"api/v0/organizations/{id}"));
+            return await Client.GetAsync<Organization>(InterpolateAndEscape($"v0/organizations/{id}"));
         }
 
         public virtual async Task<string> GetOrganizationAdminsAsync(string id)
         {
-            return await Client.GetAsync(InterpolateAndEscape($"api/v0/organizations/{id}/admins"));
+            return await Client.GetAsync(InterpolateAndEscape($"v0/organizations/{id}/admins"));
         }
 
         public virtual async Task<string> GetOrganizationAdminsAsync(Organization organization)
@@ -200,7 +200,7 @@ namespace MerakiDashboard
 
         public virtual async Task<Network[]> GetOrganizationNetworksAsync(string id)
         {
-            return await Client.GetAsync<Network[]>(InterpolateAndEscape($"api/v0/organizations/{id}/networks"));
+            return await Client.GetAsync<Network[]>(InterpolateAndEscape($"v0/organizations/{id}/networks"));
         }
 
         public virtual async Task<Network[]> GetOrganizationNetworksAsync(Organization organization)
@@ -210,7 +210,7 @@ namespace MerakiDashboard
 
         public virtual async Task<Inventory> GetOrganizationInventoryAsync(string id)
         {
-            return await Client.GetAsync< Inventory>(InterpolateAndEscape($"api/v0/organizations/{id}/inventory"));
+            return await Client.GetAsync< Inventory>(InterpolateAndEscape($"v0/organizations/{id}/inventory"));
         }
 
         public virtual async Task<Inventory> GetOrganizationInventoryAsync(Organization organization)
@@ -220,18 +220,18 @@ namespace MerakiDashboard
 
         public virtual async Task<LicenseState> GetOrganizationLicenseStateAsync(string id)
         {
-            return await Client.GetAsync<LicenseState>(InterpolateAndEscape($"api/v0/organizations/{id}/licenseState"));
+            return await Client.GetAsync<LicenseState>(InterpolateAndEscape($"v0/organizations/{id}/licenseState"));
         }
 
         public virtual async Task<SnmpSettings> GetOrganizationSnmpSettingsAsync(string id)
         {
-            return await Client.GetAsync<SnmpSettings>(InterpolateAndEscape($"api/v0/organizations/{id}/snmp"));
+            return await Client.GetAsync<SnmpSettings>(InterpolateAndEscape($"v0/organizations/{id}/snmp"));
         }
 
         // /devices/[serial]/switchPorts
         public virtual async Task<SwitchPort[]> GetSwitchPortsAsync(string serial)
         {
-            return await Client.GetAsync<SwitchPort[]>(InterpolateAndEscape($"api/v0/devices/{serial}/switchPorts"));
+            return await Client.GetAsync<SwitchPort[]>(InterpolateAndEscape($"v0/devices/{serial}/switchPorts"));
         }
     }
 }
