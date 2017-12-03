@@ -220,9 +220,9 @@ namespace MerakiDashboard
             return await GetOrganizationInventoryAsync(organization.Id);
         }
 
-        public virtual async Task<LicenseState> GetOrganizationLicenseStateAsync(string id)
+        public virtual async Task<LicenceState> GetOrganizationLicenseStateAsync(string id)
         {
-            return await Client.GetAsync<LicenseState>(InterpolateAndEscape($"v0/organizations/{id}/licenseState"));
+            return await Client.GetAsync<LicenceState>(InterpolateAndEscape($"v0/organizations/{id}/licenseState"));
         }
 
         public virtual async Task<SnmpSettings> GetOrganizationSnmpSettingsAsync(string id)

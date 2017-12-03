@@ -22,7 +22,7 @@ namespace MerakiDashboard
     /// or loss of precision.
     /// </para>
     /// </remarks>
-    public static class UnixTimestamp
+    internal static class UnixTimestamp
     {
         /// <summary>
         /// Convert from a timestamp to a <see cref="DateTime"/>.
@@ -45,7 +45,7 @@ namespace MerakiDashboard
         /// The <see cref="DateTime"/> to convert.
         /// </param>
         /// <returns>
-        /// A <see cref="double"/> represetngin the same date and time.
+        /// A <see cref="double"/> represeting the same date and time.
         /// </returns>
         public static double FromDateTime(DateTime dateTime)
         {

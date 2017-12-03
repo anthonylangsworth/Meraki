@@ -35,7 +35,7 @@ namespace MerakiDashboard.Console
         }
 
         /// <summary>
-        /// Determine the Organization ID for the “Meraki Live Sandbox”
+        /// Determine the Organization ID for the given organization.
         /// </summary>
         /// <param name="merakiDashboardClient"></param>
         /// <param name="organizationId"></param>
@@ -53,7 +53,7 @@ namespace MerakiDashboard.Console
         /// <returns></returns>
         private async Task Exercise2(MerakiDashboardClient merakiDashboardClient, string organizationId)
         {
-            LicenseState licenseState = await merakiDashboardClient.GetOrganizationLicenseStateAsync(organizationId);
+            LicenceState licenseState = await merakiDashboardClient.GetOrganizationLicenseStateAsync(organizationId);
             await System.Console.Out.WriteLineAsync($"The license expires on {licenseState.ExpirationDate}");
         }
 
