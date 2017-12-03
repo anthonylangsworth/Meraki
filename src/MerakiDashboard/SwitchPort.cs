@@ -5,6 +5,7 @@
 
 namespace MerakiDashboard
 {
+    [DataContract]
     public class SwitchPort
     {
         [DataMember(Name="number")]

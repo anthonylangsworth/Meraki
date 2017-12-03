@@ -8,6 +8,7 @@ namespace MerakiDashboard
     /// <summary>
     /// A Meraki Network.
     /// </summary>
+    [DataContract]
     public class Network
     {
         [DataMember(Name="id")]

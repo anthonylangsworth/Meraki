@@ -6,6 +6,7 @@ using System.Runtime.Serialization;
 
 namespace MerakiDashboard
 {
+    [DataContract]
     public class LicenseState
     {
         [DataMember(Name = "status")]

@@ -210,12 +210,12 @@ namespace MerakiDashboard
             return await GetOrganizationNetworksAsync(organization.Id);
         }
 
-        public virtual async Task<Inventory> GetOrganizationInventoryAsync(string id)
+        public virtual async Task<InventoryEntry[]> GetOrganizationInventoryAsync(string id)
         {
-            return await Client.GetAsync< Inventory>(InterpolateAndEscape($"v0/organizations/{id}/inventory"));
+            return await Client.GetAsync<InventoryEntry[]>(InterpolateAndEscape($"v0/organizations/{id}/inventory"));
         }
 
-        public virtual async Task<Inventory> GetOrganizationInventoryAsync(Organization organization)
+        public virtual async Task<InventoryEntry[]> GetOrganizationInventoryAsync(Organization organization)
         {
             return await GetOrganizationInventoryAsync(organization.Id);
         }

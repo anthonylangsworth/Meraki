@@ -33,7 +33,7 @@ namespace MerakiDashboard.Test
             Device device = new Device
             {
                 Address = "1600 Pennsylania Ave Washington DC",
-                LanIp = new IPAddress(new byte[] {127, 0, 0, 1}),
+                LanIpAddress = new IPAddress(new byte[] {127, 0, 0, 1}),
                 Lattitude = 38.8977,
                 Longitude = 77.0365,
                 Mac = "00:00:00:00:00:00",

@@ -5,6 +5,7 @@
 
 namespace MerakiDashboard
 {
+    [DataContract]
     public class SnmpSettings
     {
         [DataMember(Name= "v2cEnabled")]

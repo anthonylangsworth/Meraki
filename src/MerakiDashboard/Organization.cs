@@ -10,6 +10,7 @@ namespace MerakiDashboard
     /// <summary>
     /// A Meraki Organization.
     /// </summary>
+    [DataContract]
     public class Organization : IEquatable<Organization>
     {
         [DataMember(Name="id")]

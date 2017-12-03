@@ -18,6 +18,10 @@ namespace Meraki.Console
                     .WithParsed<LabOptions>(clo => new CiscoLearningLab().Run(clo.ApiKey).Wait())
                     .WithParsed<DumpOptions>(clo => new Dump().Run(clo.ApiKey).Wait());
             }
+            catch (AggregateException ex)
+            {
+                System.Console.Error.WriteLine(ex.InnerException);
+            }
             catch (Exception ex)
             {
                 System.Console.Error.WriteLine(ex);

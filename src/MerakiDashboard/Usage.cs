@@ -5,6 +5,7 @@
 
 namespace MerakiDashboard
 {
+    [DataContract]
     public class Usage
     {
         [DataMember(Name="sent")]

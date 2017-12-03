@@ -11,6 +11,7 @@ namespace MerakiDashboard
     /// <summary>
     /// A meraki device.
     /// </summary>
+    [DataContract]
     public class Device: IEquatable<Device>
     {
         [DataMember(Name="name")]
@@ -34,8 +35,18 @@ namespace MerakiDashboard
         [DataMember(Name = "address")]
         public string Address { get; set; }
 
+        /// <summary>
+        /// Set <see cref="LanIpAddress"/> by converting the string to an <see cref="IPAddress"/>.
+        /// </summary>
         [DataMember(Name = "lanIp")]
-        public IPAddress LanIp { get; set; }
+        public string LanIpAddressRaw
+        {
+            get => LanIpAddress?.ToString();
+            set => LanIpAddress = IPAddress.Parse(value);
+        }
+
+        [IgnoreDataMember]
+        public IPAddress LanIpAddress { get; set; }
 
         [DataMember(Name = "tags")]
         public string Tags { get; set; }
@@ -77,7 +88,7 @@ namespace MerakiDashboard
                 hashCode = (hashCode * 397) ^ (Mac != null ? Mac.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ (Model != null ? Model.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ (Address != null ? Address.GetHashCode() : 0);
-                hashCode = (hashCode * 397) ^ (LanIp != null ? LanIp.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (LanIpAddress != null ? LanIpAddress.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ (Tags != null ? Tags.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ (NetworkId != null ? NetworkId.GetHashCode() : 0);
                 return hashCode;
@@ -104,7 +115,7 @@ namespace MerakiDashboard
                 && string.Equals(Mac, other.Mac) 
                 && string.Equals(Model, other.Model) 
                 && string.Equals(Address, other.Address) 
-                && Equals(LanIp, other.LanIp) 
+                && LanIpAddress.Equals(other.LanIpAddress) 
                 && string.Equals(Tags, other.Tags) 
                 && string.Equals(NetworkId, other.NetworkId);
         }
