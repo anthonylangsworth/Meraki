@@ -8,7 +8,7 @@ Meraki provides a limited web API for managing their devices called the [Dashboa
 Meraki provides wrappers in NodeJS (JavaScript), Ruby and Python but not for C#. This library is the 
 beginnings of a C# wrapper. Its goals are:
 1. Wrap the Meraki APIs, making callable with the least effort.
-1. Follow C# standards and conventions as much as possible. For example, provide lists and enums with transparent converions.
+1. Follow C# standards and conventions as much as possible. For example, provide lists and enums with transparent conversions.
 1. Allow easy mocking to make automated testing of calling code easier.
 
 It is currently a work in progress.
