@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
@@ -130,6 +131,9 @@ namespace MerakiDashboard
         /// <param name="uri">
         /// The URI to call.
         /// </param>
+        /// <param name="content">
+        /// The optional content to send.
+        /// </param>
         /// <returns>
         /// The <see cref="HttpRequestMessage"/>. The caller is responsible for Disposing
         /// the returned object.
@@ -137,14 +141,40 @@ namespace MerakiDashboard
         /// <exception cref="HttpRequestException">
         /// The request failed.
         /// </exception>
-        public virtual async Task<HttpResponseMessage> SendAsync(HttpMethod method, string uri)
+        public virtual async Task<HttpResponseMessage> SendAsync(HttpMethod method, string uri, string content = "")
         {
             using (HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, uri))
             {
+                request.Content = new StringContent(content);
+
+                // The caller must Dispose of this.
                 HttpResponseMessage response = await HttpClient.SendAsync(request);
                 response.EnsureSuccessStatusCode();
                 return response;
             }
+        }
+
+        /// <summary>
+        /// Call the given URL asynchronously.
+        /// </summary>
+        /// <param name="method">
+        /// </param>
+        /// <param name="uri">
+        /// The URI to call.
+        /// </param>
+        /// <param name="content">
+        /// The optional content to send.
+        /// </param>
+        /// <returns>
+        /// The <see cref="HttpRequestMessage"/>. The caller is responsible for Disposing
+        /// the returned object.
+        /// </returns>
+        /// <exception cref="HttpRequestException">
+        /// The request failed.
+        /// </exception>
+        public virtual async Task<HttpResponseMessage> SendAsync<T>(HttpMethod method, string uri, T content)
+        {
+            return await SendAsync(method, uri, JsonConvert.SerializeObject(content));
         }
 
         /// <summary>

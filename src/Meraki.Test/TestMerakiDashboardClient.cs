@@ -1,4 +1,6 @@
 using System;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using Moq;
@@ -118,6 +120,70 @@ namespace MerakiDashboard.Test
             {
                 Organization actualOrganization = await merakiDashboardClient.GetOrganizationAsync(organizationId);
                 Assert.Equal(expectedOrganization, actualOrganization);
+            }
+
+            apiClientMock.VerifyAll();
+        }
+
+        [Fact]
+        public async void GetOrganizationSnmpSettingsAsync()
+        {
+            const string organizationId = "myOrg";
+            SnmpGetSettings snmpGetSettings = new SnmpGetSettings
+            {
+                V2cEnabled = false,
+                V3Enabled = true,
+                V3AuthenticationMode = "auth mode",
+                V3PrivacyMode = "privacy mode",
+                Hostname = "snmp.meraki.com",
+                Port = 162
+            };
+
+            Mock<MerakiHttpApiClient> apiClientMock = new Mock<MerakiHttpApiClient>(MockBehavior.Strict, "apiKey");
+            apiClientMock.Setup(apiClient => apiClient.GetAsync<SnmpGetSettings>($"v0/organizations/{organizationId}/snmp"))
+                                                      .Returns(Task.FromResult(snmpGetSettings));
+            // apiClientMock.As<IDisposable>().Setup(apiClient => apiClient.Dispose());
+            apiClientMock.Protected().Setup("Dispose", true);
+
+            using (MerakiDashboardClient merakiDashboardClient = new MerakiDashboardClient(apiClientMock.Object))
+            {
+                SnmpGetSettings actualSnmpGetSettings = await merakiDashboardClient.GetOrganizationSnmpSettingsAsync(organizationId);
+                Assert.Equal(snmpGetSettings, actualSnmpGetSettings);
+            }
+
+            apiClientMock.VerifyAll();
+        }
+
+        [Fact]
+        public async void PutOrganizationSnmpSettingsAsync()
+        {
+            const string organizationId = "myOrg";
+            SnmpPutSettings snmpPutSettings = new SnmpPutSettings
+            {
+                V2cEnabled = false,
+                V3Enabled = true,
+                V3AuthenticationMode = "auth mode",
+                V3AuthenticationPassword = "auth password",
+                V3PrivacyMode = "privacy mode",
+                V3PrivacyPassword = "privacy password",
+                PeerIps = new [] { IPAddress.Parse("192.168.0.1"), IPAddress.Parse("10.1.1.1") }
+            };
+
+            Mock<MerakiHttpApiClient> apiClientMock = new Mock<MerakiHttpApiClient>(MockBehavior.Strict, "apiKey");
+            using (HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK))
+            {
+                apiClientMock.Setup(apiClient =>
+                        apiClient.SendAsync(HttpMethod.Put, $"v0/organizations/{organizationId}/snmp", snmpPutSettings))
+                    .Returns(Task.FromResult(response));
+                // apiClientMock.As<IDisposable>().Setup(apiClient => apiClient.Dispose());
+                apiClientMock.Protected().Setup("Dispose", true);
+
+                using (MerakiDashboardClient merakiDashboardClient = new MerakiDashboardClient(apiClientMock.Object))
+                {
+                    HttpResponseMessage actualResponse =
+                        await merakiDashboardClient.PutOrganizationSnmpSettingsAsync(organizationId, snmpPutSettings);
+                    Assert.Equal(response, actualResponse);
+                }
             }
 
             apiClientMock.VerifyAll();

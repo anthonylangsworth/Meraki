@@ -123,7 +123,7 @@ namespace MerakiDashboard
         #pragma warning disable CS1591
 
         /// <summary>
-        /// /devices/[serial]/clients
+        /// GET /devices/[serial]/clients
         /// </summary>
         public virtual async Task<Client[]> GetClientsAsync(string serial)
         {
@@ -225,13 +225,24 @@ namespace MerakiDashboard
             return await Client.GetAsync<LicenceState>(InterpolateAndEscape($"v0/organizations/{id}/licenseState"));
         }
 
-        public virtual async Task<SnmpSettings> GetOrganizationSnmpSettingsAsync(string id)
+        /// <summary>
+        /// GET /organizations/[id]/snmp
+        /// </summary>
+        public virtual async Task<SnmpGetSettings> GetOrganizationSnmpSettingsAsync(string id)
         {
-            return await Client.GetAsync<SnmpSettings>(InterpolateAndEscape($"v0/organizations/{id}/snmp"));
+            return await Client.GetAsync<SnmpGetSettings>(InterpolateAndEscape($"v0/organizations/{id}/snmp"));
         }
 
         /// <summary>
-        /// /devices/[serial]/switchPorts
+        /// PUT /organizations/[id]/snmp
+        /// </summary>
+        public virtual async Task<HttpResponseMessage> PutOrganizationSnmpSettingsAsync(string id, SnmpPutSettings snmpSettings)
+        {
+            return await Client.SendAsync(HttpMethod.Put, InterpolateAndEscape($"v0/organizations/{id}/snmp"), snmpSettings);
+        }
+
+        /// <summary>
+        /// GET /devices/[serial]/switchPorts
         /// </summary>
         public virtual async Task<SwitchPort[]> GetSwitchPortsAsync(string serial)
         {

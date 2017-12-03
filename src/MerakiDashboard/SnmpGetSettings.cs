@@ -6,7 +6,7 @@
 namespace MerakiDashboard
 {
     [DataContract]
-    public class SnmpSettings
+    public class SnmpGetSettings
     {
         [DataMember(Name= "v2cEnabled")]
         public bool V2cEnabled { get; set; }
@@ -15,10 +15,10 @@ namespace MerakiDashboard
         public bool V3Enabled { get; set; }
 
         [DataMember(Name= "v3AuthMode")]
-        public string V3AuthMode { get; set; }
+        public string V3AuthenticationMode { get; set; }
 
         [DataMember(Name= "v3PrivMode")]
-        public string V3PrivMode { get; set; }
+        public string V3PrivacyMode { get; set; }
 
         [DataMember(Name = "hostname")]
         public string Hostname { get; set; }
