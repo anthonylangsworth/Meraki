@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 namespace MerakiDashboard
 {
     /// <summary>
-    /// Wrapper around Meraki APIs.
+    /// Wrapper around <see cref="MerakiHttpApiClient"/> for the Meraki Dashboard APIs.
     /// </summary>
     public class MerakiDashboardClient: IDisposable
     {
@@ -122,7 +122,9 @@ namespace MerakiDashboard
         // Ignore XML documentation warnings from here on. 
         #pragma warning disable CS1591
 
-        // /devices/[serial]/clients
+        /// <summary>
+        /// /devices/[serial]/clients
+        /// </summary>
         public virtual async Task<Client[]> GetClientsAsync(string serial)
         {
             return await Client.GetAsync<Client[]>(InterpolateAndEscape($"v0/devices/{serial}/switchPorts"));
@@ -228,7 +230,9 @@ namespace MerakiDashboard
             return await Client.GetAsync<SnmpSettings>(InterpolateAndEscape($"v0/organizations/{id}/snmp"));
         }
 
-        // /devices/[serial]/switchPorts
+        /// <summary>
+        /// /devices/[serial]/switchPorts
+        /// </summary>
         public virtual async Task<SwitchPort[]> GetSwitchPortsAsync(string serial)
         {
             return await Client.GetAsync<SwitchPort[]>(InterpolateAndEscape($"v0/devices/{serial}/switchPorts"));
