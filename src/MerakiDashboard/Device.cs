@@ -42,7 +42,7 @@ namespace MerakiDashboard
         public string LanIpAddressRaw
         {
             get => LanIpAddress?.ToString();
-            set => LanIpAddress = IPAddress.Parse(value);
+            set => LanIpAddress = string.IsNullOrWhiteSpace(value) ? IPAddress.None : IPAddress.Parse(value);
         }
 
         [IgnoreDataMember]
