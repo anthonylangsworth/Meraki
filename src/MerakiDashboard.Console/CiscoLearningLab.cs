@@ -26,8 +26,7 @@ namespace MerakiDashboard.Console
                 foreach (Func<MerakiDashboardClient, string, Task> exercise in
                     new Func<MerakiDashboardClient, string, Task>[]
                     {
-                        // Exercise1, Exercise2, Exercise3, Exercise4, Exercise5, Exercise6, Exercise7, Exercise8
-                        Exercise4, Exercise5, Exercise6, Exercise7, Exercise8
+                        Exercise1, Exercise2, Exercise3, Exercise4, Exercise5, Exercise6, Exercise7, Exercise8
                     })
                 {
                     await exercise(merakiDashboardClient, organizationId);
@@ -76,27 +75,12 @@ namespace MerakiDashboard.Console
         /// <param name="merakiDashboardClient"></param>
         /// <param name="organizationId"></param>
         /// <returns></returns>
-        private async Task Exercise4Alternate(MerakiDashboardClient merakiDashboardClient, string organizationId)
-        {
-            const string deviceSerial = "Q2EK-S3AA-BXFW"; // "Q2JD-W28X-FNEN" does not exist
-            Device device = merakiDashboardClient.GetOrganizationNetworksAsync(organizationId).Result
-                                        .SelectMany(n => merakiDashboardClient.GetNetworkDevicesAsync(n.Id).Result)
-                                        .FirstOrDefault(d => deviceSerial.Equals(d.Serial, StringComparison.OrdinalIgnoreCase)); 
-            await System.Console.Out.WriteLineAsync($"Device {deviceSerial} claimed at {device?.Mac}"); // claimedAt does not exist
-        }
-
-        /// <summary>
-        /// What is the value for “claimedAt” for the device with serial number "Q2JD-W28X-FNEN"
-        /// </summary>
-        /// <param name="merakiDashboardClient"></param>
-        /// <param name="organizationId"></param>
-        /// <returns></returns>
         private async Task Exercise4(MerakiDashboardClient merakiDashboardClient, string organizationId)
         {
-            const string deviceSerial = "Q2EK-S3AA-BXFW"; // "Q2JD-W28X-FNEN" does not exist
-            InventoryEntry inventory = merakiDashboardClient.GetOrganizationInventoryAsync(organizationId).Result
-                                                            .FirstOrDefault(d => deviceSerial.Equals(d.Serial, StringComparison.OrdinalIgnoreCase));
-            await System.Console.Out.WriteLineAsync($"Device {deviceSerial} claimed at '{inventory?.ClaimedAt}'");
+            const string deviceSerial = "Q2BV-B8VH-V2QH"; // "Q2JD-W28X-FNEN" does not exist
+            InventoryEntry inventoryEntry = merakiDashboardClient.GetOrganizationInventoryAsync(organizationId).Result
+                                                                 .FirstOrDefault(ie => deviceSerial.Equals(ie.Serial, StringComparison.OrdinalIgnoreCase));
+            await System.Console.Out.WriteLineAsync($"Device {deviceSerial} claimed at '{inventoryEntry?.ClaimedAt}'");
         }
 
         /// <summary>
@@ -107,10 +91,10 @@ namespace MerakiDashboard.Console
         /// <returns></returns>
         private async Task Exercise5(MerakiDashboardClient merakiDashboardClient, string organizationId)
         {
-            const string deviceSerial = "Q2EK-S3AA-BXFW"; // "Q2CD-MJ68-SYFF" does not exist
-            Network network = merakiDashboardClient.GetOrganizationNetworksAsync(organizationId).Result
-                                          .FirstOrDefault(n => merakiDashboardClient.GetNetworkDevicesAsync(n.Id).Result.Any(d => deviceSerial.Equals(d.Serial)));
-            await System.Console.Out.WriteLineAsync($"Network '{network?.Name}' contains device with serial {deviceSerial}"); // claimedAt does not exist
+            const string deviceSerial = "Q2BV-B8VH-V2QH"; // "Q2CD-MJ68-SYFF" does not exist
+            InventoryEntry inventoryEntry = merakiDashboardClient.GetOrganizationInventoryAsync(organizationId).Result
+                                                                 .FirstOrDefault(ie => deviceSerial.Equals(ie.Serial, StringComparison.OrdinalIgnoreCase));
+            await System.Console.Out.WriteLineAsync($"Network '{inventoryEntry?.NetworkId}' contains device with serial {deviceSerial}");
         }
 
         /// <summary>
@@ -121,7 +105,7 @@ namespace MerakiDashboard.Console
         /// <returns></returns>
         private async Task Exercise6(MerakiDashboardClient merakiDashboardClient, string organizationId)
         {
-            const string deviceSerial = "Q2EK-S3AA-BXFW"; // "Q2HP-AJ22-UG72" does not exist
+            const string deviceSerial = "Q2BV-B8VH-V2QH"; // "Q2HP-AJ22-UG72" does not exist
             Device device = GetDevice(merakiDashboardClient, organizationId, deviceSerial);
             await System.Console.Out.WriteLineAsync($"Device with serial {deviceSerial} has the tags '{device?.Tags}'");
         }
