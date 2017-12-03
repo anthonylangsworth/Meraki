@@ -14,9 +14,10 @@ namespace Meraki.Console
         {
             try
             {
-                Parser.Default.ParseArguments<LabOptions, DumpOptions>(args)
+                Parser.Default.ParseArguments<LabOptions, DumpOptions, TestOptions>(args)
                     .WithParsed<LabOptions>(clo => new CiscoLearningLab().Run(clo.ApiKey).Wait())
-                    .WithParsed<DumpOptions>(clo => new Dump().Run(clo.ApiKey).Wait());
+                    .WithParsed<DumpOptions>(clo => new Dump().Run(clo.ApiKey).Wait())
+                    .WithParsed<TestOptions>(clo => new Test().Run(clo.ApiKey).Wait());
             }
             catch (AggregateException ex)
             {

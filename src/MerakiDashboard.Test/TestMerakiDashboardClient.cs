@@ -133,8 +133,8 @@ namespace MerakiDashboard.Test
             {
                 V2cEnabled = false,
                 V3Enabled = true,
-                V3AuthenticationMode = "auth mode",
-                V3PrivacyMode = "privacy mode",
+                V3AuthenticationMode = SnmpAuthenticationMode.Sha,
+                V3PrivacyMode = SnmpPrivacyMode.Aes128,
                 Hostname = "snmp.meraki.com",
                 Port = 162
             };
@@ -170,20 +170,18 @@ namespace MerakiDashboard.Test
             };
 
             Mock<MerakiHttpApiClient> apiClientMock = new Mock<MerakiHttpApiClient>(MockBehavior.Strict, "apiKey");
-            using (HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK))
-            {
-                apiClientMock.Setup(apiClient =>
-                        apiClient.SendAsync(HttpMethod.Put, $"v0/organizations/{organizationId}/snmp", snmpPutSettings))
-                    .Returns(Task.FromResult(response));
-                // apiClientMock.As<IDisposable>().Setup(apiClient => apiClient.Dispose());
-                apiClientMock.Protected().Setup("Dispose", true);
+            HttpStatusCode statusCode = HttpStatusCode.OK;
+            apiClientMock.Setup(apiClient =>
+                    apiClient.SendAsync(HttpMethod.Put, $"v0/organizations/{organizationId}/snmp", snmpPutSettings))
+                .Returns(Task.FromResult(statusCode));
+            // apiClientMock.As<IDisposable>().Setup(apiClient => apiClient.Dispose());
+            apiClientMock.Protected().Setup("Dispose", true);
 
-                using (MerakiDashboardClient merakiDashboardClient = new MerakiDashboardClient(apiClientMock.Object))
-                {
-                    HttpResponseMessage actualResponse =
-                        await merakiDashboardClient.PutOrganizationSnmpSettingsAsync(organizationId, snmpPutSettings);
-                    Assert.Equal(response, actualResponse);
-                }
+            using (MerakiDashboardClient merakiDashboardClient = new MerakiDashboardClient(apiClientMock.Object))
+            {
+                HttpStatusCode actualResponse =
+                    await merakiDashboardClient.PutOrganizationSnmpSettingsAsync(organizationId, snmpPutSettings);
+                Assert.Equal(statusCode, actualResponse);
             }
 
             apiClientMock.VerifyAll();

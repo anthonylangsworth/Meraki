@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace MerakiDashboard
 {
@@ -135,22 +138,27 @@ namespace MerakiDashboard
         /// The optional content to send.
         /// </param>
         /// <returns>
-        /// The <see cref="HttpRequestMessage"/>. The caller is responsible for Disposing
-        /// the returned object.
+        /// The <see cref="HttpStatusCode"/> representing the result.
         /// </returns>
         /// <exception cref="HttpRequestException">
         /// The request failed.
         /// </exception>
-        public virtual async Task<HttpResponseMessage> SendAsync(HttpMethod method, string uri, string content = "")
+        public virtual async Task<HttpStatusCode> SendAsync(HttpMethod method, string uri, string content = "")
         {
             using (HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, uri))
             {
-                request.Content = new StringContent(content);
+                if (MerakiHttpApiDebugContext.IsSet())
+                {
+                    Debug.WriteLine($"{method} {uri} sending:");
+                    Debug.WriteLine(content);
+                }
 
-                // The caller must Dispose of this.
-                HttpResponseMessage response = await HttpClient.SendAsync(request);
-                response.EnsureSuccessStatusCode();
-                return response;
+                request.Content = new StringContent(content);
+                using (HttpResponseMessage response = await HttpClient.SendAsync(request))
+                {
+                    response.EnsureSuccessStatusCode();
+                    return response.StatusCode;
+                }
             }
         }
 
@@ -172,9 +180,9 @@ namespace MerakiDashboard
         /// <exception cref="HttpRequestException">
         /// The request failed.
         /// </exception>
-        public virtual async Task<HttpResponseMessage> SendAsync<T>(HttpMethod method, string uri, T content)
+        public virtual async Task<HttpStatusCode> SendAsync<T>(HttpMethod method, string uri, T content)
         {
-            return await SendAsync(method, uri, JsonConvert.SerializeObject(content));
+            return await SendAsync(method, uri, JsonConvert.SerializeObject(content, JsonSerializerSettings));
         }
 
         /// <summary>
@@ -194,7 +202,7 @@ namespace MerakiDashboard
         /// </exception>
         public virtual async Task<T> GetAsync<T>(string uri)
         {
-            return JsonConvert.DeserializeObject<T>(await GetAsync(uri));
+            return JsonConvert.DeserializeObject<T>(await GetAsync(uri), JsonSerializerSettings);
         }
 
         /// <summary>
@@ -215,7 +223,29 @@ namespace MerakiDashboard
             using (HttpResponseMessage response = await HttpClient.SendAsync(request))
             {
                 response.EnsureSuccessStatusCode();
-                return await response.Content.ReadAsStringAsync();
+                string result = await response.Content.ReadAsStringAsync();
+
+                if (MerakiHttpApiDebugContext.IsSet())
+                {
+                    Debug.WriteLine($"GET {uri} returned:");
+                    Debug.WriteLine(result);
+                }
+
+                return result;
+            }
+        }
+
+        private JsonSerializerSettings JsonSerializerSettings
+        {
+            get
+            {
+                JsonSerializerSettings result = new JsonSerializerSettings();
+                if (MerakiHttpApiDebugContext.IsSet())
+                {
+                    result.Formatting = Formatting.Indented;
+                    result.TraceWriter = new DiagnosticsTraceWriter();
+                }
+                return result;
             }
         }
     }

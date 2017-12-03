@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -236,7 +237,7 @@ namespace MerakiDashboard
         /// <summary>
         /// PUT /organizations/[id]/snmp
         /// </summary>
-        public virtual async Task<HttpResponseMessage> PutOrganizationSnmpSettingsAsync(string id, SnmpPutSettings snmpSettings)
+        public virtual async Task<HttpStatusCode> PutOrganizationSnmpSettingsAsync(string id, SnmpPutSettings snmpSettings)
         {
             return await Client.SendAsync(HttpMethod.Put, InterpolateAndEscape($"v0/organizations/{id}/snmp"), snmpSettings);
         }
