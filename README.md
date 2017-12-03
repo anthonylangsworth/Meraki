@@ -1,12 +1,12 @@
 # Meraki Dashboard API .Net Client
 
-[Meraki](meraki.cisco.com) is a network appliance vendor acquired by Cisco in 2012 that focuses on 
-cloud management and ease of use. The devices are increasingly popular with companies of any size looking
+[Meraki](http://meraki.cisco.com) is a network appliance vendor acquired by Cisco in 2012 that focuses on 
+cloud management and ease of use. Their devices are increasingly popular with companies of any size looking
 to simply their network management.
 
 Meraki provides a limited web API for managing their devices called the [Dashboard API](https://dashboard.meraki.com/api_docs). 
 Meraki provides wrappers in NodeJS (JavaScript), Ruby and Python but not for C#. This library is the 
-beginnings of a C# wrapper over the Meraki Dashboard APIs. Its goals are:
+beginnings of a C# wrapper. Its goals are:
 1. Wrap the Meraki APIs, making callable with the least effort.
 1. Follow C# standards and conventions as much as possible. For example, provide lists and enums with transparent converions.
 1. Allow easy mocking to make automated testing of calling code easier.
