@@ -65,7 +65,7 @@ namespace MerakiDashboard.Console
         /// <returns></returns>
         private async Task Exercise3(MerakiDashboardClient merakiDashboardClient, string organizationId)
         {
-            SnmpSettings snmpSettings = await merakiDashboardClient.GetOrganizationSnmpSettingsAsync(organizationId);
+            SnmpGetSettings snmpSettings = await merakiDashboardClient.GetOrganizationSnmpSettingsAsync(organizationId);
             await System.Console.Out.WriteLineAsync($"SNMP v2c enabled: {snmpSettings.V2cEnabled},  v3 enabled: {snmpSettings.V3Enabled}");
         }
 
