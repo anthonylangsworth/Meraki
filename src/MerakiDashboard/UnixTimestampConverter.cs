@@ -22,7 +22,7 @@ namespace MerakiDashboard
     /// or loss of precision.
     /// </para>
     /// </remarks>
-    internal static class UnixTimestamp
+    internal static class UnixTimestampConverter
     {
         /// <summary>
         /// Convert from a timestamp to a <see cref="DateTime"/>.

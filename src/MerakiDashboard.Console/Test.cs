@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -22,7 +23,7 @@ namespace MerakiDashboard.Console
             {
                 string organizationId = merakiDashboardClient.GetOrganizationsAsync().Result.First().Id;
                 await GetSnmpSettings(organizationId, merakiDashboardClient);
-                // await PutSnmpSettings(merakiDashboardClient);
+                await PutSnmpSettings(organizationId, merakiDashboardClient);
             }
         }
 
@@ -38,10 +39,14 @@ namespace MerakiDashboard.Console
             {
                 V2cEnabled = false,
                 V3Enabled = true,
-                V3AuthenticationMode = ""
+                V3AuthenticationMode = SnmpAuthenticationMode.Sha,
+                V3AuthenticationPassword = "auth password",
+                V3PrivacyMode = SnmpPrivacyMode.Aes128,
+                V3PrivacyPassword = "privacy password",
+                PeerIps = new[] { IPAddress.Parse("8.8.8.8") }
             };
 
-            await merakiDashboardClient.PutOrganizationSnmpSettingsAsync(organizationId, snmpPutSettings);
+            System.Console.Out.WriteLine(await merakiDashboardClient.PutOrganizationSnmpSettingsAsync(organizationId, snmpPutSettings));
         }
     }
 }

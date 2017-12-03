@@ -149,8 +149,7 @@ namespace MerakiDashboard
             {
                 if (MerakiHttpApiDebugContext.IsSet())
                 {
-                    Debug.WriteLine($"{method} {uri} sending:");
-                    Debug.WriteLine(content);
+                    Debug.WriteLine($"{method} {uri} sending: {content}");
                 }
 
                 request.Content = new StringContent(content);
@@ -227,8 +226,7 @@ namespace MerakiDashboard
 
                 if (MerakiHttpApiDebugContext.IsSet())
                 {
-                    Debug.WriteLine($"GET {uri} returned:");
-                    Debug.WriteLine(result);
+                    Debug.WriteLine($"GET {uri} returned: {result}");
                 }
 
                 return result;

@@ -17,14 +17,28 @@ namespace MerakiDashboard
         [DataMember(Name= "v3Enabled")]
         public bool V3Enabled { get; set; }
 
-        [DataMember(Name= "v3AuthMode")]
-        public string V3AuthenticationMode { get; set; }
+        [DataMember(Name = "v3AuthMode")]
+        public string V3AuthenticationModeRaw
+        {
+            get => SnmpAuthenticationModeConverter.FromEnum(V3AuthenticationMode);
+            set => V3AuthenticationMode = SnmpAuthenticationModeConverter.ToEnum(value);
+        }
+
+        [IgnoreDataMember]
+        public SnmpAuthenticationMode V3AuthenticationMode { get; set; }
 
         [DataMember(Name = "v3AuthPass")]
         public string V3AuthenticationPassword { get; set; }
 
         [DataMember(Name= "v3PrivMode")]
-        public string V3PrivacyMode { get; set; }
+        public string V3PrivacyModeRaw
+        {
+            get => SnmpPrivacyModeConverter.FromEnum(V3PrivacyMode);
+            set => V3PrivacyMode = SnmpPrivacyModeConverter.ToEnum(value);
+        }
+
+        [IgnoreDataMember]
+        public SnmpPrivacyMode V3PrivacyMode { get; set; }
 
         [DataMember(Name = "v3PrivPass")]
         public string V3PrivacyPassword { get; set; }

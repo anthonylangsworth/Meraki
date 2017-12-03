@@ -18,7 +18,7 @@ namespace MerakiDashboard.Test
 
         public static IEnumerable<object[]> ExpirationDateRawTestData()
         {
-            return TestLicenceExpirationDateFormat.ConvertTestData();
+            return TestLicenceExpirationDateConverter.ConvertTestData();
         }
     }
 }

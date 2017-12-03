@@ -13,7 +13,7 @@ namespace MerakiDashboard
     /// Extension methods were considered but there are potentially multiple
     /// conversions between strings and date/times so it was left as statics.
     /// </remarks>
-    internal class LicenceExpirationDateFormat
+    internal class LicenceExpirationDateConverter
     {
         /// <summary>
         /// Convert from a Meraki licence expiration date format string to a <see cref="DateTime"/>.

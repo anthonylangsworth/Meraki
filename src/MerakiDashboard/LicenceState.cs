@@ -17,8 +17,8 @@ namespace MerakiDashboard
         [DataMember(Name = "expirationDate")]
         public string ExpirationDateRaw
         {
-            get => LicenceExpirationDateFormat.FromDateTime(ExpirationDate);
-            set => ExpirationDate = LicenceExpirationDateFormat.ToDateTime(value);
+            get => LicenceExpirationDateConverter.FromDateTime(ExpirationDate);
+            set => ExpirationDate = LicenceExpirationDateConverter.ToDateTime(value);
         }
 
         [IgnoreDataMember]

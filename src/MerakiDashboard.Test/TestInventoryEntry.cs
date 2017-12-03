@@ -21,7 +21,7 @@ namespace MerakiDashboard.Test
 
         public static IEnumerable<object[]> ClaimedAtRawTestData()
         {
-            return TestUnixTimestamp.ConvertTestData();
+            return TestUnixTimestampConverter.ConvertTestData();
         }
 
         [Theory]

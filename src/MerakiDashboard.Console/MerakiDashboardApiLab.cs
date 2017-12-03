@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Meraki.Console;
 
 namespace MerakiDashboard.Console
 {

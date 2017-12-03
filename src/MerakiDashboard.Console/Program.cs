@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CommandLine;
-using Meraki;
-using MerakiDashboard.Console;
 
-namespace Meraki.Console
+namespace MerakiDashboard.Console
 {
     class Program
     {

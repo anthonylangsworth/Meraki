@@ -162,9 +162,9 @@ namespace MerakiDashboard.Test
             {
                 V2cEnabled = false,
                 V3Enabled = true,
-                V3AuthenticationMode = "auth mode",
+                V3AuthenticationMode = SnmpAuthenticationMode.Sha,
                 V3AuthenticationPassword = "auth password",
-                V3PrivacyMode = "privacy mode",
+                V3PrivacyMode = SnmpPrivacyMode.Aes128,
                 V3PrivacyPassword = "privacy password",
                 PeerIps = new [] { IPAddress.Parse("192.168.0.1"), IPAddress.Parse("10.1.1.1") }
             };

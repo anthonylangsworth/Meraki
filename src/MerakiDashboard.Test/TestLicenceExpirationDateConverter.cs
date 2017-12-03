@@ -5,15 +5,15 @@ using Xunit;
 
 namespace MerakiDashboard.Test
 {
-    public class TestLicenceExpirationDateFormat
+    public class TestLicenceExpirationDateConverter
     {
         [Theory]
         [MemberData(nameof(ConvertTestData))]
         public void Convert(string licenceExpirationDate, DateTime expectedDateTime)
         {
-            Assert.Equal(expectedDateTime, LicenceExpirationDateFormat.ToDateTime(licenceExpirationDate));
+            Assert.Equal(expectedDateTime, LicenceExpirationDateConverter.ToDateTime(licenceExpirationDate));
             Assert.Equal(licenceExpirationDate, 
-                LicenceExpirationDateFormat.FromDateTime(LicenceExpirationDateFormat.ToDateTime(licenceExpirationDate)));
+                LicenceExpirationDateConverter.FromDateTime(LicenceExpirationDateConverter.ToDateTime(licenceExpirationDate)));
         }
 
         public static IEnumerable<object[]> ConvertTestData()

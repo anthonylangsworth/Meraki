@@ -19,12 +19,8 @@ namespace MerakiDashboard
         [DataMember(Name = "v3AuthMode")]
         public string V3AuthenticationModeRaw
         {
-            get => V3AuthenticationMode != SnmpAuthenticationMode.Unknown
-                ? V3AuthenticationMode.ToString().ToUpper()
-                : null;
-            set => V3AuthenticationMode = !string.IsNullOrWhiteSpace(value) 
-                ? Enum.Parse<SnmpAuthenticationMode>(value, true) 
-                : SnmpAuthenticationMode.Unknown;
+            get => SnmpAuthenticationModeConverter.FromEnum(V3AuthenticationMode);
+            set => V3AuthenticationMode = SnmpAuthenticationModeConverter.ToEnum(value);
         }
 
         [IgnoreDataMember]
@@ -33,12 +29,8 @@ namespace MerakiDashboard
         [DataMember(Name = "v3PrivMode")]
         public string V3PrivacyModeRaw
         {
-            get => V3PrivacyMode != SnmpPrivacyMode.Unknown 
-                ? V3PrivacyMode.ToString().ToUpper()
-                : null;
-            set => V3PrivacyMode = !string.IsNullOrWhiteSpace(value) 
-                ? Enum.Parse<SnmpPrivacyMode>(value, true)
-                : SnmpPrivacyMode.Unknown;
+            get => SnmpPrivacyModeConverter.FromEnum(V3PrivacyMode);
+            set => V3PrivacyMode = SnmpPrivacyModeConverter.ToEnum(value);
         }
 
         [IgnoreDataMember]

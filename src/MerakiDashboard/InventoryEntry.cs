@@ -31,8 +31,8 @@ namespace MerakiDashboard
         [DataMember(Name = "claimedAt")]
         public double ClaimedAtRaw
         {
-            get => UnixTimestamp.FromDateTime(ClaimedAt);
-            set => ClaimedAt = UnixTimestamp.ToDateTime(value);
+            get => UnixTimestampConverter.FromDateTime(ClaimedAt);
+            set => ClaimedAt = UnixTimestampConverter.ToDateTime(value);
         }
 
         [IgnoreDataMember]
