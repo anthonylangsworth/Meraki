@@ -240,7 +240,6 @@ namespace Meraki.Dashboard
                 if (MerakiHttpApiDebugContext.IsSet())
                 {
                     result.Formatting = Formatting.Indented;
-                    result.TraceWriter = new DiagnosticsTraceWriter();
                 }
                 return result;
             }
