@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
-    <AssemblyName>MerakiDashboard</AssemblyName>
-    <RootNamespace>MerakiDashboard</RootNamespace>
+    <AssemblyName>Meraki.Dashboard</AssemblyName>
+    <RootNamespace>Meraki.Dashboard</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>bin\Debug\netcoreapp2.0\Meraki.xml</DocumentationFile>

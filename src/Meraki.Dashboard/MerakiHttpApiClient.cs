@@ -1,15 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using MerakiDashboard;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
-namespace MerakiDashboard
+namespace Meraki.Dashboard
 {
     /// <summary>
     /// Call HTTP APIs. Can be used to call Meraki APIs directly if not wrapped by <see cref="MerakiDashboardClient"/>.

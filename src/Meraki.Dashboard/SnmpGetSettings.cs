@@ -1,11 +1,11 @@
-﻿using System;
-using System.ComponentModel;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
+using Meraki.Dashboard.Converters;
+using MerakiDashboard;
 
 // Ignore XML documentation warnings
 #pragma warning disable CS1591
 
-namespace MerakiDashboard
+namespace Meraki.Dashboard
 {
     [DataContract]
     public class SnmpGetSettings

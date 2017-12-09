@@ -1,8 +1,9 @@
-﻿using Microsoft.Extensions.Options;
+﻿using MerakiDashboard;
+using Microsoft.Extensions.Options;
 
-namespace MerakiDashboard.Test
+namespace Meraki.Dashboard.Test
 {
-    class MerakiDashboardClientSettingsOptions: IOptions<MerakiDashboardClientSettings>
+    internal class MerakiDashboardClientSettingsOptions: IOptions<MerakiDashboardClientSettings>
     {
         /// <summary>The configured TOptions instance.</summary>
         public MerakiDashboardClientSettings Value { get; set; }

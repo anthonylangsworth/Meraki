@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using MerakiDashboard;
 
-namespace MerakiDashboard
+namespace Meraki.Dashboard.Converters
 {
     /// <summary>
     /// Convert to and from <see cref="SnmpPrivacyMode"/> and the raw string version

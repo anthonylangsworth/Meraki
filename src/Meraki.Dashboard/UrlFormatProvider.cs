@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MerakiDashboard
+namespace Meraki.Dashboard
 {
     /// <summary>
     /// A <see cref="IFormatProvider"/> that ensures data substituted unto a URI is escaped

@@ -1,6 +1,7 @@
 ﻿using System;
+using MerakiDashboard;
 
-namespace MerakiDashboard
+namespace Meraki.Dashboard
 {
     /// <summary>
     /// Factory to create <see cref="MerakiDashboardClient"/> objects.

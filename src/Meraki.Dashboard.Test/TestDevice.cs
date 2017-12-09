@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Net;
-using System.Text;
+using MerakiDashboard;
 using Xunit;
 
-namespace MerakiDashboard.Test
+namespace Meraki.Dashboard.Test
 {
     public class TestDevice
     {

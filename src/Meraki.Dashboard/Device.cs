@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Runtime.Serialization;
 
 // Ignore XML documentation warnings from here on. 
 #pragma warning disable CS1591
 
-namespace MerakiDashboard
+namespace Meraki.Dashboard
 {
     /// <summary>
     /// A meraki device.

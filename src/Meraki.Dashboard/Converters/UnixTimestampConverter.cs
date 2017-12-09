@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading;
 
-namespace MerakiDashboard
+namespace Meraki.Dashboard.Converters
 {
     /// <summary>
     /// Convert to and from Unix timestamp, a <see cref="double"/> counting the 

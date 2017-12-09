@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Runtime.Serialization;
+using Meraki.Dashboard.Converters;
 
 // Ignore XML documentation warnings from here on. 
 #pragma warning disable CS1591

@@ -1,7 +1,8 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using MerakiDashboard;
 
-namespace MerakiDashboard.Console
+namespace Meraki.Dashboard.Console
 {
     internal static class MerakiDashboardHelper
     {

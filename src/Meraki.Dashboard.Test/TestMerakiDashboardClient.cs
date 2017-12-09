@@ -7,7 +7,7 @@ using Moq;
 using Moq.Protected;
 using Xunit;
 
-namespace MerakiDashboard.Test
+namespace Meraki.Dashboard.Test
 {
     /// <summary>
     /// Tests for <see cref="MerakiDashboardClient"/>.

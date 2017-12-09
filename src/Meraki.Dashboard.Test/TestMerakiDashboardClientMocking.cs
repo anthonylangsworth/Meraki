@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 using Moq;
 using Moq.Protected;
 using Xunit;
 
-namespace MerakiDashboard.Test
+namespace Meraki.Dashboard.Test
 {
     /// <summary>
     /// Ensure <see cref="MerakiDashboardClient"/> can be mocked.

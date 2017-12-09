@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Net;
 using System.Runtime.Serialization;
 using System.Text;
+using Meraki.Dashboard.Converters;
 
 // Ignore XML documentation warnings
 #pragma warning disable CS1591

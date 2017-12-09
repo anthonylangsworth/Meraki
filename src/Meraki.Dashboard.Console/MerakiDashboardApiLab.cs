@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
+using MerakiDashboard;
 
-namespace MerakiDashboard.Console
+namespace Meraki.Dashboard.Console
 {
     /// <summary>
     /// Follow the exercises at https://learninglabs.cisco.com/modules/getting-started-with-meraki/meraki-dashboard-api.

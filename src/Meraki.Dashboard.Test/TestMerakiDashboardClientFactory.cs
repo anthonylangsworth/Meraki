@@ -1,7 +1,7 @@
 ﻿using System;
 using Xunit;
 
-namespace MerakiDashboard.Test
+namespace Meraki.Dashboard.Test
 {
     public class TestMerakiDashboardClientFactory
     {

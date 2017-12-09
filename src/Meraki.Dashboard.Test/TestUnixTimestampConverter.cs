@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using Meraki.Dashboard.Converters;
 using Xunit;
 
-namespace MerakiDashboard.Test
+namespace Meraki.Dashboard.Test
 {
     public class TestUnixTimestampConverter
     {

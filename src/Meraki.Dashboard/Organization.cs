@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 // Ignore XML documentation warnings
 #pragma warning disable CS1591
 
-namespace MerakiDashboard
+namespace Meraki.Dashboard
 {
     /// <summary>
     /// A Meraki Organization.

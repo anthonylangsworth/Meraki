@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 
-namespace MerakiDashboard
+namespace Meraki.Dashboard.Converters
 {
     /// <summary>
     /// Convert to and from the Meraki licence expiration date 

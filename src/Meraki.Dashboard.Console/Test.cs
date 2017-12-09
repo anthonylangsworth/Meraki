@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
+using MerakiDashboard;
 using Newtonsoft.Json;
 
-namespace MerakiDashboard.Console
+namespace Meraki.Dashboard.Console
 {
     internal class Test
     {

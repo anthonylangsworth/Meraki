@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
 using System.Threading;
+using MerakiDashboard;
 
-namespace MerakiDashboard
+namespace Meraki.Dashboard
 {
     /// <summary>
     /// Instantiate one of these around calls to <see cref="MerakiDashboardClient"/> 

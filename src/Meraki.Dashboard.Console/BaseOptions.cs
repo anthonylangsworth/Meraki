@@ -1,7 +1,7 @@
 ﻿using System;
 using CommandLine;
 
-namespace MerakiDashboard.Console
+namespace Meraki.Dashboard.Console
 {
     internal class BaseOptions
     {

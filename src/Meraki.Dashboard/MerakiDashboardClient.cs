@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using MerakiDashboard;
 using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
 
-namespace MerakiDashboard
+namespace Meraki.Dashboard
 {
     /// <summary>
     /// Wrapper around <see cref="MerakiHttpApiClient"/> for the Meraki Dashboard APIs.

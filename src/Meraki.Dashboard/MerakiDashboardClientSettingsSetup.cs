@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.Extensions.Options;
 
-namespace MerakiDashboard
+namespace Meraki.Dashboard
 {
     /// <summary>
     /// Initialize a <see cref="MerakiDashboardClientSettings"/> object.
