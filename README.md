@@ -88,34 +88,34 @@ The [Meraki Dashboard APIs](https://dashboard.meraki.com/api_docs) with at least
 
 | API   | Wrapped |
 |-------|---------|
-| GET /organizations/[organization_id]/admins | [x] |
-| POST /organizations/[organization_id]/admins | [ ] |
-| PUT /organizations/[organization_id]/admins/[id] | [ ] |
-| DELETE /organizations/[organization_id]/admins/[id] | [ ] |
-| GET /devices/[serial]/clients | [x] |
-| GET /networks/[networkId]/clients/[client_mac]/policy | [ ] |
-| PUT /networks/[id]/clients/[mac]/policy | [ ] |
-| GET /networks/[id]/clients/[mac]/splashAuthorizationStatus | [ ] |
-| PUT /networks/[id]/clients/[mac]/splashAuthorizationStatus | [ ] |
-| GET /organizations/[organizationId]/configTemplates | [ ] |
-| DELETE /organizations/[organizationId]/configTemplates/[id] | [ ] |
-| GET /networks/[networkId]/devices | [x] |
-| GET /networks/[networkId]/devices/[serial] | [x] |
-| GET /networks/[networkId]/devices/[serial]/uplink | [ ] |
-| PUT /networks/[networkId]/devices/[serial] | [ ] |
-| POST /networks/[networkId]/devices/claim | [ ] |
-| GET /networks/[networkId]/devices/[serial]/lldp_cdp | [ ] |
-| PUT /networks/[networkId]/cellularFirewallRules | [ ] |
-| GET /networks/[networkId]/l3FirewallRules | [ ] |
-| PUT /networks/[networkId]/l3FirewallRules | [ ] |
-| GET /organizations/[organizationId]/vpnFirewallRules |  [] |
-| PUT /organizations/[organizationId]/vpnFirewallRules | [ ] |
-| GET /networks/[networkId]/ssids/[number]/l3FirewallRules | [ ] |
-| PUT /networks/[networkId]/ssids/[number]/l3FirewallRules | [ ] |
-| GET /networks/[id]/groupPolicies | [ ] |
-| GET /organizations/[organizationId]/networks | [x] |
-| GET /networks/[id] | [x] |
-| PUT /networks/[id] | [ ] |
+| GET /organizations/[organization_id]/admins | - [x] |
+| POST /organizations/[organization_id]/admins | - [ ] |
+| PUT /organizations/[organization_id]/admins/[id] | - [ ] |
+| DELETE /organizations/[organization_id]/admins/[id] | - [ ] |
+| GET /devices/[serial]/clients | - [x] |
+| GET /networks/[networkId]/clients/[client_mac]/policy | - [ ] |
+| PUT /networks/[id]/clients/[mac]/policy | - [ ] |
+| GET /networks/[id]/clients/[mac]/splashAuthorizationStatus | - [ ] |
+| PUT /networks/[id]/clients/[mac]/splashAuthorizationStatus | - [ ] |
+| GET /organizations/[organizationId]/configTemplates | - [ ] |
+| DELETE /organizations/[organizationId]/configTemplates/[id] | - [ ] |
+| GET /networks/[networkId]/devices | - [x] |
+| GET /networks/[networkId]/devices/[serial] | - [x] |
+| GET /networks/[networkId]/devices/[serial]/uplink | - [ ] |
+| PUT /networks/[networkId]/devices/[serial] | - [ ] |
+| POST /networks/[networkId]/devices/claim | - [ ] |
+| GET /networks/[networkId]/devices/[serial]/lldp_cdp | - [ ] |
+| PUT /networks/[networkId]/cellularFirewallRules | - [ ] |
+| GET /networks/[networkId]/l3FirewallRules | - [ ] |
+| PUT /networks/[networkId]/l3FirewallRules | - [ ] |
+| GET /organizations/[organizationId]/vpnFirewallRules | - [ ] |
+| PUT /organizations/[organizationId]/vpnFirewallRules | - [ ] |
+| GET /networks/[networkId]/ssids/[number]/l3FirewallRules | - [ ] |
+| PUT /networks/[networkId]/ssids/[number]/l3FirewallRules | - [ ] |
+| GET /networks/[id]/groupPolicies | - [ ] |
+| GET /organizations/[organizationId]/networks | - [x] |
+| GET /networks/[id] | - [x] |
+| PUT /networks/[id] | - [ ] |
 | POST /organizations/[organizationId]/networks | [ ] |
 | DELETE /networks/[id] | [ ] |
 | POST /networks/[id]/bind | [ ] |
