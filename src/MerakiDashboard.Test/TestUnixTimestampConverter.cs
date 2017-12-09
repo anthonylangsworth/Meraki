@@ -18,8 +18,6 @@ namespace MerakiDashboard.Test
         public static IEnumerable<object[]> ConvertTestData()
         {
             yield return new object[] { "1474918068.66194", DateTime.Parse("2016-09-26T19:27:48.6620000") };
-            yield return new object[] { "1474918295.0268", DateTime.Parse("2016-05-05T19:56:57.9490000") };
-            yield return new object[] { "1462478217.94907", DateTime.Parse("2016-05-05T19:56:57.9490000") };
             yield return new object[] { "0.0", UnixTimestampConverter.EpochStart };
             yield return new object[] { "-100.0", UnixTimestampConverter.EpochStart.AddSeconds(-100.0) };
         }
