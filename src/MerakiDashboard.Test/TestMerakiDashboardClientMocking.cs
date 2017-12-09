@@ -4,6 +4,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Moq;
+using Moq.Protected;
 using Xunit;
 
 namespace MerakiDashboard.Test
@@ -57,8 +58,13 @@ namespace MerakiDashboard.Test
                                     .Returns(Task.FromResult(new[] { network }));
             merakiDashboardlientMock.Setup(merakiDashboardClient => merakiDashboardClient.GetNetworkDevicesAsync(network))
                                     .Returns(Task.FromResult(new[] { device }));
+            // Required by mocking framework
+            merakiDashboardlientMock.Protected().Setup("Dispose", true);
 
-            Assert.Equal(new[] {device}, await GetDevicesInAnOrganization(merakiDashboardlientMock.Object));
+            using (MerakiDashboardClient merakiDashboardClient = merakiDashboardlientMock.Object)
+            {
+                Assert.Equal(new[] {device}, await GetDevicesInAnOrganization(merakiDashboardClient));
+            }
             merakiDashboardlientMock.VerifyAll();
         }
 
