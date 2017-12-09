@@ -180,7 +180,7 @@ The [Meraki Dashboard APIs](https://dashboard.meraki.com/api_docs) with at least
 ## Mocking
 
 As stated above, one of the main goals for providing a client library is 
-mocking it when unit testing the calling code. The `TestMerakiDashboardClientMocking`
+mocking it when unit testing the calling code. The `TestMerakiDashboardClientMocking.cs`
 file in `Meraki.Dashboard.Test` provides examples of this.
 
 ## Exercise
