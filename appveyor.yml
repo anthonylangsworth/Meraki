@@ -6,5 +6,5 @@ branches:
 before_build:
   dotnet restore
 build:
-  project: src
+  project: src/Meraki.Dashboard.sln
   verbosity: minimal
