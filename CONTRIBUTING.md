@@ -11,6 +11,7 @@ In general:
 1. Each API method should escape any URIs passed to methods on the `Client` property using the protected `InterpolateAndEscape` method.
 1. For new contracts, consider providing strong typing (e.g. `enum`s, `DateTime`s, arrays) for Meraki's weakly typed fields. Provide a field with a "Raw" suffix that accepts or provides the Meraki Dashboard API value and a more strongly typed version. Contracts should be in the `Meraki.Dashboard` namespace to prevent the need for users to include multiple namespaces.
 1. For converting Meraki API weak types to stronger types, Create a class with a `Converter` suffix to convert to and from the type. The converter class should be in the `Meraki.Dashboard.Converters` namespace and should have corresponding tests in the `Meraki.Dashboard.Test` assembly.
+1. Update the list of supported APIs in README.md for newly wrapped APIs.
 
 To assist in debugging API calls, instantiate a `MerakiHttpApiDebugContext` around calls to `MerakiHttpApiClient` 
 methods. They will log details of data sent and received to Debug listeners, including the Debug window in 
