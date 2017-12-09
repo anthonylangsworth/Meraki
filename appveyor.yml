@@ -3,8 +3,14 @@ image: Visual Studio 2017
 branches:
   only:
   - master
+environment:
+  COVERALLS_REPO_TOKEN:  
+    secure: I22IRzJhFtxdLKq1eyCHJ1qhxvWQHg4Kj+3SJ3MpBbeTVZqF3q+
 before_build:
   dotnet restore src/Meraki.Dashboard.sln
 build:
   project: src/Meraki.Dashboard.sln
   verbosity: minimal
+test:
+  - cmd: tools\OpenCover.4.6.166\tools\OpenCover.Console.exe -register:user -filter:"+[*]*" -target:"src\Meraki.Dashboard.Test\dotnet test" -output:coverage.xml
+  - cmd: tools\coveralls.io.1.3.4\tools\coveralls.net.exe --opencover coverage.xml -r %COVERALLS_REPO_TOKEN%
