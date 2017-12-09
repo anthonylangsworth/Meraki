@@ -14,7 +14,7 @@
     <RepositoryUrl>https://github.com/anthonylangsworth/MerakiDashboard</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
     <PackageTags>meraki cisco dashboard api network client</PackageTags>
-    <Description>A library that wraps the Cisco Meraki Dashboard API, providing a mockaable, strongly typed interface.</Description>
+    <Description>A library that wraps the Cisco Meraki Dashboard API, providing a mockable, strongly-typed interface.</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
