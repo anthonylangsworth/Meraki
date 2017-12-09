@@ -88,7 +88,7 @@ The [Meraki Dashboard APIs](https://dashboard.meraki.com/api_docs) with at least
 
 | API   | Wrapped |
 |-------|---------|
-| GET /organizations/[organization_id]/admins | - [x] |
+| - [x] GET /organizations/[organization_id]/admins | - [x] |
 | POST /organizations/[organization_id]/admins | - [ ] |
 | PUT /organizations/[organization_id]/admins/[id] | - [ ] |
 | DELETE /organizations/[organization_id]/admins/[id] | - [ ] |
