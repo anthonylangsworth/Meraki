@@ -121,103 +121,145 @@ namespace Meraki.Dashboard
         #pragma warning disable CS1591
 
         /// <summary>
-        /// GET /devices/[serial]/clients
+        /// GET /devices/[serial]/switchPorts
         /// </summary>
         public virtual async Task<Client[]> GetClientsAsync(string serial)
         {
             return await Client.GetAsync<Client[]>(InterpolateAndEscape($"v0/devices/{serial}/switchPorts"));
         }
 
+        /// <summary>
+        /// GET /devices/[serial]/clients
+        /// </summary>
         public virtual async Task<string> GetDeviceClientsAsync(string serial, TimeSpan timespan)
         {
             return await Client.GetAsync(InterpolateAndEscape($"v0/devices/{serial}/clients?timespan={(int)timespan.TotalSeconds}"));
         }
 
-        public virtual async Task<string> GetDeviceClientsAsync(string serial)
-        {
-            return await GetDeviceClientsAsync(serial, TimeSpan.FromSeconds(8600));
-        }
-
+        /// <summary>
+        /// GET /networks/[networkId]/devices/[serial] 
+        /// </summary>
         public virtual async Task<Device> GetDeviceAsync(string networkId, string serial)
         {
             return await Client.GetAsync<Device>(InterpolateAndEscape($"v0/networks/{networkId}/devices/{serial}"));
         }
 
-        public virtual async Task<string> GetNetworkAsync(string id)
+        /// <summary>
+        /// GET /organizations/[organization_id]/admins
+        /// </summary>
+        public virtual async Task<string> GetNetworkAdminsAsync(string id)
         {
             return await Client.GetAsync(InterpolateAndEscape($"v0/networks/{id}/admins"));
         }
 
-        public virtual async Task<string> GetNetworkTrafficAsync(string id)
-        {
-            return await GetNetworkTrafficAsync(id, TimeSpan.FromSeconds(7200));
-        }
-
+        /// <summary>
+        /// GET /organizations/[organization_id]/admins
+        /// </summary>
         public virtual async Task<string> GetNetworkTrafficAsync(string id, TimeSpan timespan)
         {
             return await Client.GetAsync(InterpolateAndEscape($"v0/networks/{id}/traffic?timespan={(int)timespan.TotalSeconds}"));
         }
 
+        /// <summary>
+        /// GET /networks/[networkId]/devices
+        /// </summary>
         public virtual async Task<Device[]> GetNetworkDevicesAsync(string id)
         {
             return await Client.GetAsync<Device[]>(InterpolateAndEscape($"v0/networks/{id}/devices"));
         }
 
+        /// <summary>
+        /// GET /networks/[networkId]/devices
+        /// </summary>
         public virtual async Task<Device[]> GetNetworkDevicesAsync(Network network)
         {
             return await GetNetworkDevicesAsync(network.Id);
         }
 
+        /// <summary>
+        /// GET /networks/[networkId]/vlans
+        /// </summary>
         public virtual async Task<string> GetNetworkVlans(string id)
         {
             return await Client.GetAsync(InterpolateAndEscape($"v0/networks/{id}/vlans"));
         }
 
+        /// <summary>
+        /// GET /networks/[networkId]/vlans
+        /// </summary>
         public virtual async Task<string> GetNetworkVlans(Network network)
         {
             return await GetNetworkVlans(network.Id);
         }
 
+        /// <summary>
+        /// GET /organizations
+        /// </summary>
+        /// <returns></returns>
         public virtual async Task<Organization[]> GetOrganizationsAsync()
         {
             return await Client.GetAsync<Organization[]>($"v0/organizations");
         }
 
+        /// <summary>
+        /// GET /organizations/[id]
+        /// </summary>
         public virtual async Task<Organization> GetOrganizationAsync(string id)
         {
             return await Client.GetAsync<Organization>(InterpolateAndEscape($"v0/organizations/{id}"));
         }
 
+        /// <summary>
+        /// GET /organizations/[organization_id]/admins
+        /// </summary>
         public virtual async Task<string> GetOrganizationAdminsAsync(string id)
         {
             return await Client.GetAsync(InterpolateAndEscape($"v0/organizations/{id}/admins"));
         }
 
+        /// <summary>
+        /// GET /organizations/[organization_id]/admins
+        /// </summary>
         public virtual async Task<string> GetOrganizationAdminsAsync(Organization organization)
         {
             return await GetOrganizationAdminsAsync(organization.Id);
         }
 
+        /// <summary>
+        /// GET /organizations/[organizationId]/networks
+        /// </summary>
         public virtual async Task<Network[]> GetOrganizationNetworksAsync(string id)
         {
             return await Client.GetAsync<Network[]>(InterpolateAndEscape($"v0/organizations/{id}/networks"));
         }
 
+        /// <summary>
+        /// GET /organizations/[organizationId]/networks
+        /// </summary>
         public virtual async Task<Network[]> GetOrganizationNetworksAsync(Organization organization)
         {
             return await GetOrganizationNetworksAsync(organization.Id);
         }
 
+        /// <summary>
+        /// GET /organizations/[id]/inventory
+        /// </summary>
         public virtual async Task<InventoryEntry[]> GetOrganizationInventoryAsync(string id)
         {
             return await Client.GetAsync<InventoryEntry[]>(InterpolateAndEscape($"v0/organizations/{id}/inventory"));
         }
 
+        /// <summary>
+        /// GET /organizations/[id]/inventory
+        /// </summary>
         public virtual async Task<InventoryEntry[]> GetOrganizationInventoryAsync(Organization organization)
         {
             return await GetOrganizationInventoryAsync(organization.Id);
         }
 
+        /// <summary>
+        /// GET /organizations/[id]/licenseState
+        /// </summary>
         public virtual async Task<LicenceState> GetOrganizationLicenseStateAsync(string id)
         {
             return await Client.GetAsync<LicenceState>(InterpolateAndEscape($"v0/organizations/{id}/licenseState"));

@@ -84,6 +84,101 @@ using (MerakiDashboardClient merakiDashboardClient = MerakiDashboardClientFactor
 }
 ```
 
+The [Meraki Dashboard APIs](https://dashboard.meraki.com/api_docs) with at least partial support are:
+
+| API   | Wrapped |
+|-------|---------|
+| GET /organizations/[organization_id]/admins | [x] |
+| POST /organizations/[organization_id]/admins | [ ] |
+| PUT /organizations/[organization_id]/admins/[id] | [ ] |
+| DELETE /organizations/[organization_id]/admins/[id] | [ ] |
+| GET /devices/[serial]/clients | [x] |
+| GET /networks/[networkId]/clients/[client_mac]/policy | [ ] |
+| PUT /networks/[id]/clients/[mac]/policy | [ ] |
+| GET /networks/[id]/clients/[mac]/splashAuthorizationStatus | [ ] |
+| PUT /networks/[id]/clients/[mac]/splashAuthorizationStatus | [ ] |
+| GET /organizations/[organizationId]/configTemplates | [ ] |
+| DELETE /organizations/[organizationId]/configTemplates/[id] | [ ] |
+| GET /networks/[networkId]/devices | [x] |
+| GET /networks/[networkId]/devices/[serial] | [x] |
+| GET /networks/[networkId]/devices/[serial]/uplink | [ ] |
+| PUT /networks/[networkId]/devices/[serial] | [ ] |
+| POST /networks/[networkId]/devices/claim | [ ] |
+| GET /networks/[networkId]/devices/[serial]/lldp_cdp | [ ] |
+| PUT /networks/[networkId]/cellularFirewallRules | [ ] |
+| GET /networks/[networkId]/l3FirewallRules | [ ] |
+| PUT /networks/[networkId]/l3FirewallRules | [ ] |
+| GET /organizations/[organizationId]/vpnFirewallRules |  [] |
+| PUT /organizations/[organizationId]/vpnFirewallRules | [ ] |
+| GET /networks/[networkId]/ssids/[number]/l3FirewallRules | [ ] |
+| PUT /networks/[networkId]/ssids/[number]/l3FirewallRules | [ ] |
+| GET /networks/[id]/groupPolicies | [ ] |
+| GET /organizations/[organizationId]/networks | [x] |
+| GET /networks/[id] | [x] |
+| PUT /networks/[id] | [ ] |
+| POST /organizations/[organizationId]/networks | [ ] |
+| DELETE /networks/[id] | [ ] |
+| POST /networks/[id]/bind | [ ] |
+| POST /networks/[id]/unbind | [ ] |
+| GET /networks/[id]/siteToSiteVpn | [ ] |
+| PUT /networks/[id]/siteToSiteVpn | [ ] |
+| GET /networks/[id]/traffic | [x] |
+| GET /networks/[id]/accessPolicies | [ ] |
+| GET /networks/[id]/airMarshal | [ ] |
+| GET /networks/[id]/bluetoothSettings | [ ] |
+| PUT /networks/[id]/bluetoothSettings | [ ] |
+| GET /organizations | [x] |
+| GET /organizations/[id] | [x] |
+| PUT /organizations/[id] | [ ] |
+| POST /organizations | [ ] |
+| POST /organizations/[id]/clone | [ ] |
+| POST /organizations/[id]/claim | [ ] |
+| GET /organizations/[id]/licenseState | [x] |
+| GET /organizations/[id]/inventory | [x] |
+| GET /organizations/[id]/snmp | [x] |
+| PUT /organizations/[id]/snmp | [x] |
+| GET /organizations/[id]/thirdPartyVPNPeers | [ ] |
+| PUT /organizations/[id]/thirdPartyVPNPeers | [ ] |
+| PUT /organizations/[id]/thirdPartyVPNPeers | [ ] |
+| GET /networks/[networkId]/phoneAssignments | [ ] |
+| GET /networks/[networkId]/phoneAssignments/[serial] | [ ] |
+| PUT /networks/[networkId]/phoneAssignments/[serial] | [ ] |
+| DELETE /networks/[networkId]/phoneAssignments/[serial] | [ ] |
+| GET /networks/[networkId]/phoneContacts | [ ] |
+| POST /networks/[networkId]/phoneContacts | [ ] |
+| PUT /networks/[networkId]/phoneContacts/[contactId] | [ ] |
+| DELETE /networks/[networkId]/phoneContacts/[contactId] | [ ] |
+| GET /networks/[networkId]/phoneNumbers | [ ] |
+| GET /networks/[networkId]/phoneNumbers/available | [ ] |
+| GET /organizations/[organizationId]/samlRoles | [ ] |
+| GET /organizations/[organizationId]/samlRoles/[id] | [ ] |
+| PUT /organizations/[organizationId]/samlRoles/[id] | [ ] |
+| POST /organizations/[organizationId]/samlRoles | [ ] |
+| DELETE /organizations/[organizationId]/samlRoles/[id] | [ ] |
+| GET /networks/[network_id]/sm/devices | [ ] |
+| PUT /networks/[network_id]/sm/devices/tags | [ ] |
+| PUT /networks/[network_id]/sm/device/fields | [ ] |
+| PUT /networks/[network_id]/sm/devices/lock | [ ] |
+| PUT /networks/[network_id]/sm/device/wipe | [ ] |
+| PUT /networks/[network_id]/sm/devices/checkin | [ ] |
+| PUT /networks/[network_id]/sm/devices/move | [ ] |
+| GET /networks/[networkId]/ssids | [ ] |
+| GET /networks/[networkId]/ssids/[number] | [ ] |
+| PUT /networks/[networkId]/ssids/[number] | [ ] |
+| GET /devices/[serial]/switchPorts | [x] |
+| GET /devices/[serial]/switchPorts/[number] | [ ] |
+| PUT /devices/[serial]/switchPorts/[number] | [ ] |
+| GET /networks/[networkId]/staticRoutes | [ ] |
+| GET /networks/[networkId]/staticRoutes/[srId] | [ ] |
+| PUT /networks/[networkId]/staticRoutes/[srId] | [ ] |
+| POST /networks/[networkId]/staticRoutes | [ ] |
+| DELETE /networks/[networkId]/staticRoutes/[srId] | [ ] |
+| GET /networks/[networkId]/vlans | [x] |
+| GET /networks/[networkId]/vlans/[vlanId] | [ ] |
+| PUT /networks/[networkId]/vlans/[vlanId] | [ ] |
+| POST /networks/[networkId]/vlans | [ ] |
+| DELETE /networks/[networkId]/vlans/[id] | [ ] |
+
 ## Exercise
 
 The exercises found at http://developers.meraki.com/post/152434096196/dashboard-api-learning-lab can be found 
