@@ -1,4 +1,5 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/u5n74r69je9h3ha0/branch/master?svg=true)](https://ci.appveyor.com/project/anthonylangsworth/merakidashboard/branch/master)
+[![Coverage Status](https://coveralls.io/repos/github/anthonylangsworth/MerakiDashboard/badge.svg?branch=master)](https://coveralls.io/github/anthonylangsworth/MerakiDashboard?branch=master)
 
 # Meraki Dashboard API .Net Client
 
@@ -9,9 +10,11 @@ to simply their network management.
 Meraki provides a limited web API for managing their devices called the [Dashboard API](https://dashboard.meraki.com/api_docs). 
 Meraki provides wrappers in NodeJS (JavaScript), Ruby and Python but not for C#. This library is the 
 beginnings of a C# wrapper. Its goals are:
-1. Wrap the Meraki APIs, making callable with the least effort.
+1. Wrap the Meraki Dashboard APIs, making them callable with the least effort.
 1. Follow C# standards and conventions as much as possible. For example, provide lists and enums with transparent conversions.
 1. Allow easy mocking to make automated testing of calling code easier.
+1. Allow APIs not supported by this library to be callable.
+1. Provide assistance for debugging both this library and Meraki Dashboard API calls.
 
 It is currently a work in progress.
 
@@ -37,6 +40,29 @@ using (MerakiDashboardClient merakiDashboardClient = MerakiDashboardClientFactor
 	// ...
 }
 ```
+
+If Meraki introduces a new Dashboard API where there is no support in the library, use the `Client` 
+property to get access to the underlying `MerakiHttpApiClient` object that the `MerakiDashboardClient`
+uses to call APIs.
+
+For example, if Meraki introduced a "GET /networks/[id]/alerts" method to retreive the alerts
+for each network.
+
+``` C#
+using MerakiDashboard;
+
+ // ...
+
+string apiKey; // API key from the user's profile in the Meraki Dashboard
+string networkId; // my network ID
+using (MerakiDashboardClient merakiDashboardClient = MerakiDashboardClientFactory.Create(apiKey))
+{
+	NetworkAlerts networkAlerts = await merakiDashboardClient.Client.GetAsync<NetworkAlerts>("v0/network/{id}/alerts");
+
+	// ...
+}
+```
+
 
 ## Exercise
 
