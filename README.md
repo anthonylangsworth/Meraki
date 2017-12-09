@@ -177,6 +177,12 @@ The [Meraki Dashboard APIs](https://dashboard.meraki.com/api_docs) with at least
 - [ ] POST /networks/[networkId]/vlans
 - [ ] DELETE /networks/[networkId]/vlans/[id]
 
+## Mocking
+
+As stated above, one of the main goals for providing a client library is 
+mocking it when unit testing the calling code. The `TestMerakiDashboardClientMocking`
+file in `Meraki.Dashboard.Test` provides examples of this.
+
 ## Exercise
 
 The exercises found at http://developers.meraki.com/post/152434096196/dashboard-api-learning-lab can be found 
