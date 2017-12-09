@@ -6,4 +6,5 @@ branches:
 before_build:
   dotnet restore
 build:
+  project: src
   verbosity: minimal
