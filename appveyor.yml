@@ -4,7 +4,7 @@ branches:
   only:
   - master
 before_build:
-  dotnet restore
+  dotnet restore src/Meraki.Dashboard.sln
 build:
   project: src/Meraki.Dashboard.sln
   verbosity: minimal
