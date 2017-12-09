@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MerakiDashboard\MerakiDashboard.csproj" />
+    <ProjectReference Include="..\Meraki.Dashboard\Meraki.Dashboard.csproj" />
   </ItemGroup>
 
 </Project>
