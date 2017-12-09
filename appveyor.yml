@@ -4,6 +4,6 @@ branches:
   only:
   - master
 before_build:
-  nuget restore
+  dotnet restore
 build:
   verbosity: minimal
