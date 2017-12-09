@@ -6,7 +6,7 @@ namespace Meraki.Dashboard
     /// <summary>
     /// Initialize a <see cref="MerakiDashboardClientSettings"/> object.
     /// </summary>
-    internal class MerakiDashboardClientSettingsSetup : ConfigureOptions<MerakiDashboardClientSettings>
+    public class MerakiDashboardClientSettingsSetup : ConfigureOptions<MerakiDashboardClientSettings>
     {
         /// <summary>
         /// The default Meraki dashboard API base address.

@@ -20,13 +20,13 @@ It is currently a work in progress. While this library is in beta, breaking chan
 
 Based off original work by Michael Park at https://github.com/migrap/Meraki.
 
-## Example
+## Use
 
 Create a `MerakiDashboardClient` instance using `MerakiDashboardClientFactory.Create`, supplying your API key, 
 then call methods on it, such as:
 
 ``` C#
-using MerakiDashboard;
+using Meraki.Dashboard;
 
  // ...
 
@@ -36,7 +36,8 @@ using (MerakiDashboardClient merakiDashboardClient = MerakiDashboardClientFactor
 {
 	try
 	{
-		// GET /organizations/[id] as documented at https://dashboard.meraki.com/api_docs#return-an-organization
+		// GET /organizations/[id] as documented at 
+		// https://dashboard.meraki.com/api_docs#return-an-organization
 		Organization organization = await merakiDashboardClient.GetOrganizationAsync(organizationId);
 
 		// ...
@@ -48,6 +49,9 @@ using (MerakiDashboardClient merakiDashboardClient = MerakiDashboardClientFactor
 }
 ```
 
+`MerakiDashboardClientFactory.Create` also accepts an `IOption<MerakiClientSettings>` overload when 
+loading settings from app.config or similar.
+
 If Meraki introduces a new Dashboard API where there is no support in the library, use the `Client` 
 property to get access to the underlying `MerakiHttpApiClient` object that a `MerakiDashboardClient`
 object uses to call Meraki Dashboard APIs.
@@ -56,7 +60,7 @@ For example, if Meraki introduced a `GET /networks/[id]/alerts` API to retreive 
 for each network (found on the Dashboard under "Network-wide" -> "Configure" -> "Alerts):
 
 ``` C#
-using MerakiDashboard;
+using Meraki.Dashboard;
 
  // ...
 
@@ -73,7 +77,8 @@ string apiKey; // API key from the user's profile in the Meraki Dashboard
 string networkId; // my network ID
 using (MerakiDashboardClient merakiDashboardClient = MerakiDashboardClientFactory.Create(apiKey))
 {
-	NetworkAlerts networkAlerts = await merakiDashboardClient.Client.GetAsync<NetworkAlerts>("v0/network/{id}/alerts");
+	NetworkAlerts networkAlerts = 
+		await merakiDashboardClient.Client.GetAsync<NetworkAlerts>("v0/network/{id}/alerts");
 
 	// ...
 }
@@ -88,23 +93,23 @@ examples.
 
 ## Contributing
 
-As this is incomplete, pull requests are welcome. Please follow general C# programming guidelines and naming
-conventions and remember to include at least one mocked unit test for each new method.
+As this is incomplete, pull requests are welcome. Please follow general C# programming guidelines and add
+Xunit tests were possible.
 
 In general:
-1. The `MerakiDashboardClient` class is the main interace and exposes one public method wrapping each of the Meraki Dashboard APIs.
+1. The `MerakiDashboardClient` class is the main point of interaction and exposes one public method wrapping each of the Meraki Dashboard APIs.
 1. Each API method should be in the form of `<Verb><MethodName>` where `<Verb>` is the HTTP verb (e.g. "Get", "Put") and `<MethodName>` is an indicative name.
 1. Each API method should use the `MerakiHttpApiClient` class in the `Client` property to make the API calls. This provides authentication and a single point of mocking if needed. Add methods to `MerakiHttpApiClient` class for unsupported types of calls if needed.
-1. Each API method should have one corresponding mocked test in the `TestMerakiDashboardClient` class in `Meraki.Dashboard.Test`. The aim is to check for future breaking changes.
-1. Each API method should escape any URIs passed to methods on the `Client` property using `InterpolateAndEscape`.
-1. For new contracts, consider providing strong typing (e.g. `enum`s, `DateTime`s, arrays) for Meraki's weakly typed fields. Provide a field with a "Raw" suffix that accepts or provides the Meraki Dashboard API value and a more strongly typed version. Contracts should be in the Meraki.Dashboard namespace to prevent the need for users to include multiple namespaces.
-1. For converting Meraki API weak types to stronger types, Create a class with a `Converter` suffix to convert to and from the type. The converter class should be in the converter namespace and should have corresponding tests in the `Meraki.Dashboard.Test` assembly.
+1. Each API method should have one corresponding mocked test in the `TestMerakiDashboardClient` class in the `Meraki.Dashboard.Test` assembly. The aim is to quickly identify future breaking changes.
+1. Each API method should escape any URIs passed to methods on the `Client` property using the protected `InterpolateAndEscape` method.
+1. For new contracts, consider providing strong typing (e.g. `enum`s, `DateTime`s, arrays) for Meraki's weakly typed fields. Provide a field with a "Raw" suffix that accepts or provides the Meraki Dashboard API value and a more strongly typed version. Contracts should be in the `Meraki.Dashboard` namespace to prevent the need for users to include multiple namespaces.
+1. For converting Meraki API weak types to stronger types, Create a class with a `Converter` suffix to convert to and from the type. The converter class should be in the `Meraki.Dashboard.Converters` namespace and should have corresponding tests in the `Meraki.Dashboard.Test` assembly.
 
 To assist in debugging API calls, instantiate a `MerakiHttpApiDebugContext` around calls to `MerakiHttpApiClient` 
 methods. They will log details of data sent and received to Debug listeners, including the Debug window in 
 Visual Studio. For example:
 
-```
+``` C#
 using (new MerakiHttpApiDebugContext())
 using (MerakiDashboardClient merakiDashboardClient = MerakiDashboardClientFactory.Create(apiKey))
 {
