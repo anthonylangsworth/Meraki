@@ -1,10 +1,11 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/u5n74r69je9h3ha0/branch/master?svg=true)](https://ci.appveyor.com/project/anthonylangsworth/merakidashboard/branch/master)
 [![Coverage Status](https://coveralls.io/repos/github/anthonylangsworth/MerakiDashboard/badge.svg?branch=master)](https://coveralls.io/github/anthonylangsworth/MerakiDashboard?branch=master)
+[![NuGet Badge](https://buildstats.info/nuget/Meraki.Dashboard)](https://www.nuget.org/packages/Meraki.Dashboard/)
 
 # Meraki Dashboard API .Net Core Client
 
 [Meraki](http://meraki.cisco.com) is a network appliance vendor acquired by Cisco in 2012 that focuses on 
-cloud management and ease of use. Their devices are increasingly popular with companies of any size looking
+cloud-hosted management and ease of use. Their devices are increasingly popular with companies of any size looking
 to simply their network management.
 
 Meraki provides a limited web API for managing their devices called the [Dashboard API](https://dashboard.meraki.com/api_docs). 
