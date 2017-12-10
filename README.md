@@ -19,7 +19,7 @@ beginnings of a .Net Core 2.0 wrapper. Its goals are:
 
 It is currently a work in progress. While this library is in beta, breaking changes are still possible.
 
-See LICENSE for the license. Based off original work by Michael Park at https://github.com/migrap/Meraki.
+See [LICENSE](LICENSE) for the license. Based off original work by Michael Park at https://github.com/migrap/Meraki.
 
 ## Use
 
@@ -193,4 +193,4 @@ examples.
 
 ## Contributing
 
-Pull requests are welcome. See CONTRIBUTING.md for contribution details.
+Pull requests are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution details.
