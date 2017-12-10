@@ -5,7 +5,7 @@
 # Meraki Dashboard API .Net Core Client
 
 [Meraki](http://meraki.cisco.com) is a network appliance vendor acquired by Cisco in 2012 that focuses on 
-cloud management and ease of use. Their devices are increasingly popular with companies of any size looking
+cloud-hosted management and ease of use. Their devices are increasingly popular with companies of any size looking
 to simply their network management.
 
 Meraki provides a limited web API for managing their devices called the [Dashboard API](https://dashboard.meraki.com/api_docs). 
