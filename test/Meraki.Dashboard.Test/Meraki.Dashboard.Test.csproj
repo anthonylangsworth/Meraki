@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Meraki.Dashboard\Meraki.Dashboard.csproj" />
+    <ProjectReference Include="..\..\src\Meraki.Dashboard\Meraki.Dashboard.csproj" />
   </ItemGroup>
 
 </Project>
