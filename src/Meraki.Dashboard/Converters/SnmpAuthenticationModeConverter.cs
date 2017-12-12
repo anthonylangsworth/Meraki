@@ -21,7 +21,7 @@ namespace Meraki.Dashboard.Converters
         public static SnmpAuthenticationMode ToEnum(string raw)
         {
             return !string.IsNullOrWhiteSpace(raw)
-                ? Enum.Parse<SnmpAuthenticationMode>(raw, true)
+                ? (SnmpAuthenticationMode) Enum.Parse(typeof(SnmpAuthenticationMode), raw, true)
                 : SnmpAuthenticationMode.Unknown;
         }
 

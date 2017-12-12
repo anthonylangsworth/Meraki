@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>Meraki.Dashboard</AssemblyName>
     <RootNamespace>Meraki.Dashboard</RootNamespace>
     <Version>0.0.39</Version>

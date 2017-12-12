@@ -21,7 +21,7 @@ namespace Meraki.Dashboard.Converters
         public static SnmpPrivacyMode ToEnum(string raw)
         {
             return !string.IsNullOrWhiteSpace(raw)
-                ? Enum.Parse<SnmpPrivacyMode>(raw, true)
+                ? (SnmpPrivacyMode) Enum.Parse(typeof(SnmpPrivacyMode), raw, true)
                 : SnmpPrivacyMode.Unknown;
         }
 

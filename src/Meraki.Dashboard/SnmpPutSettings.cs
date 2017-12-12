@@ -47,8 +47,8 @@ namespace Meraki.Dashboard
         [DataMember(Name = "peerIps")]
         public string PeerIpsRaw
         {
-            get => string.Join(';', PeerIps);
-            set => PeerIps = value.Split(";").Select(IPAddress.Parse);
+            get => string.Join(";", PeerIps);
+            set => PeerIps = value.Split(';').Select(IPAddress.Parse);
         }
 
         [IgnoreDataMember]
