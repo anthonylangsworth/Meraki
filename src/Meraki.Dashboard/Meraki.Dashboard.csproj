@@ -3,15 +3,15 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>Meraki.Dashboard</AssemblyName>
     <RootNamespace>Meraki.Dashboard</RootNamespace>
-    <Version>0.0.39</Version>
+    <Version>0.0.48</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Anthony Langsworth</Authors>
     <Company>Dimension Data</Company>
     <Product />
     <Copyright>Copyright (c) 2017 Dimension Data, Copyright (c) 2016 Michael Park (initial version)</Copyright>
-    <PackageLicenseUrl>https://github.com/anthonylangsworth/MerakiDashboard/blob/master/LICENSE</PackageLicenseUrl>
-    <PackageProjectUrl>https://github.com/anthonylangsworth/MerakiDashboard</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/anthonylangsworth/MerakiDashboard</RepositoryUrl>
+    <PackageLicenseUrl>https://github.com/anthonylangsworth/Meraki.Dashboard/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/anthonylangsworth/Meraki.Dashboard</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/anthonylangsworth/Meraki.Dashboard</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
     <PackageTags>meraki cisco dashboard api network client</PackageTags>
     <Description>A library that wraps the Cisco Meraki Dashboard API, providing a mockable, strongly-typed interface.</Description>
