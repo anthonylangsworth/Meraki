@@ -186,7 +186,7 @@ file in `Meraki.Dashboard.Test` provides examples of this.
 ## Exercise
 
 The exercises found at http://developers.meraki.com/post/152434096196/dashboard-api-learning-lab can be found 
-in the MerakiDashboard.Console project. At the time of writing, the Meraki organization and devices shown does
+in the `Meraki.Dashboard.Console` project. At the time of writing, the Meraki organization and devices shown does
 not match the documented exercises. However, this may still be helpful to those looking for more complex
 examples.
 
