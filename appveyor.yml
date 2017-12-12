@@ -22,4 +22,4 @@ deploy:
   api_key:
     secure: x6RcBvyLLANc1CyznRWeSmmF0mOju+qCBpvUeVFpmCIuLk4MolWzwHOucI8tYtHJ
   skip_symbols: false
-  # artifact: /.*\.nupkg/
+  artifact: /Meraki\.Dashboard\.*\.nupkg/
