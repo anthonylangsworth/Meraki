@@ -2,7 +2,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/anthonylangsworth/MerakiDashboard/badge.svg?branch=master)](https://coveralls.io/github/anthonylangsworth/MerakiDashboard?branch=master)
 [![NuGet Badge](https://buildstats.info/nuget/Meraki.Dashboard)](https://www.nuget.org/packages/Meraki.Dashboard/)
 
-# Meraki Dashboard API .Net Core Client
+# Meraki Dashboard API .Net Standard Client
 
 [Meraki](http://meraki.cisco.com) is a network appliance vendor acquired by Cisco in 2012 that focuses on 
 cloud-hosted management and ease of use. Their devices are increasingly popular with companies of any size looking
@@ -10,7 +10,7 @@ to simply their network management.
 
 Meraki provides a limited web API for managing their devices called the [Dashboard API](https://dashboard.meraki.com/api_docs). 
 Meraki provides wrappers in NodeJS (JavaScript), Ruby and Python but not for C#. This library is the 
-beginnings of a .Net Core 2.0 wrapper. Its goals are:
+beginnings of a .Net Standard 2.0 wrapper. Its goals are:
 1. Wrap the Meraki Dashboard APIs, making them callable with the least effort.
 1. Follow C# standards and conventions as much as possible. For example, provide lists and enums with transparent conversions.
 1. Allow easy mocking to make automated testing of calling code easier.
