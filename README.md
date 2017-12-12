@@ -1,5 +1,4 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/jftj7e1s06i935cl?svg=true)](https://ci.appveyor.com/project/anthonylangsworth/meraki-dashboard)
-[![Coverage Status](https://coveralls.io/repos/github/anthonylangsworth/MerakiDashboard/badge.svg?branch=master)](https://coveralls.io/github/anthonylangsworth/MerakiDashboard?branch=master)
 [![NuGet Badge](https://buildstats.info/nuget/Meraki.Dashboard)](https://www.nuget.org/packages/Meraki.Dashboard/)
 
 # Meraki Dashboard API .Net Standard Client
