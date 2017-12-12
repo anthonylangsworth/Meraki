@@ -18,7 +18,7 @@ beginnings of a .Net Standard 2.0 wrapper. Its goals are:
 
 It is currently a work in progress. While this library is in beta, breaking changes are still possible.
 
-See [LICENSE](LICENSE) for the license. Based off original work by Michael Park at https://github.com/migrap/Meraki.
+See [LICENSE](LICENSE) for the license. Based off original work by Michael Park at https://github.com/migrap/Meraki. Meraki and Cisco are trademarks owned by Cisco Meraki and Cisco respectively.
 
 ## Use
 
