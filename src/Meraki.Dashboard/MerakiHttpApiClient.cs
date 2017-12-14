@@ -72,8 +72,7 @@ namespace Meraki.Dashboard
 
             HttpClient = new HttpClient(new HttpClientHandler())
             {
-                // Copy the URI to prevent in advertant modification by the caller.
-                BaseAddress = new Uri(baseAddress.AbsoluteUri, UriKind.Absolute)
+                BaseAddress = baseAddress
             };
             HttpClient.DefaultRequestHeaders.Add(MerakiApiKeyHttpHeader, apiKey);
             HttpClient.DefaultRequestHeaders.Add(AcceptTypeHttpHeader, "application/json");

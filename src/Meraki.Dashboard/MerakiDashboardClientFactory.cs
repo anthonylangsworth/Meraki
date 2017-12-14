@@ -6,6 +6,9 @@ namespace Meraki.Dashboard
     /// <summary>
     /// Factory to create <see cref="MerakiDashboardClient"/> objects.
     /// </summary>
+    /// <remarks>
+    /// To extend, add extension methods. 
+    /// </remarks>
     public static class MerakiDashboardClientFactory
     {
         /// <summary>
