@@ -13,7 +13,7 @@ beginnings of a .Net Standard 2.0 wrapper. Its goals are:
 1. Wrap the Meraki Dashboard APIs, making them callable with the least effort.
 1. Follow C# standards and conventions as much as possible. For example, provide lists and enums with transparent conversions.
 1. Allow easy mocking to make automated testing of calling code easier.
-1. Allow APIs not supported by this library to be callable.
+1. Allow APIs not wrapped by this library to be callable.
 1. Provide assistance for debugging both this library and Meraki Dashboard API calls.
 
 It is currently a work in progress. While this library is in beta, breaking changes are still possible.
